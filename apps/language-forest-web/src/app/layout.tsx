@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ReactQueryProviders from "@repo/language-forest-api/QueryProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,8 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <ReactQueryProviders>
+          {children}
+        </ReactQueryProviders>
       </body>
     </html>
   );
 }
+
+

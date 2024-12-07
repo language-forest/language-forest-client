@@ -16,6 +16,11 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "generate": {
+      "dependsOn": [],
+      "inputs": ["language-forest-api/api.yml", "./orval.config.js"],
+      "outputs": ["src/generated/**"]
     }
   }
 }

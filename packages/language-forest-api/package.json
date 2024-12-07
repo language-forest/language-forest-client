@@ -1,0 +1,22 @@
+{
+  "name": "@repo/language-forest-api",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "license": "MIT",
+  "scripts": {
+    "generate": "orval --config ./orval.config.js && node generateApiIndex.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.62.3",
+    "react": "^18.3.1",
+    "axios": "^1.7.9"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "orval": "^7.3.0",
+    "@types/react": "^18"
+  }
+}

@@ -5,7 +5,9 @@
     "build": "language-forest-client/node_modules/.bin/turbo build",
     "dev": "language-forest-client/node_modules/.bin/turbo dev",
     "lint": "language-forest-client/node_modules/.bin/turbo lint",
-    "format": "language-forest-client/node_modules/.bin/prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "language-forest-client/node_modules/.bin/prettier --write \"**/*.{ts,tsx,md}\"",
+    "api:generate": "pnpm -F @repo/language-forest-api generate",
+    "web:dev": "pnpm -F language-forest-web dev"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
