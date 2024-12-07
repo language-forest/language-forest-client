@@ -56,7 +56,6 @@
 
 .idea
 
-
 **/*.pbxuser
 **/!default.pbxuser
 **/*.mode1v3
@@ -83,3 +82,5 @@
 **/.cxx/
 **/*.keystore
 **/!debug.keystore
+
+apps/LanguageForest/vendor/

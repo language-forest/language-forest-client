@@ -1,0 +1,19 @@
+{
+  "name": "language-forest-client",
+  "private": true,
+  "scripts": {
+    "build": "language-forest-client/node_modules/.bin/turbo build",
+    "dev": "language-forest-client/node_modules/.bin/turbo dev",
+    "lint": "language-forest-client/node_modules/.bin/turbo lint",
+    "format": "language-forest-client/node_modules/.bin/prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "turbo": "^2.3.3",
+    "typescript": "5.5.4"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18"
+  }
+}
