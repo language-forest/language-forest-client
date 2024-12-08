@@ -10,16 +10,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "@repo/shared": "workspace:^",
+    "@webview-bridge/react-native": "^1.7.4",
     "react": "18.3.1",
-    "react-native": "0.76.4"
+    "react-native": "0.76.4",
+    "react-native-safe-area-context": "^4.14.0",
+    "react-native-webview": "^13.12.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@repo/prettier-config": "workspace:*",
     "@react-native-community/cli": "15.0.1",
     "@react-native-community/cli-platform-android": "15.0.1",
     "@react-native-community/cli-platform-ios": "15.0.1",
@@ -27,6 +28,9 @@
     "@react-native/eslint-config": "0.76.4",
     "@react-native/metro-config": "0.76.4",
     "@react-native/typescript-config": "0.76.4",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
