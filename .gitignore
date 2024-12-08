@@ -83,4 +83,7 @@
 **/*.keystore
 **/!debug.keystore
 
-apps/language-forest/vendor/
+**/language-forest/vendor/
+
+.env*
+**/.env*
