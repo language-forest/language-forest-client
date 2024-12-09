@@ -5,7 +5,8 @@
   "exports": {
     "./constant": "./constant/index.ts",
     "./util": "./util/index.ts",
-    "./webview": "./webview/index.ts"
+    "./webview": "./webview/index.ts",
+    "./storage": "./storage/index.ts"
   },
   "dependencies": {
     "react": "^18.3.1",

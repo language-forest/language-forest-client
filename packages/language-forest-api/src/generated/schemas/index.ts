@@ -7,4 +7,6 @@
 
 export * from './getHelloJsonParams';
 export * from './textQueryParamParameter';
+export * from './tokenDto';
+export * from './userInfoDto';
 export * from './yourTextDto';
