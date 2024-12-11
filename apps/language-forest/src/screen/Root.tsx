@@ -1,14 +1,14 @@
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import {BridgeState} from '../util/webview';
-import {useEffect, useMemo, useRef, useState} from 'react';
-import WebView from 'react-native-webview';
-import {Alert, BackHandler, Platform, StyleSheet} from 'react-native';
-import {bridge, createWebView} from '@webview-bridge/react-native';
-import {safeAreaColors} from '@repo/shared/webview';
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { BridgeState } from "../util/webview";
+import { useEffect, useMemo, useRef, useState } from "react";
+import WebView from "react-native-webview";
+import { Alert, BackHandler, Platform, StyleSheet } from "react-native";
+import { bridge, createWebView } from "@webview-bridge/react-native";
+import { safeAreaColors } from "@repo/shared/webview";
 
 const RootLayout = () => {
   const webviewRef = useRef<WebView>(null);
-  const [safeAreaColor, setSafeAreaColor] = useState<safeAreaColors>('blue');
+  const [safeAreaColor, setSafeAreaColor] = useState<safeAreaColors>("blue");
 
   const handleAndroidBackPress = () => {
     if (webviewRef.current) {
@@ -19,45 +19,45 @@ const RootLayout = () => {
   };
 
   const handleError = (syntheticEvent: any) => {
-    const {nativeEvent} = syntheticEvent;
+    const { nativeEvent } = syntheticEvent;
     Alert.alert(
-      '오류 발생',
-      `웹 페이지를 불러올 수 없습니다.\n${nativeEvent.description}`,
+      "오류 발생",
+      `웹 페이지를 불러올 수 없습니다.\n${nativeEvent.description}`
     );
   };
 
   const appBridge = useMemo(
     () =>
       bridge<BridgeState>({
-        postMessageHealthCheck: async ({input}) => {
+        postMessageHealthCheck: async ({ input }) => {
           return `${input} success`;
         },
-        changeSafeAreaColor: async ({color}) => {
+        changeSafeAreaColor: async ({ color }) => {
           setSafeAreaColor(color);
         },
       }),
-    [],
+    []
   );
 
-  const {WebView: CustomWebView} = useMemo(
+  const { WebView: CustomWebView } = useMemo(
     () =>
       createWebView({
         bridge: appBridge,
         debug: true,
-        fallback: method => {
+        fallback: (method) => {
           console.warn(`Method '${method}' not found in native`);
         },
       }),
-    [appBridge],
+    [appBridge]
   );
 
   useEffect(() => {
-    if (Platform.OS !== 'android') {
+    if (Platform.OS !== "android") {
       return;
     }
     const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      handleAndroidBackPress,
+      "hardwareBackPress",
+      handleAndroidBackPress
     );
     return () => backHandler.remove();
   }, []);
@@ -65,28 +65,29 @@ const RootLayout = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView
-        style={[styles.safeArea, {backgroundColor: safeAreaColor}]}
-        edges={['top', 'left', 'right']}>
+        style={[styles.safeArea, { backgroundColor: safeAreaColor }]}
+        edges={["top", "left", "right"]}
+      >
         <CustomWebView
           ref={webviewRef}
           source={{
             // uri: 'http://localhost:3000',
-            uri: 'http://172.30.1.70:3000',
+            uri: "http://172.30.1.70:3000/audio",
           }}
           style={{
-            height: '100%',
+            height: "100%",
             flex: 1,
-            width: '100%',
+            width: "100%",
           }}
           javaScriptEnabled
           domStorageEnabled
           allowsBackForwardNavigationGestures
-          originWhitelist={['*']}
+          originWhitelist={["*"]}
           scalesPageToFit
           onError={handleError}
-          onHttpError={syntheticEvent => {
-            const {nativeEvent} = syntheticEvent;
-            console.error('HTTP 에러 발생: ', nativeEvent);
+          onHttpError={(syntheticEvent) => {
+            const { nativeEvent } = syntheticEvent;
+            console.error("HTTP 에러 발생: ", nativeEvent);
           }}
         />
       </SafeAreaView>
@@ -97,7 +98,7 @@ const RootLayout = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#fff', // 글로벌 배경색
+    backgroundColor: "#fff", // 글로벌 배경색
   },
 });
 
