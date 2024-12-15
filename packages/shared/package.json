@@ -6,7 +6,9 @@
     "./constant": "./constant/index.ts",
     "./util": "./util/index.ts",
     "./webview": "./webview/index.ts",
-    "./storage": "./storage/index.ts"
+    "./storage": "./storage/index.ts",
+    "./design-system/web": "./design-system/web",
+    "./design-system/app": "./design-system/app"
   },
   "dependencies": {
     "react": "^18.3.1",
