@@ -1,4 +1,6 @@
 import ClientProviders from "./ClientProviders";
+import "./reset.css";
+import "./fonts.css";
 
 export default function RootLayout({
   children,
