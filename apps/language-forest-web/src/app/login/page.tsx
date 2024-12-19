@@ -4,7 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { cookieStore } from "@repo/shared/storage";
 import { authInfo } from "@repo/shared/constant";
-import { getHello, getUserInfo } from "@repo/language-forest-api";
+import { getUserInfo } from "@repo/language-forest-api";
 
 export default function AuthButtons() {
   const { data: session } = useSession();
@@ -23,7 +23,12 @@ export default function AuthButtons() {
 
   useEffect(() => {
     console.log("$$", session);
-    cookieStore.set(authInfo.accessToken, session?.accessToken);
+    cookieStore.set(authInfo.accessToken, session?.accessToken, {
+      expires: authInfo.accessTokenExpiresIn,
+    });
+    cookieStore.set(authInfo.refreshToken, session?.refreshToken, {
+      expires: authInfo.refreshTokenExpiresIn,
+    });
   }, [session?.accessToken]);
 
   if (session) {
@@ -34,6 +39,15 @@ export default function AuthButtons() {
       </div>
     );
   } else {
-    return <button onClick={() => signIn("google")}>로그인</button>;
+    return (
+      <button
+        onClick={() => {
+          console.log("login click");
+          signIn("google");
+        }}
+      >
+        로그인 test
+      </button>
+    );
   }
 }

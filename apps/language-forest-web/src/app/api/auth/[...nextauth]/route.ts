@@ -21,12 +21,14 @@ export const authOptions: AuthOptions = {
             accessToken: account.access_token ?? "",
           });
           token.accessToken = serverToken.accessToken;
+          token.refreshToken = serverToken.refreshToken;
         }
       }
       return token;
     },
     async session({ token, session }) {
       session.accessToken = token.accessToken as string;
+      session.refreshToken = token.refreshToken as string;
       return session;
     },
   },
