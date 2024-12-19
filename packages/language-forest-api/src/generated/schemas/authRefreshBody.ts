@@ -5,7 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface TokenDto {
-  accessToken: string;
-  refreshToken?: string;
-}
+export type AuthRefreshBody = {
+  /** 리프레시 토큰 */
+  refreshToken: string;
+};

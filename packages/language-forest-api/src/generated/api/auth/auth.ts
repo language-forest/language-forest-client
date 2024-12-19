@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import type {
+  AuthRefreshBody,
   TokenDto
 } from '../../schemas'
 import { fetchClient } from '../../../../fetchClient';
@@ -28,6 +29,24 @@ export const googleLogin = (
       {url: `/auth/google`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: tokenDto, signal
+    },
+      );
+    }
+  
+
+/**
+ * @summary 서버에서 발급한 refresh token을 통해 accessToken을 다시 받아옵니다. 
+ */
+export const authRefresh = (
+    authRefreshBody: AuthRefreshBody,
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<TokenDto>(
+      {url: `/auth/refresh`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: authRefreshBody, signal
     },
       );
     }

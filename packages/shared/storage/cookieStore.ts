@@ -1,14 +1,15 @@
 import Cookies from "js-cookie";
 
-import { authInfo } from "../constant";
 import { AbstractStore } from "./Store";
 
+const DEFAULT_COOKIE_EXPIRES = 1;
+
 export class CookieStore extends AbstractStore {
-  set(key: string, value: any): void {
+  override set(key: string, value: any, options?: { expires?: number }): void {
     const serializedValue = this.serialize(value);
     Cookies.set(key, serializedValue, {
       path: "/",
-      expires: authInfo.expiresIn,
+      expires: options?.expires ?? DEFAULT_COOKIE_EXPIRES,
     }); // 기본적으로 7일간 유지
   }
 

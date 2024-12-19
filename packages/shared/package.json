@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "js-cookie": "^3.0.5"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:^",
@@ -20,6 +21,7 @@
     "@repo/prettier-config": "workspace:^",
     "@types/node": "^20.11.24",
     "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/react-dom": "^18",
+    "@types/js-cookie": "^3.0.5"
   }
 }

@@ -217,6 +217,9 @@ importers:
 
   packages/shared:
     dependencies:
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -233,6 +236,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:^
         version: link:../typescript-config
+      '@types/js-cookie':
+        specifier: ^3.0.5
+        version: 3.0.6
       '@types/node':
         specifier: ^20.11.24
         version: 20.17.10

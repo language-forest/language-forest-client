@@ -1,4 +1,6 @@
 export const authInfo = {
   accessToken: "accessToken",
-  expiresIn: 30,
+  accessTokenExpiresIn: 7,
+  refreshToken: "refreshToken",
+  refreshTokenExpiresIn: 7,
 } as const;
