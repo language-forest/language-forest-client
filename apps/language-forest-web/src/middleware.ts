@@ -1,40 +1,83 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { authInfo } from "@repo/shared/constant";
+import { loginPath } from "@/router";
+import { authRefresh } from "@repo/language-forest-api";
 
-// 인증이 필요 없는 경로를 정규식으로 작성
 const AUTH_FREE_ROUTES = [
-  /^\/$/, // 홈 경로
-  /^\/login(\/.*)?$/, // 로그인 경로와 하위 경로
-  /^\/api\/.*$/, // API 경로
-  /^\/auth\/.*$/, // 인증 관련 경로
+  /^\/$/,
+  /^\/login(\/.*)?$/,
+  /^\/api\/.*$/,
+  /^\/auth\/.*$/,
 ];
 
-export function middleware(request: NextRequest) {
+// 인증이 필요 없는 경로인지 확인
+function isAuthFreeRoute(pathname: string): boolean {
+  return AUTH_FREE_ROUTES.some((pattern) => pattern.test(pathname));
+}
+
+// 세션 만료 여부 확인
+function isSessionExpired(lastCheckedExpiresAt?: string): boolean {
+  if (!lastCheckedExpiresAt) return true;
+  // 문자열을 숫자로 변환
+  const parsedLastCheckedExpiresAt = parseInt(lastCheckedExpiresAt, 10);
+
+  // 변환 실패 시 true 반환
+  if (isNaN(parsedLastCheckedExpiresAt)) return true;
+  const now = Date.now();
+
+  return now >= parsedLastCheckedExpiresAt;
+}
+
+export async function middleware(request: NextRequest) {
   const currentPath = request.nextUrl.pathname;
 
-  console.log(1);
-  // AUTH_FREE_ROUTES에 포함된 경로인지 검사
-  const isAuthFree = AUTH_FREE_ROUTES.some((pattern) =>
-    pattern.test(currentPath),
-  );
-  console.log(2);
-
-  if (isAuthFree) {
-    console.log(22);
-    return NextResponse.next(); // 인증 검사 없이 통과
+  // 인증이 필요 없는 경로인지 확인
+  if (isAuthFreeRoute(currentPath)) {
+    return NextResponse.next();
   }
 
-  // 인증 토큰 확인
-  console.log(3);
-  const token = request.cookies.get(authInfo.refreshToken)?.value;
+  // 세션 및 토큰 확인
+  const refreshToken = request.cookies.get(authInfo.refreshToken)?.value;
 
-  console.log(4);
-  if (!token) {
-    console.log(5);
-    return NextResponse.redirect(new URL("/login", request.url));
+  const lastCheckExpiresAt = request.cookies.get(
+    authInfo.accessTokenLastCheckExpiresAt,
+  )?.value;
+
+  if (!refreshToken) {
+    return NextResponse.redirect(new URL(loginPath, request.url));
   }
-  console.log(6);
 
+  if (isSessionExpired(lastCheckExpiresAt)) {
+    try {
+      // Refresh Token으로 새로운 Access Token 요청
+      const response = await authRefresh({ refreshToken });
+
+      const res = NextResponse.next();
+      res.cookies.set(authInfo.accessToken, response.accessToken, {
+        maxAge: authInfo.accessTokenMaxAge,
+      });
+      if (!response.refreshToken) {
+        return res;
+      }
+      res.cookies.set(authInfo.refreshToken, response.refreshToken, {
+        maxAge: authInfo.refreshTokenMaxAge,
+      });
+      res.cookies.set(
+        authInfo.accessTokenLastCheckExpiresAt,
+        String(Date.now() + authInfo.accessTokenLastCheckExpiresAtTriggerTime),
+        { maxAge: authInfo.accessTokenMaxAge },
+      );
+      return res;
+    } catch (error) {
+      return NextResponse.redirect(new URL(loginPath, request.url));
+    }
+  }
+
+  // 세션 유효, 다음 요청으로 진행
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/((?!_next/static|favicon.ico).*)"],
+};

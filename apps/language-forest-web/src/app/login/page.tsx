@@ -3,33 +3,36 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { cookieStore } from "@repo/shared/storage";
-import { authInfo } from "@repo/shared/constant";
+import { authInfo, TIME_MS } from "@repo/shared/constant";
 import { getUserInfo } from "@repo/language-forest-api";
 
 export default function AuthButtons() {
   const { data: session } = useSession();
-  console.log("--------------");
-  console.log("session", session);
-  console.log("--------------");
 
   const handleHello = async () => {
     try {
       const aa = await getUserInfo();
-      console.log(aa);
     } catch (e) {
       console.error("error", e);
     }
   };
 
   useEffect(() => {
-    console.log("$$", session);
     cookieStore.set(authInfo.accessToken, session?.accessToken, {
-      expires: authInfo.accessTokenExpiresIn,
+      maxAge: authInfo.accessTokenMaxAge,
     });
     cookieStore.set(authInfo.refreshToken, session?.refreshToken, {
-      expires: authInfo.refreshTokenExpiresIn,
+      maxAge: authInfo.refreshTokenMaxAge,
     });
-  }, [session?.accessToken]);
+
+    cookieStore.set(
+      authInfo.accessTokenLastCheckExpiresAt,
+      String(Date.now() + authInfo.accessTokenLastCheckExpiresAtTriggerTime),
+      {
+        maxAge: authInfo.refreshTokenMaxAge,
+      },
+    );
+  }, [session?.accessToken, session?.refreshToken]);
 
   if (session) {
     return (
@@ -42,7 +45,6 @@ export default function AuthButtons() {
     return (
       <button
         onClick={() => {
-          console.log("login click");
           signIn("google");
         }}
       >

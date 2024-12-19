@@ -1,16 +1,17 @@
 import Cookies from "js-cookie";
 
 import { AbstractStore } from "./Store";
-
-const DEFAULT_COOKIE_EXPIRES = 1;
+import { TIME_S } from "../constant";
 
 export class CookieStore extends AbstractStore {
-  override set(key: string, value: any, options?: { expires?: number }): void {
+  override set(key: string, value: any, options?: { maxAge?: number }): void {
     const serializedValue = this.serialize(value);
+    const expires = new Date(Date.now() + (options?.maxAge ?? TIME_S["1일"]));
+
     Cookies.set(key, serializedValue, {
       path: "/",
-      expires: options?.expires ?? DEFAULT_COOKIE_EXPIRES,
-    }); // 기본적으로 7일간 유지
+      expires,
+    });
   }
 
   get<T>(key: string): T | null {

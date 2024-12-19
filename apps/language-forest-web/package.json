@@ -23,9 +23,10 @@
     "@repo/prettier-config": "workspace:*",
     "@repo/shared": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/js-cookie": "^3.0.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/js-cookie": "^3.0.5"
+    "date-fns": "^4.1.0"
   }
 }

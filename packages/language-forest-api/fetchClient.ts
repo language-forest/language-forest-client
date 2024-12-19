@@ -6,12 +6,13 @@ import axios, {
 } from "axios";
 import { authInfo } from "@repo/shared/constant";
 
+import { cookies } from "next/headers";
+
 // SSR에서 요청 쿠키를 가져오는 함수
 const getServerCookie = (): string | undefined => {
   if (typeof window === "undefined") {
-    // @ts-ignore
-    const req = globalThis.__NEXT_SSR_CONTEXT__?.req; // Next.js의 SSR context
-    return req?.headers?.cookie;
+    const cookieStore = cookies();
+    return cookieStore.get(authInfo.accessToken)?.value;
   }
   return undefined;
 };

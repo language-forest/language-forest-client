@@ -1,6 +1,6 @@
 "use client";
 
-import { bridge } from "../../util/webview";
+import { bridge } from "@/util/webview";
 import { useState } from "react";
 import { safeAreaColors } from "@repo/shared/webview";
 

@@ -1,6 +1,12 @@
+import { TIME_MS, TIME_S } from "./time";
+
+const accessTokenMaxAge = TIME_MS["1일"];
+
 export const authInfo = {
   accessToken: "accessToken",
-  accessTokenExpiresIn: 7,
+  accessTokenMaxAge,
   refreshToken: "refreshToken",
-  refreshTokenExpiresIn: 7,
+  refreshTokenMaxAge: accessTokenMaxAge * 14,
+  accessTokenLastCheckExpiresAt: "lastCheckAt",
+  accessTokenLastCheckExpiresAtTriggerTime: accessTokenMaxAge / 2,
 } as const;

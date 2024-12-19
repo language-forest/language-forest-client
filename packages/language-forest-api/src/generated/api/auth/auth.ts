@@ -4,51 +4,38 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
-import type {
-  AuthRefreshBody,
-  TokenDto
-} from '../../schemas'
-import { fetchClient } from '../../../../fetchClient';
+import type { AuthRefreshBody, TokenDto } from "../../schemas";
+import { fetchClient } from "../../../../fetchClient";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
-      type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
-
-
+type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
 
 /**
  * @summary Google 로그인 엔드포인트
  */
-export const googleLogin = (
-    tokenDto: TokenDto,
- signal?: AbortSignal
-) => {
-      
-      
-      return fetchClient<TokenDto>(
-      {url: `/auth/google`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: tokenDto, signal
-    },
-      );
-    }
-  
+export const googleLogin = (tokenDto: TokenDto, signal?: AbortSignal) => {
+  return fetchClient<TokenDto>({
+    url: `/auth/google`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: tokenDto,
+    signal,
+  });
+};
 
 /**
- * @summary 서버에서 발급한 refresh token을 통해 accessToken을 다시 받아옵니다. 
+ * @summary 서버에서 발급한 refresh token을 통해 accessToken을 다시 받아옵니다.
  */
 export const authRefresh = (
-    authRefreshBody: AuthRefreshBody,
- signal?: AbortSignal
+  authRefreshBody: AuthRefreshBody,
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return fetchClient<TokenDto>(
-      {url: `/auth/refresh`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: authRefreshBody, signal
-    },
-      );
-    }
-  
-
+  return fetchClient<TokenDto>({
+    url: `/auth/refresh`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: authRefreshBody,
+    signal,
+  });
+};
