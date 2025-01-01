@@ -1,7 +1,7 @@
 {
   "name": "@repo/prettier-config",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "prettier.config.js",
   "license": "MIT",
   "dependencies": {},
   "publishConfig": {

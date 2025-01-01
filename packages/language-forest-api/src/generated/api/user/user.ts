@@ -18,9 +18,40 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query'
 import type {
+  BaseUser,
+  BaseUserStudyLanguage,
+  CreateUserInfoBody,
+  UpdateUserStudyLanguageRequest,
   UserInfoDto
 } from '../../schemas'
 import { fetchClient } from '../../../../fetchClient';
+
+// https://stackoverflow.com/questions/49579094/typescript-conditional-types-filter-out-readonly-properties-pick-only-requir/49579497#49579497
+type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X ? 1 : 2) extends <
+T,
+>() => T extends Y ? 1 : 2
+? A
+: B;
+
+type WritableKeys<T> = {
+[P in keyof T]-?: IfEquals<
+  { [Q in P]: T[P] },
+  { -readonly [Q in P]: T[P] },
+  P
+>;
+}[keyof T];
+
+type UnionToIntersection<U> =
+  (U extends any ? (k: U)=>void : never) extends ((k: infer I)=>void) ? I : never;
+type DistributeReadOnlyOverUnions<T> = T extends any ? NonReadonly<T> : never;
+
+type Writable<T> = Pick<T, WritableKeys<T>>;
+type NonReadonly<T> = [T] extends [UnionToIntersection<T>] ? {
+  [P in keyof Writable<T>]: T[P] extends object
+    ? NonReadonly<NonNullable<T[P]>>
+    : T[P];
+} : DistributeReadOnlyOverUnions<T>;
+
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -29,82 +60,82 @@ type AwaitedInput<T> = PromiseLike<T> | T;
 
 
 /**
- * @summary 내 유저 정보 가져오기
+ * @summary 내 유저 정보를 가져옵니다.
  */
-export const getUserInfo = (
+export const getUserInfoMe = (
     
  signal?: AbortSignal
 ) => {
       
       
       return fetchClient<UserInfoDto>(
-      {url: `/user/me`, method: 'GET', signal
+      {url: `/user-info/me`, method: 'GET', signal
     },
       );
     }
   
 
-export const getGetUserInfoQueryKey = () => {
-    return [`/user/me`] as const;
+export const getGetUserInfoMeQueryKey = () => {
+    return [`/user-info/me`] as const;
     }
 
     
-export const getGetUserInfoQueryOptions = <TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, }
+export const getGetUserInfoMeQueryOptions = <TData = Awaited<ReturnType<typeof getUserInfoMe>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfoMe>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetUserInfoQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getGetUserInfoMeQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserInfo>>> = ({ signal }) => getUserInfo(signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserInfoMe>>> = ({ signal }) => getUserInfoMe(signal);
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserInfoMe>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
 }
 
-export type GetUserInfoQueryResult = NonNullable<Awaited<ReturnType<typeof getUserInfo>>>
-export type GetUserInfoQueryError = unknown
+export type GetUserInfoMeQueryResult = NonNullable<Awaited<ReturnType<typeof getUserInfoMe>>>
+export type GetUserInfoMeQueryError = unknown
 
 
-export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>> & Pick<
+export function useGetUserInfoMe<TData = Awaited<ReturnType<typeof getUserInfoMe>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfoMe>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserInfo>>,
+          Awaited<ReturnType<typeof getUserInfoMe>>,
           TError,
           TData
         > , 'initialData'
       >, }
 
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>> & Pick<
+export function useGetUserInfoMe<TData = Awaited<ReturnType<typeof getUserInfoMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfoMe>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserInfo>>,
+          Awaited<ReturnType<typeof getUserInfoMe>>,
           TError,
           TData
         > , 'initialData'
       >, }
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, }
+export function useGetUserInfoMe<TData = Awaited<ReturnType<typeof getUserInfoMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfoMe>>, TError, TData>>, }
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 /**
- * @summary 내 유저 정보 가져오기
+ * @summary 내 유저 정보를 가져옵니다.
  */
 
-export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, }
+export function useGetUserInfoMe<TData = Awaited<ReturnType<typeof getUserInfoMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfoMe>>, TError, TData>>, }
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
 
-  const queryOptions = getGetUserInfoQueryOptions(options)
+  const queryOptions = getGetUserInfoMeQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
 
@@ -114,4 +145,58 @@ export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, 
 }
 
 
+
+/**
+ * 최초 유저 회원가입 때 사용하는 api입니다
+ * @summary 최초에 유저 언어 학습정보를 포함한 유저 정보를 생성합니다
+ */
+export const createUserInfo = (
+    createUserInfoBody: NonReadonly<CreateUserInfoBody>,
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<UserInfoDto>(
+      {url: `/user-info`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createUserInfoBody, signal
+    },
+      );
+    }
+  
+
+/**
+ * @summary 유저에 대한 정보를 수정합니다.
+ */
+export const updateUser = (
+    baseUser: NonReadonly<BaseUser>,
+ ) => {
+      
+      
+      return fetchClient<BaseUser>(
+      {url: `/user`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: baseUser
+    },
+      );
+    }
+  
+
+/**
+ * @summary 유저의 학습에 대한 정보를 변경합니다
+ */
+export const updateUserStudyLanguage = (
+    userStudyLanguageId: string,
+    updateUserStudyLanguageRequest: NonReadonly<UpdateUserStudyLanguageRequest>,
+ ) => {
+      
+      
+      return fetchClient<BaseUserStudyLanguage>(
+      {url: `/user/study-language/${userStudyLanguageId}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateUserStudyLanguageRequest
+    },
+      );
+    }
+  
 

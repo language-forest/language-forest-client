@@ -6,8 +6,23 @@
  */
 
 export * from './authRefreshBody';
+export * from './baseUser';
+export * from './baseUserAllOf';
+export * from './baseUserStudyLanguage';
+export * from './baseUserStudyLanguageAllOf';
+export * from './createUserInfoBody';
+export * from './createUserInfoBodyAllOf';
+export * from './createUserInfoBodyAllOfStudyLanguagesItem';
+export * from './createUserInfoBodyAllOfStudyLanguagesItemAllOf';
+export * from './genderEnum';
 export * from './getHelloJsonParams';
+export * from './languageEnum';
+export * from './levelEnum';
 export * from './textQueryParamParameter';
+export * from './timestamped';
 export * from './tokenDto';
+export * from './updateUserStudyLanguageRequest';
+export * from './updateUserStudyLanguageRequestAllOf';
 export * from './userInfoDto';
+export * from './userInfoDtoAllOf';
 export * from './yourTextDto';

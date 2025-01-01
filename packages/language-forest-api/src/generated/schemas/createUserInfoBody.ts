@@ -5,6 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { BaseUser } from './baseUser';
-import type { UserInfoDtoAllOf } from './userInfoDtoAllOf';
+import type { CreateUserInfoBodyAllOf } from './createUserInfoBodyAllOf';
 
-export type UserInfoDto = BaseUser & UserInfoDtoAllOf;
+export type CreateUserInfoBody = BaseUser & CreateUserInfoBodyAllOf;

@@ -1,15 +1,11 @@
-// app/user-info/page.tsx
+"use client";
 
-import { getUserInfoMe, useGetUserInfoMe } from "@repo/language-forest-api";
-
-export const metadata = {
-  title: "User Info",
-};
+import { useGetUserInfoMe } from "@repo/language-forest-api";
 
 export default async function UserInfoPage() {
   const { data } = useGetUserInfoMe();
 
-  console.log(data);
+  console.log("data", data);
   return (
     <div>
       <h1>Error</h1>

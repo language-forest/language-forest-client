@@ -1,13 +1,11 @@
 "use client";
 
-import { useGetUserInfo } from "@repo/language-forest-api";
 import { useRef, useState } from "react";
 
 const AudioPage = () => {
   const [inputText, setInputText] = useState("");
   const recognitionRef = useRef<any | null>(null);
   const [isListening, setIsListening] = useState(false);
-  const { data } = useGetUserInfo();
 
   const startListening = () => {
     const SpeechRecognition =
