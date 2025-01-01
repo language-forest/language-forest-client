@@ -1,4 +1,4 @@
 [submodule "language-forest-api"]
 	path = language-forest-api
 	url = https://github.com/language-forest/language-forest-api.git
-	branch = feat/user-info
+	branch = main
