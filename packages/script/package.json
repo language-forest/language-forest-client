@@ -1,0 +1,17 @@
+{
+  "name": "script",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "getLanguage": "ts-node ./get-i18n/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "json-to-ts": "^2.1.0",
+    "ts-node": "^10.9.2"
+  }
+}
