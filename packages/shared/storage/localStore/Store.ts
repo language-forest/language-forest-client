@@ -1,6 +1,6 @@
-import { AbstractStore } from "./Store";
+import { AbstractStore } from "../AbstractStore";
 
-export class LocalStore extends AbstractStore {
+export class Index extends AbstractStore {
   set(key: string, value: any): void {
     const serializedValue = this.serialize(value);
     localStorage.setItem(key, serializedValue);
@@ -23,4 +23,4 @@ export class LocalStore extends AbstractStore {
   }
 }
 
-export const localStore = new LocalStore();
+export const localStore = new Index();

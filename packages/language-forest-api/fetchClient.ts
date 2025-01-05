@@ -4,18 +4,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { authInfo } from "@repo/shared/constant";
-
-import { cookies } from "next/headers";
-
-// SSR에서 요청 쿠키를 가져오는 함수
-const getServerCookie = (): string | undefined => {
-  if (typeof window === "undefined") {
-    const cookieStore = cookies();
-    return cookieStore.get(authInfo.accessToken)?.value;
-  }
-  return undefined;
-};
+import { authKey } from "@repo/shared/storage";
 
 // 클라이언트 환경에서 요청 쿠키를 가져오는 함수
 const getClientCookie = (name: string): string | undefined => {
@@ -35,10 +24,7 @@ const axiosInstance: AxiosInstance = axios.create({
 // 요청 전 Authorization 헤더 추가
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    const isSSR = typeof window === "undefined";
-    const token = isSSR
-      ? getServerCookie()
-      : getClientCookie(authInfo.accessToken); // SSR 또는 클라이언트 환경에 따라 쿠키 처리
+    const token = getClientCookie(authKey.accessToken); // SSR 또는 클라이언트 환경에 따라 쿠키 처리
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`; // Authorization 헤더에 토큰 추가
