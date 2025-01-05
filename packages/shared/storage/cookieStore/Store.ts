@@ -1,7 +1,8 @@
+// @ts-ignore
 import Cookies from "js-cookie";
 
-import { AbstractStore } from "./Store";
-import { TIME_S } from "../constant";
+import { AbstractStore } from "../AbstractStore";
+import { TIME_S } from "../../constant";
 
 export class CookieStore extends AbstractStore {
   override set(key: string, value: any, options?: { maxAge?: number }): void {
