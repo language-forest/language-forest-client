@@ -9,17 +9,17 @@ import ReactQueryProviders from "@repo/language-forest-api/QueryProvider";
 interface RouteCommon {
   loader?: LoaderFunction;
   action?: ActionFunction;
-  ErrorBoundary?: React.ComponentType<any>;
+  ErrorBoundary?: React.ComponentType<unknown>;
 }
 
 interface IRoute extends RouteCommon {
   path: string;
-  Element: React.ComponentType<any>;
+  Element: React.ComponentType<unknown>;
 }
 
 interface Screen {
   [key: string]: {
-    default: React.ComponentType<any>;
+    default: React.ComponentType<unknown>;
   } & RouteCommon;
 }
 
@@ -41,7 +41,7 @@ for (const path of Object.keys(screens)) {
 
   routes.push({
     path: fileName === "index" ? "/" : `/${normalizedPathName.toLowerCase()}`,
-    Element: screens[path]?.default!,
+    Element: screens[path]?.default,
     loader: screens[path]?.loader as LoaderFunction | undefined,
     action: screens[path]?.action as ActionFunction | undefined,
     // ErrorBoundary: screens[path]?.ErrorBoundary,
