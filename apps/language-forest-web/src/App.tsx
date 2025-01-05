@@ -41,7 +41,7 @@ for (const path of Object.keys(screens)) {
 
   routes.push({
     path: fileName === "index" ? "/" : `/${normalizedPathName.toLowerCase()}`,
-    Element: screens[path].default,
+    Element: screens[path]?.default!,
     loader: screens[path]?.loader as LoaderFunction | undefined,
     action: screens[path]?.action as ActionFunction | undefined,
     // ErrorBoundary: screens[path]?.ErrorBoundary,
