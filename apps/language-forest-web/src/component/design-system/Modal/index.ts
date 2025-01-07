@@ -1,1 +1,1 @@
-export * from "./TempModal";
+export * from "./Alert";

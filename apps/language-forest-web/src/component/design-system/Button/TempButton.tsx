@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import Icon from "@/component/design-system/Icon";
 
 interface ButtonProps {
   isPrimary?: boolean;
