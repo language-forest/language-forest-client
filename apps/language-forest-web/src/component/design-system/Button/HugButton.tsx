@@ -6,11 +6,13 @@ import { LFColor, LFRadius } from "@repo/shared/constant";
 import { LoadingIndicator } from "@/component/design-system/Layout";
 import { LFText, LFTextProps } from "@/component/design-system";
 
-type ButtonType = "Green" | "LightGreen" | "Line";
+type ButtonType = "Green" | "LightGreen" | "Ghost" | "White";
+type ButtonBorder = "Pill" | "Square";
 
 type HugButtonProps = {
-  prefixIcon: {};
+  // prefixIcon: {};
   type: ButtonType;
+  border: ButtonBorder;
   children: ReactNode;
   onClick: () => Promise<void>;
 };
@@ -25,7 +27,6 @@ const baseButtonStyles = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "100%",
   overflow: "hidden",
 };
 
@@ -33,38 +34,50 @@ const buttonStyles: Record<ButtonType, SerializedStyles> = {
   Green: css({
     ...baseButtonStyles,
     backgroundColor: LFColor.LFGreen,
-    border: `1px solid ${LFColor.OpacityG18}`,
   }),
   LightGreen: css({
     ...baseButtonStyles,
-    backgroundColor: LFColor.Green10,
+    backgroundColor: LFColor.OpacityG18,
   }),
-  Line: css({
+  White: css({
     ...baseButtonStyles,
     backgroundColor: LFColor.LFWhite,
-    border: `1px solid ${LFColor.OpacityB18}`,
+  }),
+  Ghost: css({
+    ...baseButtonStyles,
+    backgroundColor: "transparent",
   }),
 };
 
 const fontStyles: Record<ButtonType, Omit<LFTextProps, "children">> = {
   Green: {
-    variant: "subHeadline",
+    variant: "body",
     color: "LightGreen",
     weight: "M",
   },
   LightGreen: {
-    variant: "callout",
+    variant: "body",
     color: "LFGreen",
     weight: "M",
   },
-  Line: {
-    variant: "subHeadline",
+  White: {
+    variant: "body",
     color: "LFBlack",
+    weight: "M",
+  },
+  Ghost: {
+    variant: "body",
+    color: "LFGreen",
     weight: "M",
   },
 };
 
-export const HugButton = ({ type, children, onClick }: HugButtonProps) => {
+export const HugButton = ({
+  type,
+  border,
+  children,
+  onClick,
+}: HugButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
@@ -79,7 +92,14 @@ export const HugButton = ({ type, children, onClick }: HugButtonProps) => {
   };
 
   return (
-    <button css={buttonStyles[type]} onClick={handleClick} disabled={isLoading}>
+    <button
+      css={{
+        ...buttonStyles[type],
+        borderRadius: border === "Pill" ? "8px" : "40px",
+      }}
+      onClick={handleClick}
+      disabled={isLoading}
+    >
       <motion.div
         css={{
           display: "flex",

@@ -1,13 +1,19 @@
-import { FillButton, TempButton } from "@/component/design-system";
+import {
+  FillButton,
+  HugButton,
+  InputField,
+  Tooltip,
+} from "@/component/design-system";
 import { overlay } from "overlay-kit";
 import { Alert } from "@/component/design-system/Modal";
 import { LFText } from "@/component/design-system";
 import { waitTimeout } from "@/util/waitTimeout.ts";
+import { Divider, HStack } from "@/component/design-system/Layout";
 
 const IndexScreen = () => {
   return (
     <div>
-      <LFText>test 스크린입니다</LFText>
+      <LFText>test 스크린입니다 aaaaaaaaaaaaaaaaaaaaaa</LFText>
       <FillButton
         type={"Line"}
         onClick={async () => {
@@ -34,9 +40,82 @@ const IndexScreen = () => {
       >
         LightGreen
       </FillButton>
-      <TempButton
-        text={"이버튼을 누르면 모달이 등장합니다"}
-        onClick={() => {
+
+      <HStack>
+        <HugButton
+          type={"Ghost"}
+          border={"Pill"}
+          onClick={async () => {
+            await waitTimeout(2000);
+          }}
+        >
+          Ghost
+        </HugButton>
+
+        <HugButton
+          type={"White"}
+          border={"Pill"}
+          onClick={async () => {
+            await waitTimeout(2000);
+          }}
+        >
+          White
+        </HugButton>
+
+        <HugButton
+          type={"Green"}
+          border={"Pill"}
+          onClick={async () => {
+            await waitTimeout(2000);
+          }}
+        >
+          Green
+        </HugButton>
+
+        <HugButton
+          type={"LightGreen"}
+          border={"Pill"}
+          onClick={async () => {
+            await waitTimeout(2000);
+          }}
+        >
+          LightGreen
+        </HugButton>
+
+        <HugButton
+          type={"White"}
+          border={"Square"}
+          onClick={async () => {
+            await waitTimeout(2000);
+          }}
+        >
+          White
+        </HugButton>
+
+        <HugButton
+          type={"Green"}
+          border={"Square"}
+          onClick={async () => {
+            await waitTimeout(2000);
+          }}
+        >
+          Green
+        </HugButton>
+
+        <HugButton
+          type={"LightGreen"}
+          border={"Square"}
+          onClick={async () => {
+            await waitTimeout(2000);
+          }}
+        >
+          LightGreen
+        </HugButton>
+      </HStack>
+
+      <FillButton
+        type={"Green"}
+        onClick={async () => {
           overlay.open(({ isOpen, close }) => {
             return (
               <Alert
@@ -61,7 +140,23 @@ const IndexScreen = () => {
             );
           });
         }}
-      />
+      >
+        모달열기jk
+      </FillButton>
+      <Divider height={8} backgroundColor={"White"} />
+      <HStack>
+        {/*<Tooltip label={"top"} position={"top"} />*/}
+        {/*<Tooltip label={"bottom"} position={"bottom"} />*/}
+        {/*<Tooltip label={"bottom-left"} position={"bottom-left"} />*/}
+        {/*<Tooltip label={"top-left"} position={"top-left"} />*/}
+        {/*<Tooltip label={"label"} position={"top-right"} />*/}
+        {/*<Tooltip label={"label"} position={"bottom-left"} />*/}
+        <Tooltip label={"bottom-right"} position={"bottom-right"} />
+      </HStack>
+
+      <InputField placeholder={"test"} maxLines={4} validate={() => true} />
+      <InputField placeholder={"test"} maxLines={4} validate={() => false} />
+      <InputField placeholder={"test"} />
     </div>
   );
 };
