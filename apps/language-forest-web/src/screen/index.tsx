@@ -2,6 +2,7 @@ import {
   FillButton,
   HugButton,
   InputField,
+  LFIcon,
   Tooltip,
 } from "@/component/design-system";
 import { overlay } from "overlay-kit";
@@ -157,6 +158,8 @@ const IndexScreen = () => {
       <InputField placeholder={"test"} maxLines={4} validate={() => true} />
       <InputField placeholder={"test"} maxLines={4} validate={() => false} />
       <InputField placeholder={"test"} />
+
+      <LFIcon variant={"chevron.down"} weight={"R"} size={20} color={"Black"} />
     </div>
   );
 };
