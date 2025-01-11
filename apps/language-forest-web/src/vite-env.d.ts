@@ -8,7 +8,7 @@ declare module "*.svg" {
 }
 
 // 2. ?component 쿼리가 붙은 *.svg 모듈 (React 컴포넌트)
-declare module "*.svg?component" {
+declare module "*.svg?react" {
   import * as React from "react";
   const Component: React.FC<React.SVGProps<SVGSVGElement>>;
   export default Component;

@@ -6,15 +6,14 @@ import path from "path";
 
 export default defineConfig({
   plugins: [
-    react(),
     svgr({
-      enforce: "pre",
       include: ["**/*.svg"], // 직접 지정
 
       svgrOptions: {
         icon: true,
       },
     }),
+    react(),
   ],
   resolve: {
     alias: {

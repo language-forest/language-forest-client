@@ -159,7 +159,7 @@ const IndexScreen = () => {
       <InputField placeholder={"test"} maxLines={4} validate={() => false} />
       <InputField placeholder={"test"} />
 
-      <LFIcon variant={"chevron.down"} weight={"R"} size={20} color={"Black"} />
+      <LFIcon variant={"bottomNav.book"} size={20} color={"Red"} />
     </div>
   );
 };
