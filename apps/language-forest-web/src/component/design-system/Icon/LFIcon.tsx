@@ -57,7 +57,7 @@ import Weight_B_arrow_up from "./raw/Weight=B.arrow.up.svg";
 import Weight_B_arrow_right from "./raw/Weight=B.arrow.right.svg";
 import Weight_B_arrow_left from "./raw/Weight=B.arrow.left.svg";
 import Weight_B_arrow_down from "./raw/Weight=B.arrow.down.svg";
-import { LFColor, LFColorType } from "@repo/shared/constant";
+import { LFColor, LFColorKey } from "@repo/shared/constant";
 
 // ===================== 2) Weighted / NonWeighted Variant 구분 =====================
 
@@ -65,7 +65,7 @@ import { LFColor, LFColorType } from "@repo/shared/constant";
  * (A) weight가 필요한 아이콘 (이름만 적음: "xMark", "speaker.wave.fill", "mic", ...)
  * - 이 아이콘들은 <LFIcon variant="xMark" weight="R" /> 같이 weight를 꼭 써야 함
  */
-type WeightedVariant =
+export type LFIconWeightedVariant =
   | "xMark"
   | "speaker.wave.fill"
   | "mic"
@@ -86,7 +86,7 @@ type WeightedVariant =
  * (B) weight가 없어야 하는(=쓰면 안 되는) 아이콘
  *   예: "bottomNav.home", "topNav.bell", etc.
  */
-type NonWeightedVariant =
+export type LFIconNonWeightedVariant =
   | "topNav.shop"
   | "topNav.bell"
   | "topNav.bell.dot"
@@ -94,11 +94,11 @@ type NonWeightedVariant =
   | "bottomNav.home"
   | "bottomNav.book";
 
-type IconKey =
-  | `Weight=R.${WeightedVariant}`
-  | `Weight=M.${WeightedVariant}`
-  | `Weight=B.${WeightedVariant}`
-  | NonWeightedVariant;
+type FullIconKey =
+  | `Weight=R.${LFIconWeightedVariant}`
+  | `Weight=M.${LFIconWeightedVariant}`
+  | `Weight=B.${LFIconWeightedVariant}`
+  | LFIconNonWeightedVariant;
 
 // ===================== 3) icons Dictionary (파일명 매핑) =====================
 // 실제 키 예: "Weight=R.xMark" → Weight_R_xMark (import)
@@ -165,30 +165,30 @@ const icons = {
 // ===================== 4) Props 정의 (유니온) =====================
 /** weight가 필요한 아이콘 (variant ∈ WeightedVariant) */
 interface WeightedIconProps {
-  color: LFColorType;
-  variant: WeightedVariant;
+  color: LFColorKey;
+  variant: LFIconWeightedVariant;
   weight: "R" | "M" | "B"; // 필수
   size?: number; // <img> width/height
 }
 
 /** weight가 없어야 하는 아이콘 (variant ∈ NonWeightedVariant) */
 interface NonWeightedIconProps {
-  color: LFColorType;
-  variant: NonWeightedVariant;
+  color: LFColorKey;
+  variant: LFIconNonWeightedVariant;
   size?: number;
   // weight 주면 에러
 }
 
 /** 최종 유니온 타입 → TS가 조합 오류를 잡아줌 */
-export type IconProps = WeightedIconProps | NonWeightedIconProps;
+export type LFIconProps = WeightedIconProps | NonWeightedIconProps;
 
 // ===================== 5) getIconKey 함수 =====================
-function getIconKey(variant: string, weight?: "R" | "M" | "B"): IconKey {
-  if (weight) return `Weight=${weight}.${variant}` as IconKey;
-  return variant as IconKey;
+function getIconKey(variant: string, weight?: "R" | "M" | "B"): FullIconKey {
+  if (weight) return `Weight=${weight}.${variant}` as FullIconKey;
+  return variant as FullIconKey;
 }
 
-export const LFIcon: React.FC<IconProps> = (props) => {
+export const LFIcon: React.FC<LFIconProps> = (props) => {
   const { variant, size = 24, color: _color } = props;
   const color = LFColor[_color];
 
@@ -201,7 +201,7 @@ export const LFIcon: React.FC<IconProps> = (props) => {
     iconKey = getIconKey(variant);
   }
 
-  const IconComponent = icons[iconKey as IconKey];
+  const IconComponent = icons[iconKey as FullIconKey];
   if (!IconComponent) {
     throw new Error(`Icon not found for key="${iconKey}"`);
   }

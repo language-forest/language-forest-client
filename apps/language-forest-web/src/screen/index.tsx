@@ -1,19 +1,27 @@
 import {
   FillButton,
+  LFHeader,
   HugButton,
   InputField,
   LFIcon,
   Tooltip,
+  Alert,
+  LFText,
+  Divider,
+  HStack,
+  BottomTabNavigation,
 } from "@/component/design-system";
 import { overlay } from "overlay-kit";
-import { Alert } from "@/component/design-system/Modal";
-import { LFText } from "@/component/design-system";
 import { waitTimeout } from "@/util/waitTimeout.ts";
-import { Divider, HStack } from "@/component/design-system/Layout";
 
 const IndexScreen = () => {
   return (
     <div>
+      <LFHeader
+        left={<div>llllllllllllllllllllll</div>}
+        center={<div>cccccccccccccccccentercccccccccccccc</div>}
+        right={<div>rrrrrrrrrrrrrrrrrrrrrrrrrrrrr</div>}
+      />
       <LFText>test 스크린입니다 aaaaaaaaaaaaaaaaaaaaaa</LFText>
       <FillButton
         type={"Line"}
@@ -160,6 +168,8 @@ const IndexScreen = () => {
       <InputField placeholder={"test"} />
 
       <LFIcon variant={"bottomNav.book"} size={20} color={"Red"} />
+
+      <BottomTabNavigation />
     </div>
   );
 };

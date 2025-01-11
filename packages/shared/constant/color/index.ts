@@ -37,4 +37,4 @@ export const LFColor = {
   Yellow: "#FFEB0FFF",
 } as const;
 
-export type LFColorType = keyof typeof LFColor;
+export type LFColorKey = keyof typeof LFColor;

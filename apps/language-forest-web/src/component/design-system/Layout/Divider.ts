@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { LFColor, LFColorType } from "@repo/shared/constant";
+import { LFColor, LFColorKey } from "@repo/shared/constant";
 
 type DividerType = 1 | 4 | 8;
 
@@ -7,12 +7,12 @@ type DividerProps =
   | {
       width: DividerType; // 가로 Divider
       height?: never; // 높이는 사용 불가
-      backgroundColor?: LFColorType; // 배경색
+      backgroundColor?: LFColorKey; // 배경색
     }
   | {
       width?: never; // 너비는 사용 불가
       height: DividerType; // 세로 Divider
-      backgroundColor?: LFColorType; // 배경색
+      backgroundColor?: LFColorKey; // 배경색
     };
 
 export const Divider = styled.div<DividerProps>`

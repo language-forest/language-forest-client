@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { motion } from "framer-motion";
 import { css } from "@emotion/react";
-import { LFColor, LFColorType } from "@repo/shared/constant";
+import { LFColor, LFColorKey } from "@repo/shared/constant";
 
 type LoadingIndicatorProps = {
   size?: number;
-  color?: LFColorType;
+  color?: LFColorKey;
 };
 
 export const LoadingIndicator = ({

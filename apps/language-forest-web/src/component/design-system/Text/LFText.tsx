@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import {
-  LFColorType,
+  LFColorKey,
   LFFontSizeType,
   LFFontSize,
   LFFontWeight,
@@ -13,7 +13,7 @@ import { ReactNode } from "react";
 export interface LFTextProps {
   variant?: LFFontSizeType;
   weight?: LFFontWeightType;
-  color?: LFColorType;
+  color?: LFColorKey;
   children: ReactNode;
 }
 
