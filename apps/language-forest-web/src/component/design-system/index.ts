@@ -7,3 +7,4 @@ export * from "./Tooltip";
 export * from "./InputField";
 export * from "./Navigation";
 export * from "./Header";
+export * from "./SegmentControl";

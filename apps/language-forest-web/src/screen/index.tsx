@@ -10,6 +10,7 @@ import {
   Divider,
   HStack,
   BottomTabNavigation,
+  SegmentControl,
 } from "@/component/design-system";
 import { overlay } from "overlay-kit";
 import { waitTimeout } from "@/util/waitTimeout.ts";
@@ -168,6 +169,15 @@ const IndexScreen = () => {
       <InputField placeholder={"test"} />
 
       <LFIcon variant={"bottomNav.book"} size={20} color={"Red"} />
+
+      <SegmentControl
+        name={"test"}
+        segments={[
+          { label: "111111111", value: "1" },
+          { label: "2222222222", value: "2" },
+        ]}
+        callback={(e) => console.log(e)}
+      />
 
       <BottomTabNavigation />
     </div>
