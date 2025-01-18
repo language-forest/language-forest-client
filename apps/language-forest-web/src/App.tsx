@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import ReactQueryProviders from "@repo/language-forest-api/QueryProvider";
 import { useAsyncEffect } from "./hook/useAsyncEffect.ts";
-import { useUserStore } from "./store/userStore.ts";
+import { useUserStore } from "./store/useUserStore.ts";
 import { OverlayProvider } from "overlay-kit";
 import styled from "@emotion/styled";
 
@@ -88,6 +88,7 @@ const GlobalOuterContainer = styled.div`
 
 const GlobalInnerContainer = styled.div`
   max-width: 480px;
+  width: 100%;
   background-color: white;
 `;
 

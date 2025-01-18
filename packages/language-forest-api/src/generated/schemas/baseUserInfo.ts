@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { GenderEnum } from './genderEnum';
+import type { LanguageEnum } from './languageEnum';
 
 export interface BaseUserInfo {
   /**
@@ -21,7 +22,7 @@ export interface BaseUserInfo {
    * 옵션 - 2차 언어 (ex. JP)
    * @nullable
    */
-  languageSecond?: string | null;
+  languageSecond?: LanguageEnum;
   /**
    * 옵션 - MBTI
    * @nullable
@@ -42,7 +43,7 @@ export interface BaseUserInfo {
    * @nullable
    */
   studyPlace?: string | null;
-  uid?: string;
+  uid: string;
   /**
    * 옵션 - 태어난 해
    * @nullable

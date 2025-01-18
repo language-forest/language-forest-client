@@ -6,5 +6,5 @@
  */
 
 export type CreateUserRequestUserInfoAllOf = {
-  readonly uid?: unknown;
+  readonly uid?: never;
 };

@@ -18,7 +18,7 @@ type AwaitedInput<T> = PromiseLike<T> | T;
 
 
 /**
- * @summary Google 로그인을 요청합니다 (nickname, language 필수).
+ * @summary Google 로그인을 요청합니다.
  */
 export const googleLogin = (
     googleLoginRequest: GoogleLoginRequest,

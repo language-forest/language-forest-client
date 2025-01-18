@@ -6,7 +6,7 @@ type HeaderTitleProps = {
   description?: string;
 };
 
-export const HeaderTitle = ({ title, description }: HeaderTitleProps) => {
+export const LFHeaderTitle = ({ title, description }: HeaderTitleProps) => {
   return (
     <HeaderTitleContainer>
       <LFText variant={"headline"} weight={"B"} color={"LFBlack"}>

@@ -15,6 +15,7 @@ export interface LFTextProps {
   weight?: LFFontWeightType;
   color?: LFColorKey;
   children: ReactNode;
+  textAlign?: "left" | "center" | "right" | "start";
 }
 
 // Text 컴포넌트
@@ -23,16 +24,22 @@ export const LFText = ({
   weight = "R",
   color = "LFBlack",
   children,
+  textAlign = "start",
 }: LFTextProps) => {
   return (
-    <TextStyled variant={variant} weight={weight} color={color}>
+    <TextStyled
+      variant={variant}
+      weight={weight}
+      color={color}
+      textAlign={textAlign}
+    >
       {children}
     </TextStyled>
   );
 };
 
 const TextStyled = styled.p<Required<LFTextProps>>(
-  ({ variant, weight, color }) => {
+  ({ variant, weight, color, textAlign }) => {
     const fontSizeValue = LFFontSize[variant];
     const fontWeightValue = LFFontWeight[weight];
 
@@ -43,6 +50,7 @@ const TextStyled = styled.p<Required<LFTextProps>>(
       font-weight: ${fontWeightValue};
       line-height: ${fontSizeValue.size / 16}rem;
       letter-spacing: ${fontSizeValue?.letterSpacing}px;
+      text-align: ${textAlign};
     `;
   },
 );

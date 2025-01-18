@@ -12,6 +12,17 @@ export abstract class AbstractStore {
   }
 
   protected deserialize<T>(value: string): T {
-    return JSON.parse(value);
+    if (this.isJSON(value)) {
+      return JSON.parse(value);
+    }
+    return value as T;
   }
+  private isJSON = (value: string) => {
+    try {
+      JSON.parse(value);
+      return true;
+    } catch {
+      return false;
+    }
+  };
 }

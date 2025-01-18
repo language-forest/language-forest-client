@@ -6,8 +6,8 @@
  */
 
 export type CreateUserRequestUserStudyInfoAllOf = {
-  readonly id?: unknown;
-  readonly sentenceAmount?: unknown;
-  readonly uid?: unknown;
-  readonly voiceType?: unknown;
+  readonly id?: never;
+  readonly sentenceAmount?: never;
+  readonly uid?: never;
+  readonly voiceType?: never;
 };

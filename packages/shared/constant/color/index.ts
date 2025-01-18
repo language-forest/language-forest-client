@@ -35,6 +35,7 @@ export const LFColor = {
   Green10: "#E4EFE3FF",
   Red: "#FF123FFF",
   Yellow: "#FFEB0FFF",
+  ContentSubC: "#434542",
 } as const;
 
 export type LFColorKey = keyof typeof LFColor;

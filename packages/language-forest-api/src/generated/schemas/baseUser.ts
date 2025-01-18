@@ -4,11 +4,12 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
+import type { LanguageEnum } from './languageEnum';
 
 export interface BaseUser {
   /** 대표 언어 (필수) */
-  language: string;
+  language: LanguageEnum;
   /** 유저 닉네임 (필수) */
   nickname: string;
-  uid?: string;
+  uid: string;
 }

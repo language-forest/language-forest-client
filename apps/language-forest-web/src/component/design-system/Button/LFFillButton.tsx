@@ -11,7 +11,7 @@ type ButtonType = "Green" | "LightGreen" | "Line";
 type ButtonProps = {
   type: ButtonType;
   children: ReactNode;
-  onClick: () => Promise<void>;
+  onClick: () => Promise<void> | void;
 };
 
 const baseButtonStyles = {
@@ -63,7 +63,7 @@ const fontStyles: Record<ButtonType, Omit<LFTextProps, "children">> = {
   },
 };
 
-export const FillButton = ({ type, children, onClick }: ButtonProps) => {
+export const LFFillButton = ({ type, children, onClick }: ButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {

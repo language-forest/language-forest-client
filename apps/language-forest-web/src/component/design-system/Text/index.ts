@@ -1,1 +1,2 @@
-export * from "./LFText.tsx";
+export * from "./LFText";
+export * from "./LFLink";

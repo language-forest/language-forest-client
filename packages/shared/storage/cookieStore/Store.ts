@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { AbstractStore } from "../AbstractStore";
 import { TIME_S } from "../../constant";
 
-export class CookieStore extends AbstractStore {
+class CookieStore extends AbstractStore {
   override set(key: string, value: any, options?: { maxAge?: number }): void {
     const serializedValue = this.serialize(value);
     const expires = new Date(Date.now() + (options?.maxAge ?? TIME_S["1일"]));

@@ -8,12 +8,12 @@ import type { LevelEnum } from './levelEnum';
 import type { VoiceTypeEnum } from './voiceTypeEnum';
 
 export interface BaseUserStudyInfo {
-  id?: string;
+  id: string;
   /** 학습 난이도 */
   level: LevelEnum;
   /** 학습할 문장 수 */
   sentenceAmount: number;
-  uid?: string;
+  uid: string;
   /** ai 목소리 타입 */
   voiceType: VoiceTypeEnum;
 }

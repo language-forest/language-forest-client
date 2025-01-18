@@ -144,7 +144,7 @@ const ModalWrapper = styled(motion.div)`
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   z-index: 130;
   min-width: 270px;
-  max-width: 70vw; /* 반응형 지원 */
+  max-width: 70vw;
 `;
 
 const ModalContent = styled(VStack)`

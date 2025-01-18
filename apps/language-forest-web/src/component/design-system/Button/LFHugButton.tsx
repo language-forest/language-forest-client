@@ -72,7 +72,7 @@ const fontStyles: Record<ButtonType, Omit<LFTextProps, "children">> = {
   },
 };
 
-export const HugButton = ({
+export const LFHugButton = ({
   type,
   border,
   children,
