@@ -4,14 +4,7 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
-import type { BaseUser } from "./baseUser";
-import type { CreateUserRequestUserAllOf } from "./createUserRequestUserAllOf";
-import { LanguageEnum } from "./languageEnum";
+import type { BaseUser } from './baseUser';
+import type { CreateUserRequestUserOneOf } from './createUserRequestUserOneOf';
 
-export type CreateUserRequestUser = BaseUser | CreateUserRequestUserAllOf;
-
-const a: CreateUserRequestUser = {
-  language: LanguageEnum.EN,
-};
-
-a.language;
+export type CreateUserRequestUser = BaseUser | CreateUserRequestUserOneOf;

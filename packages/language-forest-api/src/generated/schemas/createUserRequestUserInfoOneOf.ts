@@ -5,8 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type CreateUserRequestUserAllOf = {
-  nickname?: never;
+export type CreateUserRequestUserInfoOneOf = {
   uid?: never;
   [key: string]: unknown;
  };

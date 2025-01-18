@@ -4,9 +4,10 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
+import type { LanguageEnum } from "./languageEnum";
 
-export type CreateUserRequestUserAllOf = {
+export type CreateUserRequestUserAnyOf = {
+  language: LanguageEnum;
   nickname?: never;
   uid?: never;
-  [key: string]: unknown;
- };
+};

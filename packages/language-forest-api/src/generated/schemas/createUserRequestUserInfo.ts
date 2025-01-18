@@ -5,6 +5,6 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { BaseUserInfo } from './baseUserInfo';
-import type { CreateUserRequestUserInfoAllOf } from './createUserRequestUserInfoAllOf';
+import type { CreateUserRequestUserInfoOneOf } from './createUserRequestUserInfoOneOf';
 
-export type CreateUserRequestUserInfo = BaseUserInfo & CreateUserRequestUserInfoAllOf;
+export type CreateUserRequestUserInfo = BaseUserInfo | CreateUserRequestUserInfoOneOf;

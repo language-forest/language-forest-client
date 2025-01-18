@@ -5,8 +5,10 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type CreateUserRequestUserAllOf = {
-  nickname?: never;
+export type CreateUserRequestUserStudyInfoOneOf = {
+  id?: never;
+  sentenceAmount?: never;
   uid?: never;
+  voiceType?: never;
   [key: string]: unknown;
  };
