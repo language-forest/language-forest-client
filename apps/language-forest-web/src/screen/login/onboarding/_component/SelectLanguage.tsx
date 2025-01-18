@@ -12,12 +12,17 @@ import {
 import { LFHeaderGoBack } from "@/component/design-system/Header/LFHeaderGoBack.tsx";
 import { LFSmallButton } from "@/component/design-system/Button/LFSmallButton.tsx";
 import styled from "@emotion/styled";
+import { LanguageEnum } from "@repo/language-forest-api";
 
 export const SelectLanguage = () => {
   const onMoveNext = useOnboardingStore((state) => state.onMoveNext);
   const onMovePrev = useOnboardingStore((state) => state.onMovePrev);
+  const updateUser = useOnboardingStore((state) => state.updateUser);
 
-  const handleLanguageClick = () => {};
+  const handleLanguageClick = (language: LanguageEnum) => {
+    updateUser({ language });
+    onMoveNext();
+  };
 
   return (
     <GlobalContainer>
@@ -55,11 +60,17 @@ export const SelectLanguage = () => {
       </ContentContainer>
 
       <CTAPosition>
-        <LFFillButton type={"Green"} onClick={() => onMoveNext()}>
+        <LFFillButton
+          type={"Green"}
+          onClick={() => handleLanguageClick(LanguageEnum.EN)}
+        >
           영어의 숲
         </LFFillButton>
 
-        <LFFillButton type={"LightGreen"} onClick={() => onMoveNext()}>
+        <LFFillButton
+          type={"LightGreen"}
+          onClick={() => handleLanguageClick(LanguageEnum.KO)}
+        >
           한국의 숲
         </LFFillButton>
       </CTAPosition>

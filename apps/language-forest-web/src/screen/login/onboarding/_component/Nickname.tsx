@@ -16,12 +16,12 @@ import { useState } from "react";
 export const Nickname = () => {
   const onMoveNext = useOnboardingStore((state) => state.onMoveNext);
   const onMovePrev = useOnboardingStore((state) => state.onMovePrev);
-  const updateNickname = useOnboardingStore((state) => state.updateNickname);
+  const updateNickname = useOnboardingStore((state) => state.updateUser);
   const [nickname, setNickname] = useState("");
 
   const handleNicknameChange = (e: string) => {
     setNickname(e);
-    updateNickname(e);
+    updateNickname({ nickname: e });
   };
 
   return (

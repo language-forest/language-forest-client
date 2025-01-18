@@ -2,8 +2,9 @@ import { ReactNode, useEffect } from "react";
 import { useOnboardingStore } from "@/screen/login/onboarding/_component/useOnboardingStore.tsx";
 import { Intro } from "./_component/Intro";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
-import { Nickname } from "@/screen/login/onboarding/_component/Nickname.tsx";
-import { SelectLanguage } from "@/screen/login/onboarding/_component/SelectLanguage.tsx";
+import { Nickname } from "./_component/Nickname.tsx";
+import { SelectLanguage } from "./_component/SelectLanguage.tsx";
+import { QuestionAnnounce } from "./_component/QuestionAnnounce.tsx";
 
 const funnel: Array<{ index: number; key: string; Component: ReactNode }> = [
   {
@@ -17,9 +18,15 @@ const funnel: Array<{ index: number; key: string; Component: ReactNode }> = [
     Component: <Nickname />,
   },
   {
-    index: 1,
+    index: 2,
     key: "selectLanguage",
     Component: <SelectLanguage />,
+  },
+
+  {
+    index: 3,
+    key: "questionAnnounce",
+    Component: <QuestionAnnounce />,
   },
 ];
 

@@ -6,7 +6,6 @@
  */
 
 export type CreateUserRequestUserOneOf = {
-  nickname?: never;
   uid?: never;
   [key: string]: unknown;
  };
