@@ -9,6 +9,7 @@ import topNav_bell_dot from "./raw/topNav.bell.dot.svg";
 import bottomNav_star from "./raw/bottomNav.star.svg";
 import bottomNav_home from "./raw/bottomNav.home.svg";
 import bottomNav_book from "./raw/bottomNavBook.svg";
+import SooPooRy from "./raw/SooPooRy.svg";
 
 import Weight_R_xMark from "./raw/Weight=R.xMark.svg";
 import Weight_R_speaker_wave_fill from "./raw/Weight=R.speaker.wave.fill.svg";
@@ -87,6 +88,7 @@ export type LFIconWeightedVariant =
  *   예: "bottomNav.home", "topNav.bell", etc.
  */
 export type LFIconNonWeightedVariant =
+  | "SooPooRy"
   | "topNav.shop"
   | "topNav.bell"
   | "topNav.bell.dot"
@@ -154,6 +156,7 @@ const icons = {
   "Weight=B.arrow.down": Weight_B_arrow_down,
 
   // --- (B) NonWeighted 아이콘 ---
+  SooPooRy: SooPooRy,
   "topNav.shop": topNav_shop,
   "topNav.bell": topNav_bell,
   "topNav.bell.dot": topNav_bell_dot,
@@ -165,7 +168,7 @@ const icons = {
 // ===================== 4) Props 정의 (유니온) =====================
 /** weight가 필요한 아이콘 (variant ∈ WeightedVariant) */
 interface WeightedIconProps {
-  color: LFColorKey;
+  color?: LFColorKey;
   variant: LFIconWeightedVariant;
   weight: "R" | "M" | "B"; // 필수
   size?: number; // <img> width/height
@@ -173,7 +176,7 @@ interface WeightedIconProps {
 
 /** weight가 없어야 하는 아이콘 (variant ∈ NonWeightedVariant) */
 interface NonWeightedIconProps {
-  color: LFColorKey;
+  color?: LFColorKey;
   variant: LFIconNonWeightedVariant;
   size?: number;
   // weight 주면 에러
@@ -189,7 +192,7 @@ function getIconKey(variant: string, weight?: "R" | "M" | "B"): FullIconKey {
 }
 
 export const LFIcon: React.FC<LFIconProps> = (props) => {
-  const { variant, size = 24, color: _color } = props;
+  const { variant, size = 24, color: _color = "Black" } = props;
   const color = LFColor[_color];
 
   let iconKey;

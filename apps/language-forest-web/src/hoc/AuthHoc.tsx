@@ -24,7 +24,6 @@ function withAuth<P extends object>(
     const { replace, back } = useLFNavigate();
     const { getIsLoggedIn } = useUserStore();
     const isLoggedIn = getIsLoggedIn();
-    console.log("isLoggedIn", isLoggedIn);
 
     useEffect(() => {
       if (isLoggedIn) {
@@ -74,11 +73,11 @@ function withAuth<P extends object>(
               bottomButtons={{
                 type: "double",
                 leftButton: {
-                  onClick: () => console.log("llllllllllll"),
+                  onClick: () => console.info("llllllllllll"),
                   text: "왼",
                 },
                 rightButton: {
-                  onClick: () => console.log("rrrrrrrr"),
+                  onClick: () => console.info("rrrrrrrr"),
                   text: "오른쪽",
                 },
               }}

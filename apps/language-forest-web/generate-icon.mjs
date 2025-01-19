@@ -17,15 +17,12 @@ const toSafeVariableName = (fileName) =>
 // LFIcon.tsx 파일 생성 함수
 const generateIconComponent = async () => {
   try {
-    console.log("Fetching SVG files...");
     const files = await glob(`${svgDir}/**/*.svg`, { nodir: true });
 
     if (files.length === 0) {
       console.warn("No SVG files found to generate LFIcon.tsx!");
       return;
     }
-
-    console.log(`Found ${files.length} SVG file(s).`);
 
     // Extract variants and imports
     const imports = files
@@ -74,7 +71,6 @@ export default Icon;
 
     // Write to LFIcon.tsx
     fs.writeFileSync(outputFilePath, componentContent, "utf8");
-    console.log(`Icon.tsx generated successfully at ${outputFilePath}`);
   } catch (err) {
     console.error("Error generating LFIcon.tsx:", err);
   }

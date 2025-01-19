@@ -18,7 +18,6 @@ module.exports = {
 
           // 파일 다시 쓰기
           fs.writeFileSync(filePath, content, "utf-8");
-          console.log("`unknown`을 `never`로 변환 완료");
         },
       },
       override: {

@@ -106,11 +106,8 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
     const refreshToken = cookieStore.get<string | null>(AuthKey.refreshToken);
     const accessToken = cookieStore.get<string | null>(AuthKey.accessToken);
 
-    console.log(1);
     if (!accessToken) {
-      console.log(2);
       if (!refreshToken) {
-        console.log(3);
         return;
       }
       const newToken = await authRefresh({ refreshToken });

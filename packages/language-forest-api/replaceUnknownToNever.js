@@ -6,7 +6,6 @@ const targetDir = path.resolve(__dirname, "./src/generated"); // API 파일이 �
 
 const processFile = (filePath) => {
   let content = fs.readFileSync(filePath, "utf-8");
-  console.log(content);
 
   // 1. `unknown` 타입을 `never`로 변환
   content = content.replaceAll(/(\w+)\?: unknown;/g, "$1?: never;"); // 옵셔널 속성에서 unknown 변환

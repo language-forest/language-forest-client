@@ -5,10 +5,14 @@ import {
   LFHeader,
   LFHeaderGoBack,
   LFText,
-  VStack,
+  LFIcon,
 } from "@/component/design-system";
 import { useOnboardingStore } from "./useOnboardingStore";
 import { useDisableScroll } from "@/hook/useScrollDisable.ts";
+import {
+  MainContentContainer,
+  TextContainer,
+} from "@/screen/login/onboarding/_component/shared/Layout.tsx";
 
 export const Intro = () => {
   useDisableScroll();
@@ -16,26 +20,29 @@ export const Intro = () => {
 
   return (
     <GlobalContainer>
-      <LFHeader left={<LFHeaderGoBack onGoBack={onMoveNext} />} />
+      <LFHeader left={<LFHeaderGoBack />} />
 
-      <VStack>
-        <LFText
-          variant={"title3"}
-          color={"LFBlack"}
-          weight={"B"}
-          textAlign={"center"}
-        >
-          안녕하세요!
-        </LFText>
-        <LFText
-          variant={"title3"}
-          color={"LFBlack"}
-          weight={"B"}
-          textAlign={"center"}
-        >
-          저는 '수푸리'라고 해요
-        </LFText>
-      </VStack>
+      <MainContentContainer>
+        <TextContainer>
+          <LFText
+            variant={"title3"}
+            color={"LFBlack"}
+            weight={"B"}
+            textAlign={"center"}
+          >
+            안녕하세요!
+          </LFText>
+          <LFText
+            variant={"title3"}
+            color={"LFBlack"}
+            weight={"B"}
+            textAlign={"center"}
+          >
+            저는 '수푸리'라고 해요
+          </LFText>
+        </TextContainer>
+        <LFIcon variant={"SooPooRy"} size={140} />
+      </MainContentContainer>
 
       <CTAPosition>
         <LFFillButton type={"Green"} onClick={() => onMoveNext()}>

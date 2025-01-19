@@ -25,7 +25,7 @@ export const AppleLogin = ({ onLoginSuccess }: AppleLoginProps) => {
   // });
 
   return (
-    <AppleLoginButton onClick={() => console.log("cccccc")}>
+    <AppleLoginButton onClick={() => console.info("cccccc")}>
       <AppleLogo />
       <LFText variant="callout" color={"White"} weight={"M"}>
         Apple로 시작하기

@@ -5,14 +5,16 @@ import {
   GlobalContainer,
   LFHeader,
   LFText,
-  VStack,
   LFIcon,
   HStack,
 } from "@/component/design-system";
 import { LFHeaderGoBack } from "@/component/design-system/Header/LFHeaderGoBack.tsx";
 import { LFSmallButton } from "@/component/design-system/Button/LFSmallButton.tsx";
-import styled from "@emotion/styled";
 import { LanguageEnum } from "@repo/language-forest-api";
+import {
+  MainContentContainer,
+  TextContainer,
+} from "@/screen/login/onboarding/_component/shared/Layout.tsx";
 
 export const SelectLanguage = () => {
   const onMoveNext = useOnboardingStore((state) => state.onMoveNext);
@@ -28,25 +30,27 @@ export const SelectLanguage = () => {
     <GlobalContainer>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
 
-      <ContentContainer>
-        <LFText
-          variant={"title3"}
-          color={"LFBlack"}
-          weight={"B"}
-          textAlign={"center"}
-        >
-          저도 만나서 반가워요!
-        </LFText>
-        <LFText
-          variant={"title3"}
-          color={"LFBlack"}
-          weight={"B"}
-          textAlign={"center"}
-        >
-          어느 숲에 들어갈까요?
-        </LFText>
+      <MainContentContainer>
+        <TextContainer>
+          <LFText
+            variant={"title3"}
+            color={"LFBlack"}
+            weight={"B"}
+            textAlign={"center"}
+          >
+            저도 만나서 반가워요!
+          </LFText>
+          <LFText
+            variant={"title3"}
+            color={"LFBlack"}
+            weight={"B"}
+            textAlign={"center"}
+          >
+            어느 숲에 들어갈까요?
+          </LFText>
+        </TextContainer>
 
-        <LFSmallButton onClick={() => console.log("cc")}>
+        <LFSmallButton onClick={() => console.info("cc")}>
           <HStack>
             모국어: 한국어{" "}
             <LFIcon
@@ -57,7 +61,7 @@ export const SelectLanguage = () => {
             />
           </HStack>
         </LFSmallButton>
-      </ContentContainer>
+      </MainContentContainer>
 
       <CTAPosition>
         <LFFillButton
@@ -77,8 +81,3 @@ export const SelectLanguage = () => {
     </GlobalContainer>
   );
 };
-
-const ContentContainer = styled(VStack)`
-  justify-content: center;
-  align-items: center;
-`;

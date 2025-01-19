@@ -6,12 +6,15 @@ import {
   LFHeader,
   LFInputField,
   LFText,
-  VStack,
+  LFIcon,
 } from "@/component/design-system";
 import { LFHeaderGoBack } from "@/component/design-system/Header/LFHeaderGoBack.tsx";
 import { LFSmallButton } from "@/component/design-system/Button/LFSmallButton.tsx";
-import styled from "@emotion/styled";
 import { useState } from "react";
+import {
+  MainContentContainer,
+  TextContainer,
+} from "@/screen/login/onboarding/_component/shared/Layout.tsx";
 
 export const Nickname = () => {
   const onMoveNext = useOnboardingStore((state) => state.onMoveNext);
@@ -28,25 +31,29 @@ export const Nickname = () => {
     <GlobalContainer>
       <LFHeader left={<LFHeaderGoBack onGoBack={() => onMovePrev()} />} />
 
-      <ContentContainer>
-        <LFText
-          variant={"title3"}
-          color={"LFBlack"}
-          weight={"B"}
-          textAlign={"center"}
-        >
-          제가 앞으로 뭐라고
-        </LFText>
-        <LFText
-          variant={"title3"}
-          color={"LFBlack"}
-          weight={"B"}
-          textAlign={"center"}
-        >
-          불러드리면 될까요?
-        </LFText>
+      <MainContentContainer>
+        <TextContainer>
+          <LFText
+            variant={"title3"}
+            color={"LFBlack"}
+            weight={"B"}
+            textAlign={"center"}
+          >
+            제가 앞으로 뭐라고
+          </LFText>
+          <LFText
+            variant={"title3"}
+            color={"LFBlack"}
+            weight={"B"}
+            textAlign={"center"}
+          >
+            불러드리면 될까요?
+          </LFText>
+        </TextContainer>
 
-        <LFSmallButton onClick={() => console.log("cc")}>
+        <LFIcon variant={"SooPooRy"} size={140} />
+
+        <LFSmallButton onClick={() => console.info("cc")}>
           이름 추천 받기
         </LFSmallButton>
 
@@ -55,7 +62,7 @@ export const Nickname = () => {
           value={nickname}
           onInputChange={handleNicknameChange}
         />
-      </ContentContainer>
+      </MainContentContainer>
 
       <CTAPosition>
         <LFFillButton type={"Green"} onClick={() => onMoveNext()}>
@@ -65,8 +72,3 @@ export const Nickname = () => {
     </GlobalContainer>
   );
 };
-
-const ContentContainer = styled(VStack)`
-  justify-content: center;
-  align-items: center;
-`;

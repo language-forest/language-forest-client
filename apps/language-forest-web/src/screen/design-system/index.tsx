@@ -138,11 +138,11 @@ const IndexScreen = () => {
                 bottomButtons={{
                   type: "double",
                   leftButton: {
-                    onClick: () => console.log("llllllllllll"),
+                    onClick: () => console.info("llllllllllll"),
                     text: "왼",
                   },
                   rightButton: {
-                    onClick: () => console.log("rrrrrrrr"),
+                    onClick: () => console.info("rrrrrrrr"),
                     text: "오른쪽",
                   },
                 }}
@@ -176,7 +176,7 @@ const IndexScreen = () => {
           { label: "111111111", value: "1" },
           { label: "2222222222", value: "2" },
         ]}
-        callback={(e) => console.log(e)}
+        callback={(e) => console.info(e)}
       />
 
       <BottomTabNavigation />
