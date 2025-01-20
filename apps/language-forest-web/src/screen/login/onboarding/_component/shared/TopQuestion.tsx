@@ -43,6 +43,6 @@ const InnerContainer = styled(VStack)`
 const IconContainer = styled(VStack)`
   position: absolute;
   right: 12px;
-  top: -8px;
+  top: 0;
   transform: rotate(13deg);
 `;
