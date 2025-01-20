@@ -5,10 +5,15 @@ import { HStack, LFText } from "@/component/design-system";
 
 type SmallButtonProps = {
   children: ReactNode;
+  selected?: boolean;
   onClick: () => Promise<void> | void;
 };
 
-export const LFSmallButton = ({ children, onClick }: SmallButtonProps) => {
+export const LFSmallButton = ({
+  children,
+  selected = false,
+  onClick,
+}: SmallButtonProps) => {
   const handleClick = async () => {
     try {
       await onClick();
@@ -19,7 +24,7 @@ export const LFSmallButton = ({ children, onClick }: SmallButtonProps) => {
 
   return (
     <RawSmallButtonContainer>
-      <RawSmallButton onClick={handleClick}>
+      <RawSmallButton selected={selected} onClick={handleClick}>
         <LFText variant={"footnote"} weight={"M"}>
           {children}
         </LFText>
@@ -29,12 +34,15 @@ export const LFSmallButton = ({ children, onClick }: SmallButtonProps) => {
 };
 
 const RawSmallButtonContainer = styled(HStack)`
-  padding: 4px 10px;
   border-radius: 33px;
 `;
 
-const RawSmallButton = styled.button`
-  background-color: ${LFColor.GrayLight30};
+const RawSmallButton = styled.button<{ selected: boolean }>`
+  box-sizing: border-box;
+  background-color: ${(props) =>
+    props.selected ? LFColor.Green10 : LFColor.GrayLight30};
   border-radius: 33px;
-  padding: 4px 10px;
+  border: 1px solid
+    ${(props) => (props.selected ? LFColor.LFGreen : "transparent")};
+  padding: 6px 12px;
 `;

@@ -33,6 +33,7 @@ export const LFColor = {
   Green30: "#84B67EFF",
   Green20: "#B4D1B1FF",
   Green10: "#E4EFE3FF",
+  RawGray70: "#868E96",
   Red: "#FF123FFF",
   Yellow: "#FFEB0FFF",
   ContentSubC: "#434542",

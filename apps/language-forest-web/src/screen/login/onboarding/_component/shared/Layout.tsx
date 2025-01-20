@@ -5,6 +5,7 @@ export const MainContentContainer = styled(VStack)`
   justify-content: center;
   align-items: center;
   gap: 24px;
+  padding: 20px;
 `;
 
 export const TextContainer = styled(VStack)`

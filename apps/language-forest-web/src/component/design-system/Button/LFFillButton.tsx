@@ -6,11 +6,12 @@ import { LFColor, LFRadius } from "@repo/shared/constant";
 import { LoadingIndicator } from "@/component/design-system/Layout";
 import { LFText, LFTextProps } from "@/component/design-system";
 
-type ButtonType = "Green" | "LightGreen" | "Line";
+type ButtonType = "Green" | "LightGreen" | "Line" | "LineSelected";
 
 type ButtonProps = {
   type: ButtonType;
   children: ReactNode;
+  disabled?: boolean;
   onClick: () => Promise<void> | void;
 };
 
@@ -43,6 +44,11 @@ const buttonStyles: Record<ButtonType, SerializedStyles> = {
     backgroundColor: LFColor.LFWhite,
     border: `1px solid ${LFColor.OpacityB18}`,
   }),
+  LineSelected: css({
+    ...baseButtonStyles,
+    backgroundColor: LFColor.GrayLight20,
+    border: `1px solid ${LFColor.OpacityG80}`,
+  }),
 };
 
 const fontStyles: Record<ButtonType, Omit<LFTextProps, "children">> = {
@@ -61,12 +67,25 @@ const fontStyles: Record<ButtonType, Omit<LFTextProps, "children">> = {
     color: "LFBlack",
     weight: "M",
   },
+  LineSelected: {
+    variant: "subHeadline",
+    color: "LFBlack",
+    weight: "M",
+  },
 };
 
-export const LFFillButton = ({ type, children, onClick }: ButtonProps) => {
+export const LFFillButton = ({
+  type,
+  children,
+  disabled = false,
+  onClick,
+}: ButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = async () => {
+    if (disabled) {
+      return;
+    }
     setIsLoading(true);
     try {
       await onClick();
@@ -78,7 +97,14 @@ export const LFFillButton = ({ type, children, onClick }: ButtonProps) => {
   };
 
   return (
-    <button css={buttonStyles[type]} onClick={handleClick} disabled={isLoading}>
+    <button
+      css={{ ...buttonStyles[type] }}
+      style={{
+        opacity: disabled ? 0.5 : 1,
+      }}
+      onClick={handleClick}
+      disabled={isLoading || disabled}
+    >
       <motion.div
         css={{
           display: "flex",

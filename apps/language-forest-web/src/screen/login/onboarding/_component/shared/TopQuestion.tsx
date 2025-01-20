@@ -31,6 +31,7 @@ const Container = styled(VStack)`
   position: relative;
   padding: 0 20px;
   padding-top: 12px;
+  padding-bottom: 8px;
 `;
 
 const InnerContainer = styled(VStack)`

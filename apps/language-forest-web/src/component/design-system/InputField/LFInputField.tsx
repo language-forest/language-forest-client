@@ -117,23 +117,28 @@ const inputStyle = (
   hasMaxLength: boolean,
 ) => css`
   width: 100%;
+  background-color: ${LFColor.LFWhite};
   padding: 8px ${hasMaxLength ? "60px" : "36px"} 8px 12px; /* maxLength 있을 경우 오른쪽 여유 공간 추가 */
   font-family: "NanumSquareRound", sans-serif;
   font-size: 1rem;
   border: 2px solid;
   border-radius: 8px;
-  border-color: ${isValid === null ? "#ccc" : isValid ? "green" : "red"};
+  border-color: ${isValid === null
+    ? LFColor.OpacityG18
+    : isValid
+      ? LFColor.LFGreen
+      : LFColor.Red};
   outline: none;
   transition: border-color 0.2s ease;
 
   &:focus {
     border-color: ${isValid === null
       ? isFocused
-        ? "blue"
-        : "#ccc"
+        ? LFColor.LFGreen
+        : LFColor.LFWhite
       : isValid
-        ? "green"
-        : "red"};
+        ? LFColor.LFGreen
+        : LFColor.Red};
   }
 `;
 
@@ -152,7 +157,7 @@ const TextAreaStyle = (
 
 const maxLengthStyle = css`
   z-index: 1;
-  background-color: ${LFColor.White};
+  background-color: ${LFColor.LFWhite};
   position: absolute;
   right: 10px;
   border: none;
@@ -166,8 +171,4 @@ const clearButtonStyle = css`
   border: none;
   font-size: 16px;
   cursor: pointer;
-  color: #666;
-  &:hover {
-    color: #000;
-  }
 `;

@@ -9,3 +9,4 @@ export * from "./InputField";
 export * from "./Navigation";
 export * from "./Header";
 export * from "./SegmentControl";
+export * from "./Select";
