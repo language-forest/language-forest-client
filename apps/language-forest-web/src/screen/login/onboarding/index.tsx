@@ -9,6 +9,7 @@ import { Gender } from "./_component/Gender.tsx";
 import { BirthOfYear } from "@/screen/login/onboarding/_component/BirthOfYear.tsx";
 import { Occupation } from "@/screen/login/onboarding/_component/Occupation.tsx";
 import { Interest } from "@/screen/login/onboarding/_component/Interest.tsx";
+import { Level } from "@/screen/login/onboarding/_component/Level.tsx";
 
 const funnel: Array<{ index: number; key: string; Component: ReactNode }> = [
   {
@@ -42,17 +43,21 @@ const funnel: Array<{ index: number; key: string; Component: ReactNode }> = [
     key: "birthOfYear",
     Component: <BirthOfYear />,
   },
-
   {
     index: 6,
     key: "occupation",
     Component: <Occupation />,
   },
-
   {
     index: 7,
     key: "interest",
     Component: <Interest />,
+  },
+
+  {
+    index: 8,
+    key: "level",
+    Component: <Level />,
   },
 ] as const;
 

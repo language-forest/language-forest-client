@@ -8,14 +8,15 @@ import {
   LFFontWeightType,
   LFColor,
 } from "@repo/shared/constant";
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export interface LFTextProps {
   variant?: LFFontSizeType;
   weight?: LFFontWeightType;
   color?: LFColorKey;
   children: ReactNode;
-  textAlign?: "left" | "center" | "right" | "start";
+  textAlign?: CSSProperties["textAlign"];
+  whiteSpace?: CSSProperties["whiteSpace"];
 }
 
 // Text 컴포넌트
@@ -25,6 +26,7 @@ export const LFText = ({
   color = "LFBlack",
   children,
   textAlign = "start",
+  whiteSpace = "pre-wrap",
 }: LFTextProps) => {
   return (
     <TextStyled
@@ -32,6 +34,7 @@ export const LFText = ({
       weight={weight}
       color={color}
       textAlign={textAlign}
+      whiteSpace={whiteSpace}
     >
       {children}
     </TextStyled>
@@ -39,7 +42,7 @@ export const LFText = ({
 };
 
 const TextStyled = styled.p<Required<LFTextProps>>(
-  ({ variant, weight, color, textAlign }) => {
+  ({ variant, weight, color, textAlign, whiteSpace }) => {
     const fontSizeValue = LFFontSize[variant];
     const fontWeightValue = LFFontWeight[weight];
 
@@ -48,9 +51,10 @@ const TextStyled = styled.p<Required<LFTextProps>>(
       font-family: "NanumSquareRound", sans-serif;
       font-size: ${fontSizeValue.size / 16}rem;
       font-weight: ${fontWeightValue};
-      line-height: ${fontSizeValue.size / 16}rem;
+      line-height: ${fontSizeValue.lienHeight / 16}rem;
       letter-spacing: ${fontSizeValue?.letterSpacing}px;
       text-align: ${textAlign};
+      white-space: ${whiteSpace};
     `;
   },
 );
