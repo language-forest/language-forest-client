@@ -10,6 +10,9 @@ import { BirthOfYear } from "@/screen/login/onboarding/_component/BirthOfYear.ts
 import { Occupation } from "@/screen/login/onboarding/_component/Occupation.tsx";
 import { Interest } from "@/screen/login/onboarding/_component/Interest.tsx";
 import { Level } from "@/screen/login/onboarding/_component/Level.tsx";
+import { Purpose } from "@/screen/login/onboarding/_component/Purpose.tsx";
+import { AnotherLanguage } from "@/screen/login/onboarding/_component/AnotherLanguage.tsx";
+import { StudyPlace } from "@/screen/login/onboarding/_component/StudyPlace.tsx";
 
 const funnel: Array<{ index: number; key: string; Component: ReactNode }> = [
   {
@@ -53,11 +56,30 @@ const funnel: Array<{ index: number; key: string; Component: ReactNode }> = [
     key: "interest",
     Component: <Interest />,
   },
-
   {
     index: 8,
     key: "level",
     Component: <Level />,
+  },
+  {
+    index: 9,
+    key: "purpose",
+    Component: <Purpose />,
+  },
+  {
+    index: 10,
+    key: "anotherLanguage",
+    Component: <AnotherLanguage />,
+  },
+  {
+    index: 11,
+    key: "studyPlace",
+    Component: <StudyPlace />,
+  },
+  {
+    index: 12,
+    key: "",
+    Component: <AnotherLanguage />,
   },
 ] as const;
 
