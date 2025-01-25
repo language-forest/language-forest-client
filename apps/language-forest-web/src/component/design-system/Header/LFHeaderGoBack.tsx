@@ -15,4 +15,6 @@ export const LFHeaderGoBack = ({ onGoBack }: HeaderGoBackProps) => {
   );
 };
 
-const HeaderGoBackContainer = styled.button``;
+const HeaderGoBackContainer = styled.button`
+  padding: 9px;
+`;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { overlay } from "overlay-kit";
 import { Alert, BottomSheet } from "@/component/design-system";
-import { useUserStore } from "@/store/useUserStore.ts";
+import { LoadingStatusEnum, useUserStore } from "@/store/useUserStore.ts";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
 
 export type WithBehaviorOptions = {
@@ -22,10 +22,16 @@ function withAuth<P extends object>(
 
   const EnhancedComponent: React.FC<P> = (props) => {
     const { replace, back } = useLFNavigate();
-    const { getIsLoggedIn } = useUserStore();
+    const { getIsLoggedIn, loadingStatus } = useUserStore();
     const isLoggedIn = getIsLoggedIn();
 
     useEffect(() => {
+      if (
+        loadingStatus === LoadingStatusEnum.loading ||
+        loadingStatus === LoadingStatusEnum.init
+      ) {
+        return;
+      }
       if (isLoggedIn) {
         return;
       }
@@ -86,7 +92,7 @@ function withAuth<P extends object>(
         });
         return;
       }
-    }, [behavior, redirectTo, isLoggedIn]);
+    }, [behavior, redirectTo, isLoggedIn, loadingStatus]);
 
     if (isLoggedIn) {
       return <WrappedComponent {...props} />;

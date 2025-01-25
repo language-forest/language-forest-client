@@ -31,7 +31,7 @@ const headerStyle = css`
   align-items: center;
   width: 100%;
   height: 56px;
-  padding: 0 20px;
+  padding: 0 4px;
 `;
 
 const centerStyle = css`

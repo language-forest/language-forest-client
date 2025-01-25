@@ -28,7 +28,7 @@ export const QuestionAnnounce = () => {
       "몇 가지 질문을 드릴게요jk",
     ],
   } as const;
-  const { onMoveNext } = useOnboardingStore();
+  const { onMoveNext, onMovePrev } = useOnboardingStore();
 
   useAsyncEffect(async () => {
     if (isRunBefore.current) {
@@ -44,7 +44,7 @@ export const QuestionAnnounce = () => {
 
   return (
     <GlobalContainer>
-      <LFHeader left={<LFHeaderGoBack onGoBack={onMoveNext} />} />
+      <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
 
       <MainContentContainer>
         <TextContainer>

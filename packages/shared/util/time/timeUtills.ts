@@ -23,3 +23,20 @@ export const compareTime = (params: TimeComparisonParams) => {
       isBefore(baseTime, targetTime) || isEqual(baseTime, targetTime), // baseTime <= targetTime
   };
 };
+
+export const dailyCronExpressionFromDeviceTime = (time: {
+  hour: number;
+  minute: number;
+  second?: number;
+}): string => {
+  // 디바이스 시간 기준으로 UTC 시간 계산
+  const { hour, minute, second = 0 } = time;
+  const deviceDate = new Date();
+  deviceDate.setHours(hour, minute, second, 0); // 디바이스 시간으로 설정
+  const utcHour = deviceDate.getUTCHours();
+  const utcMinute = deviceDate.getUTCMinutes();
+  const utcSecond = deviceDate.getUTCSeconds();
+
+  // 크론 표현식 반환 (매일 기준)
+  return `${utcSecond} ${utcMinute} ${utcHour} * * *`;
+};

@@ -47,15 +47,15 @@ export const Interest = () => {
     <GlobalContainer>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
       <TopQuestion
-        title={"어떤 일을 하시는지 궁금해요"}
-        description={"비슷한 관심사 설정을 위해 필요해요"}
+        title={"관심 있는 분야에 대해 알려주세요"}
+        description={"자세히 적을수록 좋아요!"}
       />
 
       <MainContentContainer>
         <VStack style={{ width: "100%" }}>
           <LFInputField
             value={(userInfo?.interest as string) ?? ""}
-            placeholder={"어떤일을 하시나요?"}
+            placeholder={"관심 있는 분야를 알려주세요!"}
             onInputChange={(e) => updateUserInfo({ interest: e })}
           />
         </VStack>

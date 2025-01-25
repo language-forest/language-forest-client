@@ -38,7 +38,7 @@ export const createUser = (
 ) => {
       
       
-      return fetchClient<UserResponse>(
+      return fetchClient<void>(
       {url: `/user`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createUserRequest, signal
@@ -48,7 +48,7 @@ export const createUser = (
   
 
 /**
- * @summary jwtㄱ반으로 유저의 정보를 가져옵니다.
+ * @summary jwt 기반으로 유저의 정보를 가져옵니다.
  */
 export const getUserMe = (
     
@@ -115,7 +115,7 @@ export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TErr
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 /**
- * @summary jwtㄱ반으로 유저의 정보를 가져옵니다.
+ * @summary jwt 기반으로 유저의 정보를 가져옵니다.
  */
 
 export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = unknown>(

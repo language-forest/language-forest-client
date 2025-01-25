@@ -4,11 +4,10 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
-import type { LanguageEnum } from './languageEnum';
 import type { TokenDto } from './tokenDto';
 
 export interface GoogleLoginRequest {
   /** 디바이스의 언어를 가져옵니다. */
-  language: LanguageEnum;
+  language: string;
   token: TokenDto;
 }

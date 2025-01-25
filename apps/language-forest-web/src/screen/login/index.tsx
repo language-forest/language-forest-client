@@ -13,7 +13,7 @@ import { AppleLogin } from "@/component/auth/AppleLogin.tsx";
 import { LoginStatusEnum, useUserStore } from "@/store/useUserStore.ts";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
 
-export const LoginScreen = () => {
+const LoginScreen = () => {
   useDisableScroll();
   const { init, checkLoginStatus } = useUserStore();
   const { replace } = useLFNavigate();

@@ -11,6 +11,7 @@ import { TopQuestion } from "@/screen/login/onboarding/_component/shared/TopQues
 import { MainContentContainer } from "@/screen/login/onboarding/_component/shared/Layout.tsx";
 import { LanguageEnum } from "@repo/language-forest-api";
 import { useState } from "react";
+import { SkipProgress } from "@/screen/login/onboarding/_component/shared/SkipProgress.tsx";
 
 const languageInfos = [
   { displayText: "🇯🇵 일본어", enum: LanguageEnum.JA },
@@ -30,7 +31,10 @@ export const AnotherLanguage = () => {
 
   return (
     <GlobalContainer>
-      <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
+      <LFHeader
+        left={<LFHeaderGoBack onGoBack={onMovePrev} />}
+        right={<SkipProgress />}
+      />
       <TopQuestion title={"외에 더 배우고 싶은 언어가 있나요?"} />
 
       <MainContentContainer>

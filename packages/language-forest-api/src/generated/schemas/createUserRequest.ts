@@ -4,12 +4,14 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
-import type { CreateUserRequestUser } from './createUserRequestUser';
-import type { CreateUserRequestUserInfo } from './createUserRequestUserInfo';
-import type { CreateUserRequestUserStudyInfo } from './createUserRequestUserStudyInfo';
+import type { UpdateUser } from './updateUser';
+import type { UpdateUserInfo } from './updateUserInfo';
+import type { CreateUserNotification } from './createUserNotification';
+import type { UpdateUserStudyInfo } from './updateUserStudyInfo';
 
 export interface CreateUserRequest {
-  user: CreateUserRequestUser;
-  userInfo: CreateUserRequestUserInfo;
-  userStudyInfo: CreateUserRequestUserStudyInfo;
+  user: UpdateUser;
+  userInfo: UpdateUserInfo;
+  userNotification: CreateUserNotification;
+  userStudyInfo: UpdateUserStudyInfo;
 }

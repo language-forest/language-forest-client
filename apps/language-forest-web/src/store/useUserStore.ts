@@ -8,8 +8,7 @@ import {
 import { create } from "zustand";
 import { AuthKey, cookieStore } from "@repo/shared/storage";
 
-// 유저 정보를 위한 타입 정의
-enum LoadingStatusEnum {
+export enum LoadingStatusEnum {
   init = "init",
   loading = "loading",
   success = "success",
@@ -70,7 +69,7 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
     const refreshToken = cookieStore.get<string | null>(AuthKey.refreshToken);
     const accessToken = cookieStore.get<string | null>(AuthKey.accessToken);
 
-    if (!accessToken && !refreshToken) {
+    if (!(accessToken && refreshToken)) {
       return LoginStatusEnum.anonymous;
     }
 

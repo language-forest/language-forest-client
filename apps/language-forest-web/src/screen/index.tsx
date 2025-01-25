@@ -1,10 +1,13 @@
-import { useEffect } from "react";
-import { useUserStore } from "@/store/useUserStore.ts";
+import withAuth from "@/hoc/AuthHoc.tsx";
 
-const IndexScreen = () => {
-  useEffect(() => {}, []);
-
-  return <div>button</div>;
-};
+const IndexScreen = withAuth(
+  () => {
+    return <div>index</div>;
+  },
+  {
+    behavior: "bottomSheet",
+    redirectTo: "/login",
+  },
+);
 
 export default IndexScreen;

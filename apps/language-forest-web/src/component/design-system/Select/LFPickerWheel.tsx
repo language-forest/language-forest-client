@@ -21,9 +21,9 @@ export const LFPickerWheel = <T,>({
 }: ScrollPickerProps<T>) => {
   const SCROLL_DEBOUNCE_TIME = 100;
 
-  const newList = [...list];
+  const newList = [undefined, ...list, undefined];
   const ref = useRef<HTMLUListElement>(null);
-  const [selected, setSelected] = useState(getInitialIndex(list));
+  const [selected, setSelected] = useState(getInitialIndex(list) + 1); // 앞에 undefinde를 넣기 때문에 + 1을 해줍니다
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
@@ -46,10 +46,32 @@ export const LFPickerWheel = <T,>({
             block: "center",
           });
           if (onSelectedChange) {
-            onSelectedChange(newList[index]);
+            if (newList[index]) {
+              onSelectedChange(newList[index]);
+            }
           }
         }
       }, SCROLL_DEBOUNCE_TIME);
+    }
+  };
+
+  const handleClickItem = (index: number) => {
+    if (index === 0) {
+      return;
+    }
+    if (index === newList.length - 1) {
+      return;
+    }
+
+    if (ref.current) {
+      // 스크롤 위치를 인덱스에 맞춰서 이동
+      ref.current.scrollTop = index * ITEM_HEIGHT;
+    }
+    setSelected(index);
+
+    // 클릭 후에도 onSelectedChange 호출
+    if (onSelectedChange) {
+      onSelectedChange(list[index]);
     }
   };
 
@@ -66,6 +88,7 @@ export const LFPickerWheel = <T,>({
         <ListItem
           key={index}
           isSelected={index === selected}
+          onClick={() => handleClickItem(index)} // ← 클릭 핸들러 추가!
           ref={(el) => (itemRefs.current[index] = el)}
           animate={{
             opacity: index === selected ? 1 : 0.4,
@@ -82,7 +105,7 @@ export const LFPickerWheel = <T,>({
             color={index === selected ? "LFGreen" : "RawGray70"}
             weight={"B"}
           >
-            {getDisplayText(item)}
+            {item && getDisplayText(item)}
           </LFText>
         </ListItem>
       ))}

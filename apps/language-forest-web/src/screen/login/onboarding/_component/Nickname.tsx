@@ -10,7 +10,6 @@ import {
 } from "@/component/design-system";
 import { LFHeaderGoBack } from "@/component/design-system/Header/LFHeaderGoBack.tsx";
 import { LFSmallButton } from "@/component/design-system/Button/LFSmallButton.tsx";
-import { useState } from "react";
 import {
   MainContentContainer,
   TextContainer,
@@ -20,10 +19,10 @@ export const Nickname = () => {
   const onMoveNext = useOnboardingStore((state) => state.onMoveNext);
   const onMovePrev = useOnboardingStore((state) => state.onMovePrev);
   const updateNickname = useOnboardingStore((state) => state.updateUser);
-  const [nickname, setNickname] = useState("");
+  const nickname =
+    (useOnboardingStore((state) => state.user?.nickname) as string) ?? "";
 
   const handleNicknameChange = (e: string) => {
-    setNickname(e);
     updateNickname({ nickname: e });
   };
 

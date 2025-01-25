@@ -10,6 +10,7 @@ import { useDisableScroll } from "@/hook/useScrollDisable.ts";
 import { TopQuestion } from "@/screen/login/onboarding/_component/shared/TopQuestion.tsx";
 import { MainContentContainer } from "@/screen/login/onboarding/_component/shared/Layout.tsx";
 import { useState } from "react";
+import { SkipProgress } from "@/screen/login/onboarding/_component/shared/SkipProgress.tsx";
 
 const LocationInfos = [
   { displayText: "🚌 대중교통 이용 시", value: "publicTransportation" },
@@ -27,7 +28,10 @@ export const StudyPlace = () => {
 
   return (
     <GlobalContainer>
-      <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
+      <LFHeader
+        left={<LFHeaderGoBack onGoBack={onMovePrev} />}
+        right={<SkipProgress />}
+      />
       <TopQuestion title={"외에 더 배우고 싶은 언어가 있나요?"} />
 
       <MainContentContainer>

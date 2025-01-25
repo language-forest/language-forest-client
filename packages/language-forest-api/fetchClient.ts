@@ -44,7 +44,22 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     // 에러 처리
-    console.error("API 요청 중 오류 발생:", error);
+    if (error.response) {
+      console.error("API 요청 중 오류 발생:", {
+        status: error.response.status,
+        data: error.response.data,
+      });
+
+      // 응답 데이터에서 에러 메시지를 추출
+      if (error.response.data?.error) {
+        console.error(
+          "서버에서 반환된 에러 메시지:",
+          error.response.data.error,
+        );
+      }
+    } else {
+      console.error("응답 없음 또는 네트워크 에러:", error.message);
+    }
     return Promise.reject(error);
   },
 );
