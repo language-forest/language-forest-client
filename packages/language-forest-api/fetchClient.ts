@@ -4,7 +4,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { authKey } from "@repo/shared/storage";
+import { AuthKey } from "@repo/shared/storage";
 
 // 클라이언트 환경에서 요청 쿠키를 가져오는 함수
 const getClientCookie = (name: string): string | undefined => {
@@ -24,7 +24,7 @@ const axiosInstance: AxiosInstance = axios.create({
 // 요청 전 Authorization 헤더 추가
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    const token = getClientCookie(authKey.accessToken); // SSR 또는 클라이언트 환경에 따라 쿠키 처리
+    const token = getClientCookie(AuthKey.accessToken); // SSR 또는 클라이언트 환경에 따라 쿠키 처리
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`; // Authorization 헤더에 토큰 추가
@@ -44,7 +44,22 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     // 에러 처리
-    console.error("API 요청 중 오류 발생:", error);
+    if (error.response) {
+      console.error("API 요청 중 오류 발생:", {
+        status: error.response.status,
+        data: error.response.data,
+      });
+
+      // 응답 데이터에서 에러 메시지를 추출
+      if (error.response.data?.error) {
+        console.error(
+          "서버에서 반환된 에러 메시지:",
+          error.response.data.error,
+        );
+      }
+    } else {
+      console.error("응답 없음 또는 네트워크 에러:", error.message);
+    }
     return Promise.reject(error);
   },
 );

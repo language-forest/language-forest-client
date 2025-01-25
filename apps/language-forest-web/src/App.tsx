@@ -5,6 +5,11 @@ import {
   ActionFunction,
 } from "react-router-dom";
 import ReactQueryProviders from "@repo/language-forest-api/QueryProvider";
+import { useAsyncEffect } from "./hook/useAsyncEffect.ts";
+import { useUserStore } from "./store/useUserStore.ts";
+import { OverlayProvider } from "overlay-kit";
+import styled from "@emotion/styled";
+import { LFColor } from "@repo/shared/constant";
 
 interface RouteCommon {
   loader?: LoaderFunction;
@@ -57,11 +62,35 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
+  const { init } = useUserStore();
+  useAsyncEffect(async () => {
+    await init();
+  }, []);
+
   return (
-    <ReactQueryProviders>
-      <RouterProvider router={router} />;
-    </ReactQueryProviders>
+    <GlobalOuterContainer>
+      <GlobalInnerContainer>
+        <ReactQueryProviders>
+          <OverlayProvider>
+            <RouterProvider router={router} />
+          </OverlayProvider>
+        </ReactQueryProviders>
+      </GlobalInnerContainer>
+    </GlobalOuterContainer>
   );
 };
+
+const GlobalOuterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: ${LFColor.White};
+  height: 100vh;
+`;
+
+const GlobalInnerContainer = styled.div`
+  max-width: 480px;
+  width: 100%;
+  background-color: ${LFColor.LFWhite};
+`;
 
 export default App;

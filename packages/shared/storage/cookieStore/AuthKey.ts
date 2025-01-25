@@ -2,7 +2,7 @@ import { TIME_MS } from "../../constant";
 
 const accessTokenMaxAge = TIME_MS["1일"];
 
-export const authKey = {
+export const AuthKey = {
   accessToken: "accessToken",
   accessTokenMaxAge,
   refreshToken: "refreshToken",

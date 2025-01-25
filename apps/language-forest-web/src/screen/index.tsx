@@ -1,10 +1,13 @@
-const IndexScreen = () => {
-  return (
-    <div>
-      test 스크린입니다
-      <button>test</button>
-    </div>
-  );
-};
+import withAuth from "@/hoc/AuthHoc.tsx";
+
+const IndexScreen = withAuth(
+  () => {
+    return <div>index</div>;
+  },
+  {
+    behavior: "bottomSheet",
+    redirectTo: "/login",
+  },
+);
 
 export default IndexScreen;

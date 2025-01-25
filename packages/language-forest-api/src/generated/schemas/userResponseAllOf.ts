@@ -4,7 +4,8 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
+import type { BaseUser } from './baseUser';
 
-export interface YourTextDto {
-  yourText?: string;
-}
+export type UserResponseAllOf = {
+  user?: BaseUser;
+};
