@@ -9,7 +9,7 @@ import {
   LFText,
   Divider,
   HStack,
-  BottomTabNavigation,
+  LFBottomTabNavigation,
   SegmentControl,
 } from "@/component/design-system";
 import { overlay } from "overlay-kit";
@@ -179,7 +179,7 @@ const IndexScreen = () => {
         callback={(e) => console.info(e)}
       />
 
-      <BottomTabNavigation />
+      <LFBottomTabNavigation />
     </div>
   );
 };

@@ -34,9 +34,15 @@ const BottomTabList: Array<BottomTabType> = [
     pathNames: ["/forest"],
     href: "/forest",
   },
+  {
+    iconKey: "bottomNav.star",
+    text: "보이스 테스트",
+    pathNames: ["/voice"],
+    href: "/voice",
+  },
 ] as const;
 
-export const BottomTabNavigation = () => {
+export const LFBottomTabNavigation = () => {
   const { pathname } = useLocation();
   const getColor = (pathNames: BottomTabType["pathNames"]): LFColorKey => {
     const isSelected = pathNames.includes(pathname);
