@@ -17,7 +17,7 @@ export interface BaseUserInfo {
    * 옵션 - 관심사
    * @nullable
    */
-  interest?: string | null;
+  interest?: string[] | null;
   /**
    * 옵션 - 2차 언어 (ex. JP)
    * @nullable

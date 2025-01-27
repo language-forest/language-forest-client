@@ -2,6 +2,7 @@ import {
   authRefresh,
   BaseUser,
   BaseUserInfo,
+  BaseUserPoint,
   BaseUserStudyInfo,
   getUserMe,
 } from "@repo/language-forest-api";
@@ -27,12 +28,14 @@ interface UseUserStore {
   _user: BaseUser | null;
   _userInfo: BaseUserInfo | null;
   _userStudyInfo: BaseUserStudyInfo | null;
+  _userPoint: BaseUserPoint | null;
   loadingStatus: LoadingStatusEnum; // 로딩 상태
 
   getUser: () => {
     user: BaseUser | null;
     userInfo: BaseUserInfo | null;
     userStudyInfo: BaseUserStudyInfo | null;
+    userPoint: BaseUserPoint | null;
   };
 
   checkLoginStatus: () => LoginStatusEnum;
@@ -48,6 +51,7 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
   _user: null,
   _userInfo: null,
   _userStudyInfo: null,
+  _userPoint: null,
 
   loadingStatus: LoadingStatusEnum.init,
 
@@ -56,12 +60,14 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
       _user: user,
       _userInfo: userInfo,
       _userStudyInfo: userStudyInfo,
+      _userPoint: userPoint,
     } = get();
 
     return {
       user,
       userInfo,
       userStudyInfo,
+      userPoint,
     };
   },
 
@@ -107,6 +113,9 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
 
     if (!accessToken) {
       if (!refreshToken) {
+        set({
+          loadingStatus: LoadingStatusEnum.success,
+        });
         return;
       }
       const newToken = await authRefresh({ refreshToken });
@@ -115,12 +124,13 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
     }
 
     try {
-      const { userInfo, user, userStudyInfo } = await getUserMe();
+      const { userInfo, user, userStudyInfo, userPoint } = await getUserMe();
 
       set({
         _userInfo: userInfo,
         _user: user,
         _userStudyInfo: userStudyInfo,
+        _userPoint: userPoint,
         loadingStatus: LoadingStatusEnum.success,
       });
     } catch {
@@ -131,12 +141,13 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
   reFetch: async () => {
     set({ loadingStatus: LoadingStatusEnum.loading }); // 로딩 상태 설정
     try {
-      const { userInfo, user, userStudyInfo } = await getUserMe();
+      const { userInfo, user, userStudyInfo, userPoint } = await getUserMe();
 
       set({
         _userInfo: userInfo,
         _user: user,
         _userStudyInfo: userStudyInfo,
+        _userPoint: userPoint,
         loadingStatus: LoadingStatusEnum.success,
       });
     } catch {
@@ -150,6 +161,7 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
       _user: null,
       _userInfo: null,
       _userStudyInfo: null,
+      _userPoint: null,
       loadingStatus: LoadingStatusEnum.loading,
     });
   },

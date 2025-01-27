@@ -10,6 +10,8 @@ import bottomNav_star from "./raw/bottomNav.star.svg";
 import bottomNav_home from "./raw/bottomNav.home.svg";
 import bottomNav_book from "./raw/bottomNavBook.svg";
 import SooPooRy from "./raw/SooPooRy.svg";
+import Seed from "./raw/Seed.svg";
+import Shop from "./raw/Shop.svg";
 
 import Weight_R_xMark from "./raw/Weight=R.xMark.svg";
 import Weight_R_speaker_wave_fill from "./raw/Weight=R.speaker.wave.fill.svg";
@@ -89,6 +91,8 @@ export type LFIconWeightedVariant =
  */
 export type LFIconNonWeightedVariant =
   | "SooPooRy"
+  | "Seed"
+  | "Shop"
   | "topNav.shop"
   | "topNav.bell"
   | "topNav.bell.dot"
@@ -157,6 +161,8 @@ const icons = {
 
   // --- (B) NonWeighted 아이콘 ---
   SooPooRy: SooPooRy,
+  Seed: Seed,
+  Shop: Shop,
   "topNav.shop": topNav_shop,
   "topNav.bell": topNav_bell,
   "topNav.bell.dot": topNav_bell_dot,
@@ -172,6 +178,7 @@ interface WeightedIconProps {
   variant: LFIconWeightedVariant;
   weight: "R" | "M" | "B"; // 필수
   size?: number; // <img> width/height
+  onClick?: () => void;
 }
 
 /** weight가 없어야 하는 아이콘 (variant ∈ NonWeightedVariant) */
@@ -179,6 +186,7 @@ interface NonWeightedIconProps {
   color?: LFColorKey;
   variant: LFIconNonWeightedVariant;
   size?: number;
+  onClick?: () => void;
   // weight 주면 에러
 }
 
@@ -192,7 +200,7 @@ function getIconKey(variant: string, weight?: "R" | "M" | "B"): FullIconKey {
 }
 
 export const LFIcon: React.FC<LFIconProps> = (props) => {
-  const { variant, size = 24, color: _color = "Black" } = props;
+  const { variant, size = 24, color: _color = "Black", onClick } = props;
   const color = LFColor[_color];
 
   let iconKey;
@@ -210,7 +218,7 @@ export const LFIcon: React.FC<LFIconProps> = (props) => {
   }
 
   return (
-    <div style={{ color }}>
+    <div style={{ color }} onClick={onClick}>
       {/*<IconComponent width={30} height={40} />*/}
       <IconComponent width={size} height={size} />
     </div>

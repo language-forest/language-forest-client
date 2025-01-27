@@ -19,10 +19,12 @@ import {
 export const SelectLanguage = () => {
   const onMoveNext = useOnboardingStore((state) => state.onMoveNext);
   const onMovePrev = useOnboardingStore((state) => state.onMovePrev);
-  const updateUser = useOnboardingStore((state) => state.updateUser);
+  const updateUserStudyInfo = useOnboardingStore(
+    (state) => state.updateUserStudyInfo,
+  );
 
   const handleLanguageClick = (language: LanguageEnum) => {
-    updateUser({ language });
+    updateUserStudyInfo({ language });
     onMoveNext();
   };
 

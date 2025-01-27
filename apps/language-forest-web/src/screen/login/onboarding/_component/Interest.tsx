@@ -29,10 +29,16 @@ const interestItemList = [
 
 export const Interest = () => {
   useDisableScroll();
-  const { onMoveNext, onMovePrev, updateUserInfo, userInfo } =
-    useOnboardingStore();
+
+  const { onMoveNext, onMovePrev, updateUserInfo } = useOnboardingStore();
 
   const [selectedItem, setSelectedItem] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleMOveNext = () => {
+    updateUserInfo({ interest: [inputValue, ...selectedItem] });
+    onMoveNext();
+  };
 
   const handleItemSelect = (newItem: string) => {
     setSelectedItem((prevItem) => {
@@ -54,16 +60,16 @@ export const Interest = () => {
       <MainContentContainer>
         <VStack style={{ width: "100%" }}>
           <LFInputField
-            value={(userInfo?.interest as string) ?? ""}
+            value={inputValue}
             placeholder={"관심 있는 분야를 알려주세요!"}
-            onInputChange={(e) => updateUserInfo({ interest: e })}
+            onInputChange={(e) => setInputValue(e)}
           />
         </VStack>
 
         <LFFillButton
-          disabled={!userInfo?.interest}
+          disabled={!inputValue}
           type={"Green"}
-          onClick={onMoveNext}
+          onClick={handleMOveNext}
         >
           다음
         </LFFillButton>

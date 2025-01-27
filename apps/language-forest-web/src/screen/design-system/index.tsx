@@ -4,7 +4,7 @@ import {
   LFHugButton,
   LFInputField,
   LFIcon,
-  Tooltip,
+  LFTooltip,
   Alert,
   LFText,
   Divider,
@@ -161,7 +161,7 @@ const IndexScreen = () => {
         {/*<Tooltip label={"top-left"} position={"top-left"} />*/}
         {/*<Tooltip label={"label"} position={"top-right"} />*/}
         {/*<Tooltip label={"label"} position={"bottom-left"} />*/}
-        <Tooltip label={"bottom-right"} position={"bottom-right"} />
+        <LFTooltip label={"bottom-right"} position={"bottom-right"} />
       </HStack>
 
       <LFInputField placeholder={"test"} maxLines={4} validate={() => true} />

@@ -7,5 +7,6 @@
 import type { UserResponseAllOf } from './userResponseAllOf';
 import type { UserResponseAllOfTwo } from './userResponseAllOfTwo';
 import type { UserResponseAllOfThree } from './userResponseAllOfThree';
+import type { UserResponseAllOfFour } from './userResponseAllOfFour';
 
-export type UserResponse = UserResponseAllOf & UserResponseAllOfTwo & UserResponseAllOfThree;
+export type UserResponse = UserResponseAllOf & UserResponseAllOfTwo & UserResponseAllOfThree & UserResponseAllOfFour;

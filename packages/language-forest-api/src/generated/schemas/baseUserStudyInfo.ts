@@ -4,15 +4,20 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
+import type { LanguageEnum } from './languageEnum';
 import type { LevelEnum } from './levelEnum';
 import type { VoiceTypeEnum } from './voiceTypeEnum';
 
 export interface BaseUserStudyInfo {
   id: string;
+  /** 지금 내가 학습하는 언어 */
+  language: LanguageEnum;
   /** 학습 난이도 */
   level: LevelEnum;
   /** 학습할 문장 수 */
   sentenceAmount: number;
+  /** 연속 학습 일 수 */
+  streakDays: number;
   uid: string;
   /** ai 목소리 타입 */
   voiceType: VoiceTypeEnum;
