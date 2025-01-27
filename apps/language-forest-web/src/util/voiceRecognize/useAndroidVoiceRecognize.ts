@@ -14,9 +14,8 @@ export const useAndroidVoiceRecognize = ({
   const [voiceTextList, setVoiceListText] = useState<Array<string>>([""]);
   const [voiceStatus, setVoiceStatus] = useState<VoiceStatus>("notStarted");
 
+  // 이 부분이 최종 완성 문자열을 만드는 핵심!
   const voiceText = mergeAllPartials(voiceTextList);
-  console.log("voiceTextList", voiceTextList);
-  console.log("voiceText", voiceText);
 
   const {
     onVoiceStart: _onVoiceStart,
@@ -26,45 +25,69 @@ export const useAndroidVoiceRecognize = ({
     voiceStatus: _voiceStatus,
   } = useBridge(bridge.store);
 
+  /**
+   * 마이크 시작
+   */
   const onVoiceStart = async () => {
     setVoiceStatus("start");
     await _onVoiceStart({ locale: languageEnumToLocaleTransformer(locale) });
   };
 
+  /**
+   * 마이크 취소
+   */
   const onVoiceCancel = async () => {
     setVoiceStatus("finish");
     await _onVoiceCancel();
   };
 
+  /**
+   * voicePartialResults[0]이 새로 들어올 때마다,
+   * `voiceTextList`의 마지막 요소와 합쳐서 갱신한다.
+   *
+   * - 마지막 요소에 겹쳐지는 부분이 있다면 중복 없이 merge.
+   * - 예: 마지막 요소가 "가나다"이고 새 partial이 "가나다라"라면 → "가나다라"
+   */
   useEffect(() => {
     if (voiceStatus === "notStarted") {
       return;
     }
     const target = voicePartialResults[0];
-    console.log(target);
     if (!target) {
       return;
     }
-    setVoiceListText((prev) => {
-      const lastIndex = prev.length - 1;
 
-      return [...prev.slice(0, lastIndex), target];
+    setVoiceListText((prev) => {
+      // 이미 누적된 문자열 중 "마지막" 부분만 새 partial과 합치면 됨
+      const lastIndex = prev.length - 1;
+      const merged = mergeTwoPartials(prev[lastIndex], target);
+      return [...prev.slice(0, lastIndex), merged];
     });
   }, [voicePartialResults, voiceStatus]);
+
+  /**
+   * voiceStatus(혹은 _voiceStatus)가 "finish"가 되면,
+   * 마지막 partial을 확정짓고 다음 인식 결과를 받기 위해
+   * 새로운 공백 문자열을 push
+   */
   useEffect(() => {
     if (_voiceStatus === "finish") {
       setVoiceListText((prev) => [...prev, ""]);
     }
   }, [_voiceStatus]);
-  console.log(voiceTextList);
 
+  /**
+   * 컴포넌트 unmount 시에
+   * - 마이크 리소스 정리
+   * - voiceStatus, voiceTextList 초기화
+   */
   useEffect(() => {
     return () => {
       onVoiceDestroy();
       setVoiceStatus("notStarted");
       setVoiceListText([""]);
     };
-  }, []);
+  }, [onVoiceDestroy]);
 
   return {
     onVoiceStart,
@@ -76,59 +99,31 @@ export const useAndroidVoiceRecognize = ({
 };
 
 /**
- * 두 string 배열이 완전히 동일한지 비교하는 헬퍼 함수
+ * [1] 두 문자열을 **접두사/접미사 최대 겹침**으로 합치는 함수
+ *    - 예: "가나다" + "가나다라" → "가나다라"
+ *    - 예: "안녕하세요" + "하세요 반갑습니다" → "안녕하세요하세요 반갑습니다"
+ *        (접두사/접미사가 일치하면 겹침, 중간 문자열 겹침은 처리하지 않음)
  */
-function arrayEquals(arr1: string[], arr2: string[]): boolean {
-  if (arr1.length !== arr2.length) return false;
-  for (let i = 0; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) return false;
-  }
-  return true;
-}
-
-/**
- * (누적된 단어 배열) + (새 partial 문자열)을 합쳐
- * 뒤/앞 겹치는 단어를 제거한 뒤 새로운 단어 배열로 리턴
- */
-function mergeTwoPartials(
-  accumulatedTokens: string[],
-  newPartial: string,
-): string[] {
-  // 새 partial 분할
-  const newTokens = newPartial.trim().split(/\s+/).filter(Boolean);
-  if (accumulatedTokens.length === 0) {
-    return newTokens;
-  }
-  if (newTokens.length === 0) {
-    return accumulatedTokens;
-  }
-
-  const maxCheckSize = Math.min(accumulatedTokens.length, newTokens.length);
+function mergeTwoPartials(accumulated: string, newStr: string): string {
   let overlapSize = 0;
+  const maxPossible = Math.min(accumulated.length, newStr.length);
 
-  // 뒤 i개와 앞 i개가 동일한지 확인
-  for (let i = 1; i <= maxCheckSize; i++) {
-    const tail = accumulatedTokens.slice(-i);
-    const head = newTokens.slice(0, i);
-    if (arrayEquals(tail, head)) {
+  // accumulated의 끝부분(tail)과 newStr의 앞부분(head)이 일치하는 가장 긴 길이를 찾는다.
+  for (let i = 1; i <= maxPossible; i++) {
+    const tail = accumulated.slice(-i);
+    const head = newStr.slice(0, i);
+    if (tail === head) {
       overlapSize = i;
     }
   }
-
-  // 겹치는 부분 제외
-  return [...accumulatedTokens, ...newTokens.slice(overlapSize)];
+  // 겹치는 부분(overlapSize)은 이미 포함되어 있으므로, 그 뒤부터 이어붙인다.
+  return accumulated + newStr.slice(overlapSize);
 }
 
 /**
- * partial 문자열 배열을 한 번에 합쳐서
- * 최종 문자열을 만드는 함수
+ * [2] partial 문자열들이 여러 개 들어왔을 때,
+ *     순서대로 mergeTwoPartials를 적용해서 최종 문자열을 만든다.
  */
-export function mergeAllPartials(partials: string[]): string {
-  let accumulatedTokens: string[] = [];
-
-  for (const partial of partials) {
-    accumulatedTokens = mergeTwoPartials(accumulatedTokens, partial);
-  }
-
-  return accumulatedTokens.join(" ");
+function mergeAllPartials(partials: string[]): string {
+  return partials.reduce((acc, cur) => mergeTwoPartials(acc, cur), "");
 }
