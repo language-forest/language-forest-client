@@ -1,8 +1,19 @@
 import withAuth from "@/hoc/AuthHoc.tsx";
+import {
+  LFBottomTabNavigation,
+  GlobalContainer,
+  LFHeader,
+} from "@/component/design-system";
 
 const IndexScreen = withAuth(
   () => {
-    return <div>index</div>;
+    return (
+      <GlobalContainer>
+        <LFHeader />
+
+        <LFBottomTabNavigation />
+      </GlobalContainer>
+    );
   },
   {
     behavior: "bottomSheet",
