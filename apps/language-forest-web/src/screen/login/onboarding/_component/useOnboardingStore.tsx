@@ -2,7 +2,7 @@ import {
   createUser,
   UpdateUser,
   UpdateUserInfo,
-  UpdateUserStudyInfo,
+  CreateUserStudyInfo,
   CreateUserNotification,
 } from "@repo/language-forest-api";
 import { create } from "zustand";
@@ -12,15 +12,15 @@ interface UseOnboardingStore {
   index: number;
   user: UpdateUser | null;
   userInfo: UpdateUserInfo | null;
-  userStudyInfo: UpdateUserStudyInfo | null;
+  userStudyInfo: CreateUserStudyInfo | null;
   userNotification: CreateUserNotification | null;
   onMoveNext: () => void;
   onMovePrev: () => void;
   onSkip: () => void;
-  updateUser: (user: UpdateUser) => void;
-  updateUserInfo: (userInfo: UpdateUserInfo) => void;
-  updateUserStudyInfo: (user: UpdateUserStudyInfo) => void;
-  updateUserNotification: (user: CreateUserNotification) => void;
+  updateUser: (user: Partial<UpdateUser>) => void;
+  updateUserInfo: (userInfo: Partial<UpdateUserInfo>) => void;
+  updateUserStudyInfo: (user: Partial<CreateUserStudyInfo>) => void;
+  updateUserNotification: (user: Partial<CreateUserNotification>) => void;
 
   fetchCreateUser: () => Promise<void>;
 }
@@ -47,7 +47,7 @@ export const useOnboardingStore = create<UseOnboardingStore>((set, get) => {
       set({ index: 13 });
     },
 
-    updateUser: (_user: Partial<UpdateUser>) => {
+    updateUser: (_user) => {
       const user = _user as UpdateUser;
       set({
         user: {
@@ -57,7 +57,7 @@ export const useOnboardingStore = create<UseOnboardingStore>((set, get) => {
       });
     },
 
-    updateUserInfo: (_user: Partial<UpdateUserInfo>) => {
+    updateUserInfo: (_user) => {
       const userInfo = _user as UpdateUserInfo;
       set({
         userInfo: {
@@ -66,8 +66,8 @@ export const useOnboardingStore = create<UseOnboardingStore>((set, get) => {
         },
       });
     },
-    updateUserStudyInfo: (_user: Partial<UpdateUserStudyInfo>) => {
-      const userStudyInfo = _user as UpdateUserStudyInfo;
+    updateUserStudyInfo: (_user) => {
+      const userStudyInfo = _user as CreateUserStudyInfo;
       set({
         userStudyInfo: {
           ...get().userStudyInfo,
@@ -75,7 +75,7 @@ export const useOnboardingStore = create<UseOnboardingStore>((set, get) => {
         },
       });
     },
-    updateUserNotification: (_user: Partial<CreateUserNotification>) => {
+    updateUserNotification: (_user) => {
       const userNotification = _user as CreateUserNotification;
       set({
         userNotification: {

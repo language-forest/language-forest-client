@@ -97,15 +97,15 @@ export const LFFillButton = ({
   };
 
   return (
-    <motion.div whileTap={{ scale: 0.95, opacity: 0.9 }}>
-      <button
-        css={{ ...buttonStyles[type] }}
-        style={{
-          opacity: disabled ? 0.5 : 1,
-        }}
-        onClick={handleClick}
-        disabled={isLoading || disabled}
-      >
+    <button
+      css={{ ...buttonStyles[type] }}
+      style={{
+        opacity: disabled ? 0.5 : 1,
+      }}
+      onClick={handleClick}
+      disabled={isLoading || disabled}
+    >
+      <motion.div whileTap={{ scale: 0.95, opacity: 0.9 }}>
         <motion.div
           css={{
             display: "flex",
@@ -152,7 +152,7 @@ export const LFFillButton = ({
             )}
           </AnimatePresence>
         </motion.div>
-      </button>
-    </motion.div>
+      </motion.div>
+    </button>
   );
 };

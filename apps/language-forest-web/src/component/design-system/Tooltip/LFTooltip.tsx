@@ -17,11 +17,11 @@ type TooltipItemProps = {
 
 const color = LFColor["GrayLight30"];
 
-export const Tooltip: React.FC<TooltipItemProps> = ({ label, position }) => {
+export const LFTooltip: React.FC<TooltipItemProps> = ({ label, position }) => {
   return (
     <div css={tooltipItem}>
       <div css={tooltipLabel(position)}>
-        <LFText variant="subHeadline" weight={"M"}>
+        <LFText variant="subHeadline" weight={"M"} textAlign={"center"}>
           {label}
         </LFText>
         <span css={tooltipTail(position)} />

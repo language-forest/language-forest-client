@@ -7,11 +7,11 @@
 import type { UpdateUser } from './updateUser';
 import type { UpdateUserInfo } from './updateUserInfo';
 import type { CreateUserNotification } from './createUserNotification';
-import type { UpdateUserStudyInfo } from './updateUserStudyInfo';
+import type { CreateUserStudyInfo } from './createUserStudyInfo';
 
 export interface CreateUserRequest {
   user: UpdateUser;
   userInfo: UpdateUserInfo;
   userNotification: CreateUserNotification;
-  userStudyInfo: UpdateUserStudyInfo;
+  userStudyInfo: CreateUserStudyInfo;
 }

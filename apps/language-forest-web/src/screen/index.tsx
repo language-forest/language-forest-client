@@ -3,13 +3,15 @@ import {
   LFBottomTabNavigation,
   GlobalContainer,
   LFHeader,
+  LFHeaderHome,
+  LFHeaderNotification,
 } from "@/component/design-system";
 
 const IndexScreen = withAuth(
   () => {
     return (
       <GlobalContainer>
-        <LFHeader />
+        <LFHeader left={<LFHeaderHome />} right={<LFHeaderNotification />} />
 
         <LFBottomTabNavigation />
       </GlobalContainer>

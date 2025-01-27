@@ -11,3 +11,4 @@ export * from "./Header";
 export * from "./SegmentControl";
 export * from "./Select";
 export * from "./Slider";
+export * from "./Chip";

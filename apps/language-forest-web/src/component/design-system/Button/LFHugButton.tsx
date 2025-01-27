@@ -4,7 +4,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState, ReactNode } from "react";
 import { LFColor, LFRadius } from "@repo/shared/constant";
 import { LoadingIndicator } from "@/component/design-system/Layout";
-import { LFText, LFTextProps } from "@/component/design-system";
+import {
+  LFIcon,
+  LFIconProps,
+  LFText,
+  LFTextProps,
+} from "@/component/design-system";
 
 type ButtonType = "Green" | "LightGreen" | "Ghost" | "White";
 type ButtonBorder = "Pill" | "Square";
@@ -15,6 +20,8 @@ type HugButtonProps = {
   border: ButtonBorder;
   children: ReactNode;
   onClick: () => Promise<void>;
+  prefixIcon?: LFIconProps;
+  suffixIcon?: LFIconProps;
 };
 
 const baseButtonStyles = {
@@ -77,6 +84,8 @@ export const LFHugButton = ({
   border,
   children,
   onClick,
+  prefixIcon,
+  suffixIcon,
 }: HugButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -124,7 +133,9 @@ export const LFHugButton = ({
               whiteSpace: "nowrap", // 텍스트 줄바꿈 방지
             }}
           >
+            {prefixIcon && <LFIcon {...prefixIcon} />}
             <LFText {...fontStyles[type]}>{children}</LFText>
+            {suffixIcon && <LFIcon {...suffixIcon} />}
           </motion.span>
         </AnimatePresence>
 

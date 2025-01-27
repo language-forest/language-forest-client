@@ -11,7 +11,7 @@ export interface UpdateUserInfo {
   /** 옵션 - 성별 */
   gender?: GenderEnum;
   /** 옵션 - 관심사 */
-  interest?: string;
+  interest?: string[];
   /** 옵션 - 2차 언어 (ex. JP) */
   languageSecond?: LanguageEnum;
   /** 옵션 - MBTI */
