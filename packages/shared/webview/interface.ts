@@ -12,7 +12,7 @@ export type VoiceStatus = "error" | "start" | "notStarted" | "finish";
 
 interface PostMessageBridgeRaw {
   voiceText: string;
-  voiceTextList: Array<string>;
+  voicePartialResults: Array<string>;
   voiceStatus: VoiceStatus;
   postMessageHealthCheck: (params: { input: string }) => string;
   changeSafeAreaColor: (params: { color: safeAreaColors }) => void;

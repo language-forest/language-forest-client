@@ -17,6 +17,15 @@ import { throttle } from "@repo/shared/util";
 import Voice from "@react-native-voice/voice";
 import { startVoice, destroyVoice } from "../util/voice.ts";
 
+const INJECTED_CODE = `
+(function() {
+  window.__VIEW_ON_LF_APP = true;
+  window.__LF_APP_PLATFORM = "${Platform.OS}";
+})();
+
+true;
+`;
+
 const RootLayout = () => {
   const webviewRef = useRef<WebView>(null);
   const [safeAreaColor, setSafeAreaColor] = useState<safeAreaColors>("blue");
@@ -41,7 +50,7 @@ const RootLayout = () => {
     () =>
       bridge<BridgeState>(({ get, set }) => ({
         voiceStatus: "notStarted",
-        voiceTextList: [],
+        voicePartialResults: [],
         voiceText: "",
         postMessageHealthCheck: async ({ input }) => {
           return `${input} success`;
@@ -94,7 +103,7 @@ const RootLayout = () => {
           };
 
           const handleVoiceListChange = (e: Array<string>) => {
-            set({ voiceTextList: e });
+            set({ voicePartialResults: e });
           };
 
           startVoice({
@@ -113,6 +122,7 @@ const RootLayout = () => {
           await Voice.destroy();
         },
         haptic: async ({ type }) => {
+          console.log("type", type);
           trigger(type, {
             enableVibrateFallback: true,
             ignoreAndroidSystemSettings: false,
@@ -151,7 +161,6 @@ const RootLayout = () => {
         style={[styles.safeArea, { backgroundColor: safeAreaColor }]}
         edges={["top", "left", "right"]}
       >
-        <Button title={"test"} />
         <CustomWebView
           ref={webviewRef}
           source={{
@@ -162,6 +171,8 @@ const RootLayout = () => {
             flex: 1,
             width: "100%",
           }}
+          injectedJavaScript={INJECTED_CODE}
+          injectedJavaScriptBeforeContentLoaded={INJECTED_CODE}
           javaScriptEnabled
           domStorageEnabled
           allowsBackForwardNavigationGestures

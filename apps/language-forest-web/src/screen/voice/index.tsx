@@ -6,39 +6,31 @@ import {
   LFText,
   VStack,
 } from "@/component/design-system";
-import { useBridge } from "@webview-bridge/react";
-import { bridge } from "@/util/webview.ts";
-import { HapticFeedbackTypes } from "@repo/shared/webview";
+import { useVoiceRecognize } from "@/util/voiceRecognize";
+import { LanguageEnum } from "@repo/language-forest-api";
 
 const Voice = () => {
   const {
+    voiceStatus,
     onVoiceStart,
     onVoiceDestroy,
     onVoiceCancel,
     voiceText,
-    voiceTextList,
-    voiceStatus,
-    haptic,
-  } = useBridge(bridge.store);
+  } = useVoiceRecognize({ locale: LanguageEnum.KO });
 
   return (
     <GlobalContainer>
       <LFHeader left={<LFHeaderGoBack />} />
 
       <VStack>
-        <LFFillButton
-          type={"Green"}
-          onClick={() => {
-            haptic({ type: HapticFeedbackTypes.clockTick });
-          }}
-        >
-          onVoiceStart
+        <LFFillButton type={"Green"} onClick={() => {}}>
+          check
         </LFFillButton>
 
         <LFFillButton
           type={"Green"}
           onClick={() => {
-            onVoiceStart({ locale: "ko-KR" });
+            onVoiceStart();
           }}
         >
           onVoiceStart
@@ -55,13 +47,6 @@ const Voice = () => {
           <VStack>
             text:
             <LFText>{voiceText}</LFText>
-          </VStack>
-
-          <VStack>
-            textList:
-            {voiceTextList.map((item) => {
-              return <LFText>{item}</LFText>;
-            })}
           </VStack>
 
           <VStack>

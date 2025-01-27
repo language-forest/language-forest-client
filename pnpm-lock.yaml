@@ -22,13 +22,13 @@ importers:
     dependencies:
       '@react-native-voice/voice':
         specifier: github:language-forest/voice
-        version: github.com/language-forest/voice/fb50c31e65643f965e1f305478b1e40c8b365bef(react-native@0.76.4)(react@18.3.1)
+        version: github.com/language-forest/voice/4b2b90e7f4c7f090a1a9fd870b2f71b420b4cced(react-native@0.76.4)(react@18.3.1)
       '@repo/shared':
         specifier: workspace:^
         version: link:../../packages/shared
       '@webview-bridge/react-native':
-        specifier: ^1.7.5
-        version: 1.7.5(react-native-webview@13.6.4)(react@18.3.1)
+        specifier: ^1.7.4
+        version: 1.7.5(react-native-webview@13.13.1)(react@18.3.1)
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -42,8 +42,8 @@ importers:
         specifier: ^4.14.0
         version: 4.14.1(react-native@0.76.4)(react@18.3.1)
       react-native-webview:
-        specifier: ~13.6.4
-        version: 13.6.4(react-native@0.76.4)(react@18.3.1)
+        specifier: ^13.13.1
+        version: 13.13.1(react-native@0.76.4)(react@18.3.1)
     devDependencies:
       '@babel/core':
         specifier: ^7.25.2
@@ -296,6 +296,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:^
         version: link:../eslint-config
+      '@repo/language-forest-api':
+        specifier: workspace:*
+        version: link:../language-forest-api
       '@repo/prettier-config':
         specifier: workspace:^
         version: link:../prettier-config
@@ -4635,7 +4638,7 @@ packages:
       - '@swc/helpers'
     dev: true
 
-  /@webview-bridge/react-native@1.7.5(react-native-webview@13.6.4)(react@18.3.1):
+  /@webview-bridge/react-native@1.7.5(react-native-webview@13.13.1)(react@18.3.1):
     resolution: {integrity: sha512-fkMqUH0zf/7kjzRj3jViNGmuUJNPE2+rxMWWSOP05czt5ZCLxn9+aYNHukSc7E+bsuYvePJgiKpu3jJJjRlDnQ==}
     peerDependencies:
       react: '*'
@@ -4644,7 +4647,7 @@ packages:
       '@webview-bridge/types': 1.7.5
       '@webview-bridge/utils': 1.7.5
       react: 18.3.1
-      react-native-webview: 13.6.4(react-native@0.76.4)(react@18.3.1)
+      react-native-webview: 13.13.1(react-native@0.76.4)(react@18.3.1)
       use-sync-external-store: 1.4.0(react@18.3.1)
     dev: false
 
@@ -9077,13 +9080,13 @@ packages:
       react-native: 0.76.4(@babel/core@7.26.0)(@babel/preset-env@7.26.0)(@types/react@18.3.16)(react@18.3.1)
     dev: false
 
-  /react-native-webview@13.6.4(react-native@0.76.4)(react@18.3.1):
-    resolution: {integrity: sha512-AdgmaMBHPcyERTvng9eSGgHX6AleyUlSusWAxngSOSdiYGgHW81T6C5A8j/ImJAF9oZg0bQDxp43Hu56tzENZQ==}
+  /react-native-webview@13.13.1(react-native@0.76.4)(react@18.3.1):
+    resolution: {integrity: sha512-Qwrvdwl2U2bG8QlghfRzGR/PCwKzW/cXTCR/WfMWHeGoADp2CHuCaEpfYO/HhlLLGy3Jqizsy+sjFhnKa1AgrA==}
     peerDependencies:
       react: '*'
       react-native: '*'
     dependencies:
-      escape-string-regexp: 2.0.0
+      escape-string-regexp: 4.0.0
       invariant: 2.2.4
       react: 18.3.1
       react-native: 0.76.4(@babel/core@7.26.0)(@babel/preset-env@7.26.0)(@types/react@18.3.16)(react@18.3.1)
@@ -10661,11 +10664,12 @@ packages:
       react: 18.3.1
     dev: false
 
-  github.com/language-forest/voice/fb50c31e65643f965e1f305478b1e40c8b365bef(react-native@0.76.4)(react@18.3.1):
-    resolution: {tarball: https://codeload.github.com/language-forest/voice/tar.gz/fb50c31e65643f965e1f305478b1e40c8b365bef}
-    id: github.com/language-forest/voice/fb50c31e65643f965e1f305478b1e40c8b365bef
+  github.com/language-forest/voice/4b2b90e7f4c7f090a1a9fd870b2f71b420b4cced(react-native@0.76.4)(react@18.3.1):
+    resolution: {tarball: https://codeload.github.com/language-forest/voice/tar.gz/4b2b90e7f4c7f090a1a9fd870b2f71b420b4cced}
+    id: github.com/language-forest/voice/4b2b90e7f4c7f090a1a9fd870b2f71b420b4cced
     name: '@react-native-voice/voice'
-    version: 3.2.7
+    version: 3.2.8
+    prepare: true
     requiresBuild: true
     peerDependencies:
       react: '*'

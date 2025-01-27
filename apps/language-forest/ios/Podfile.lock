@@ -1308,7 +1308,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-voice (3.2.7):
+  - react-native-voice (3.2.8):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1890,7 +1890,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: e086ffb0c143c96e19fa114bef0ff27bab208dff
   React-microtasksnativemodule: 8e528efbba69994a8cb107b4698d028430e80f25
   react-native-safe-area-context: 782fec0553f14a630a2bac87b116e512a9f35500
-  react-native-voice: 3d0585f4bbfee171f7db038dced678e211a2dfe8
+  react-native-voice: 59b1a649a6dba33be7310eef425a85f0320beb97
   react-native-webview: ce6e24111244cea3b9cefbb65d8c32ad0a0c7b45
   React-nativeconfig: 2199ff468fce8b95d1776d9cea31d35076fe7e48
   React-NativeModulesApple: c90010b6d0dd192bfe2aa92485ac4e58ccae8e27
