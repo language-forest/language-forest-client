@@ -2,9 +2,29 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { BridgeState } from "../util/webview";
 import { useEffect, useMemo, useRef, useState } from "react";
 import WebView from "react-native-webview";
-import { Alert, BackHandler, Platform, StyleSheet } from "react-native";
+import {
+  Alert,
+  BackHandler,
+  Button,
+  Linking,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import { bridge, createWebView } from "@webview-bridge/react-native";
-import { safeAreaColors } from "@repo/shared/webview";
+import { safeAreaColors, VoiceStatus } from "@repo/shared/webview";
+import { trigger } from "react-native-haptic-feedback";
+import { throttle } from "@repo/shared/util";
+import Voice from "@react-native-voice/voice";
+import { startVoice, destroyVoice } from "../util/voice.ts";
+
+const INJECTED_CODE = `
+(function() {
+  window.__VIEW_ON_LF_APP = true;
+  window.__LF_APP_PLATFORM = "${Platform.OS}";
+})();
+
+true;
+`;
 
 const RootLayout = () => {
   const webviewRef = useRef<WebView>(null);
@@ -22,21 +42,94 @@ const RootLayout = () => {
     const { nativeEvent } = syntheticEvent;
     Alert.alert(
       "오류 발생",
-      `웹 페이지를 불러올 수 없습니다.\n${nativeEvent.description}`
+      `웹 페이지를 불러올 수 없습니다.\n${nativeEvent.description}`,
     );
   };
 
   const appBridge = useMemo(
     () =>
-      bridge<BridgeState>({
+      bridge<BridgeState>(({ get, set }) => ({
+        voiceStatus: "notStarted",
+        voicePartialResults: [],
+        voiceText: "",
         postMessageHealthCheck: async ({ input }) => {
           return `${input} success`;
         },
         changeSafeAreaColor: async ({ color }) => {
           setSafeAreaColor(color);
         },
-      }),
-    []
+        openNotificationSetting: async () => {
+          throttle(async () => {
+            if (Platform.OS === "ios") {
+              // iOS 설정 화면 열기
+              await Linking.openURL("app-settings:");
+            } else if (Platform.OS === "android") {
+              // Android의 알림 설정 화면 열기
+              try {
+                await Linking.openURL(
+                  "android.settings.APP_NOTIFICATION_SETTINGS",
+                );
+              } catch (error) {
+                console.error("Error opening notification settings: ", error);
+              }
+            }
+          }, 500);
+        },
+        openExternalBrowser: async ({ url }) => {
+          try {
+            const canOpen = await Linking.canOpenURL(url);
+            if (canOpen) {
+              await Linking.openURL(url);
+            }
+            return { success: true };
+          } catch (e) {
+            return { success: false };
+          }
+        },
+        openAppSetting: async () => {
+          if (Platform.OS === "android") {
+            Linking.openSettings();
+          } else {
+            Linking.openURL("app-settings:");
+          }
+        },
+        onVoiceStart: async ({ locale }) => {
+          const handleVocalStatusChange = (e: VoiceStatus) => {
+            set({ voiceStatus: e });
+          };
+
+          const handleVoiceChange = (e: string) => {
+            set({ voiceText: e });
+          };
+
+          const handleVoiceListChange = (e: Array<string>) => {
+            set({ voicePartialResults: e });
+          };
+
+          startVoice({
+            onVoiceListChange: handleVoiceListChange,
+            onVoiceChange: handleVoiceChange,
+            onVoiceStatusChange: handleVocalStatusChange,
+          });
+          await Voice.start(locale, {});
+          //
+        },
+        onVoiceCancel: async () => {
+          await Voice.cancel();
+        },
+        onVoiceDestroy: async () => {
+          destroyVoice();
+          await Voice.destroy();
+        },
+        haptic: async ({ type }) => {
+          console.log("type", type);
+          trigger(type, {
+            enableVibrateFallback: true,
+            ignoreAndroidSystemSettings: false,
+          });
+        },
+      })),
+    [],
   );
 
   const { WebView: CustomWebView } = useMemo(
@@ -48,7 +141,7 @@ const RootLayout = () => {
           console.warn(`Method '${method}' not found in native`);
         },
       }),
-    [appBridge]
+    [appBridge],
   );
 
   useEffect(() => {
@@ -57,7 +150,7 @@ const RootLayout = () => {
     }
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
-      handleAndroidBackPress
+      handleAndroidBackPress,
     );
     return () => backHandler.remove();
   }, []);
@@ -71,14 +164,15 @@ const RootLayout = () => {
         <CustomWebView
           ref={webviewRef}
           source={{
-            // uri: 'http://localhost:3000',
-            uri: "http://172.30.1.70:3000/audio",
+            uri: "http://172.30.1.53:3000/",
           }}
           style={{
             height: "100%",
             flex: 1,
             width: "100%",
           }}
+          injectedJavaScript={INJECTED_CODE}
+          injectedJavaScriptBeforeContentLoaded={INJECTED_CODE}
           javaScriptEnabled
           domStorageEnabled
           allowsBackForwardNavigationGestures

@@ -4,7 +4,7 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "generate": "orval --config ./orval.config.js && node generateApiIndex.js"
+    "generate": "orval --config ./orval.config.js && node generateApiIndex.js && node replaceUnknownToNever.js"
   },
   "publishConfig": {
     "access": "public"
@@ -12,7 +12,6 @@
   "dependencies": {
     "@tanstack/react-query": "^5.62.3",
     "react": "^18.3.1",
-    "next": "14.2.20",
     "axios": "^1.7.9"
   },
   "devDependencies": {

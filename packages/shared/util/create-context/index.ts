@@ -1,44 +1,52 @@
-import { createContext as createReactContext, useContext as useReactContext } from 'react'
+import {
+  createContext as createReactContext,
+  useContext as useReactContext,
+} from "react";
 
 export interface CreateContextOptions<T> {
-  name: string
-  strict?: boolean
-  errorMessage?: string
-  defaultValue?: T
+  name: string;
+  strict?: boolean;
+  errorMessage?: string;
+  defaultValue?: T;
 }
 
-export type CreateContextReturn<T> = [React.Provider<T>, () => T, React.Context<T>]
+export type CreateContextReturn<T> = [
+  React.Provider<T>,
+  () => T,
+  React.Context<T>,
+];
 
 const getErrorMessage = (hook: string, provider: string) => {
-  return `${hook}이 존재하지 않습니다. 컴포넌트를 ${provider}로 감싸주세요`
-}
+  return `${hook}이 존재하지 않습니다. 컴포넌트를 ${provider}로 감싸주세요`;
+};
 
 export const createContext = <T>(
   options: CreateContextOptions<T> = {
-    name: '',
+    name: "",
   },
 ) => {
-  const { name, strict = true, errorMessage, defaultValue } = options
+  const { name, strict = true, errorMessage, defaultValue } = options;
 
-  const hookName = `use${name}Context`
-  const providerName = `<${name}Provider />`
+  const hookName = `use${name}Context`;
+  const providerName = `<${name}Provider />`;
 
-  const Context = createReactContext<T | undefined>(defaultValue)
+  const Context = createReactContext<T | undefined>(defaultValue);
 
-  Context.displayName = `${name}Context`
+  Context.displayName = `${name}Context`;
 
   const useContext = () => {
-    const context = useReactContext(Context)
+    const context = useReactContext(Context);
 
     if (!context && strict) {
-      const error = new Error(errorMessage ?? getErrorMessage(hookName, providerName))
-      error.name = 'ContextError'
-      Error.captureStackTrace?.(error, useContext)
-      throw error
+      const error = new Error(
+        errorMessage ?? getErrorMessage(hookName, providerName),
+      );
+      error.name = "ContextError";
+      throw error;
     }
 
-    return context
-  }
+    return context;
+  };
 
-  return [Context.Provider, useContext, Context] as CreateContextReturn<T>
-}
+  return [Context.Provider, useContext, Context] as CreateContextReturn<T>;
+};

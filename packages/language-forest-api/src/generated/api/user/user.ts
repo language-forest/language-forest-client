@@ -18,7 +18,8 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query'
 import type {
-  UserInfoDto
+  CreateUserRequest,
+  UserResponse
 } from '../../schemas'
 import { fetchClient } from '../../../../fetchClient';
 
@@ -29,82 +30,100 @@ type AwaitedInput<T> = PromiseLike<T> | T;
 
 
 /**
- * @summary 내 유저 정보 가져오기
+ * @summary 새로운 유저를 생성합니다.
  */
-export const getUserInfo = (
+export const createUser = (
+    createUserRequest: CreateUserRequest,
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<void>(
+      {url: `/user`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createUserRequest, signal
+    },
+      );
+    }
+  
+
+/**
+ * @summary jwt 기반으로 유저의 정보를 가져옵니다.
+ */
+export const getUserMe = (
     
  signal?: AbortSignal
 ) => {
       
       
-      return fetchClient<UserInfoDto>(
+      return fetchClient<UserResponse>(
       {url: `/user/me`, method: 'GET', signal
     },
       );
     }
   
 
-export const getGetUserInfoQueryKey = () => {
+export const getGetUserMeQueryKey = () => {
     return [`/user/me`] as const;
     }
 
     
-export const getGetUserInfoQueryOptions = <TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, }
+export const getGetUserMeQueryOptions = <TData = Awaited<ReturnType<typeof getUserMe>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetUserInfoQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getGetUserMeQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserInfo>>> = ({ signal }) => getUserInfo(signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMe>>> = ({ signal }) => getUserMe(signal);
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
 }
 
-export type GetUserInfoQueryResult = NonNullable<Awaited<ReturnType<typeof getUserInfo>>>
-export type GetUserInfoQueryError = unknown
+export type GetUserMeQueryResult = NonNullable<Awaited<ReturnType<typeof getUserMe>>>
+export type GetUserMeQueryError = unknown
 
 
-export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>> & Pick<
+export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserInfo>>,
+          Awaited<ReturnType<typeof getUserMe>>,
           TError,
           TData
         > , 'initialData'
       >, }
 
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>> & Pick<
+export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserInfo>>,
+          Awaited<ReturnType<typeof getUserMe>>,
           TError,
           TData
         > , 'initialData'
       >, }
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, }
+export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, }
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
 /**
- * @summary 내 유저 정보 가져오기
+ * @summary jwt 기반으로 유저의 정보를 가져옵니다.
  */
 
-export function useGetUserInfo<TData = Awaited<ReturnType<typeof getUserInfo>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserInfo>>, TError, TData>>, }
+export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMe>>, TError, TData>>, }
 
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
 
-  const queryOptions = getGetUserInfoQueryOptions(options)
+  const queryOptions = getGetUserMeQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
 
