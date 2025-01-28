@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { overlay } from "overlay-kit";
 import { Alert, BottomSheet } from "@/component/design-system";
 import { LoadingStatusEnum, useUserStore } from "@/store/useUserStore.ts";
-import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
+import { PathKey, useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
 
 export type WithBehaviorOptions = {
   behavior: "redirect" | "bottomSheet" | "modal"; // 세 가지 시나리오
-  redirectTo?: string; // redirect 시 이동할 경로
+  redirectTo?: PathKey; // redirect 시 이동할 경로
 };
 
 /**
@@ -37,12 +37,12 @@ function withAuth<P extends object>(
       }
 
       if (behavior === "redirect" && redirectTo) {
-        replace(redirectTo);
+        replace({ path: redirectTo });
       }
 
       const handleOutsideClick = () => {
         if (redirectTo) {
-          return replace(redirectTo);
+          return replace({ path: redirectTo });
         }
 
         back();

@@ -1,5 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import styled from "@emotion/styled";
+import { LFColor } from "@repo/shared/constant";
+import { HStack } from "../Layout";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -36,21 +38,40 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
       },
     },
   };
+
+  const handleDragEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: { offset: { y: number } },
+  ) => {
+    // 사용자가 일정 거리 이상 드래그하면 바텀시트를 닫음
+    if (info.offset.y > 10) {
+      onClose();
+    }
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          <BottomSheetWrapper
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={sheetVariants}
-          >
-            <SheetContent>
-              {children}
-              <CloseButton onClick={onClose}>Close</CloseButton>
-            </SheetContent>
-          </BottomSheetWrapper>
+          <Container>
+            <BottomSheetWrapper
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={sheetVariants}
+              drag="y" // Y축 드래그 활성화
+              dragConstraints={{ top: 0 }} // 위로는 드래그 불가
+              onDragEnd={handleDragEnd} // 드래그 종료 이벤트
+            >
+              <BottomSheetClickableBar>
+                <ClickableBar />
+              </BottomSheetClickableBar>
+              <SheetContent>
+                {children}
+                <CloseButton onClick={onClose}>Close</CloseButton>
+              </SheetContent>
+            </BottomSheetWrapper>
+          </Container>
           <Backdrop
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
@@ -63,16 +84,27 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     </AnimatePresence>
   );
 };
+
+const Container = styled.div`
+  position: fixed;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  min-width: 270px;
+  max-width: 480px;
+`;
 const BottomSheetWrapper = styled(motion.div)`
   position: fixed;
   bottom: 0;
-  left: 0;
-  background: white;
+  background-color: white;
   box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 12px 12px 0 0;
-  z-index: 100;
+  z-index: 200;
+  width: 100%;
   min-width: 270px;
-  max-width: 70vw;
+  max-width: 480px;
 `;
 const SheetContent = styled.div`
   padding: 20px;
@@ -94,4 +126,19 @@ const Backdrop = styled(motion.div)`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 50;
+`;
+
+const BottomSheetClickableBar = styled(HStack)`
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 12px;
+  padding-top: 16px;
+  cursor: grab; /* 드래그 가능 UI 표시 */
+`;
+
+const ClickableBar = styled.div`
+  background-color: ${LFColor.GrayLight50};
+  width: 72px;
+  height: 6px;
+  border-radius: 13px;
 `;

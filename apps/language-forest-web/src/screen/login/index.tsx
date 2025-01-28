@@ -22,11 +22,11 @@ const LoginScreen = () => {
     await init();
     const loginStatus = checkLoginStatus();
     if (loginStatus === LoginStatusEnum.loginWithOnboarding) {
-      replace("/login/onboarding");
+      replace({ path: "loginOnboarding" });
       return;
     }
 
-    replace("/");
+    replace({ path: "home" });
   };
 
   return (

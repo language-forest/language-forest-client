@@ -31,7 +31,7 @@ const ShopScreen = withAuth(
   },
   {
     behavior: "bottomSheet",
-    redirectTo: "/login",
+    redirectTo: "login",
   },
 );
 

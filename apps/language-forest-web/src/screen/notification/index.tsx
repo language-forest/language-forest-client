@@ -4,7 +4,6 @@ import {
   LFHeader,
   LFHeaderGoBack,
   LFHeaderTitle,
-  LFText,
 } from "@/component/design-system";
 
 const NotificationScreen = withAuth(
@@ -32,7 +31,7 @@ const NotificationScreen = withAuth(
   },
   {
     behavior: "bottomSheet",
-    redirectTo: "/login",
+    redirectTo: "login",
   },
 );
 

@@ -19,7 +19,7 @@ const IndexScreen = withAuth(
   },
   {
     behavior: "bottomSheet",
-    redirectTo: "/login",
+    redirectTo: "login",
   },
 );
 

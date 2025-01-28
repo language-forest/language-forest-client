@@ -20,7 +20,9 @@ export const useLFNavigate = () => {
 const pathInfo = {
   home: { path: "/", params: {} },
   shop: { path: "/shop", params: {} },
+  login: { path: "/login", params: {} },
+  loginOnboarding: { path: "/login/onboarding", params: {} },
   notification: { path: "/notification", params: {} },
 };
 
-type PathKey = keyof typeof pathInfo;
+export type PathKey = keyof typeof pathInfo;
