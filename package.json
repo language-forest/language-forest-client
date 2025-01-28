@@ -7,6 +7,7 @@
     "lint": "language-forest-client/node_modules/.bin/turbo lint",
     "format": "language-forest-client/node_modules/.bin/prettier --write \"**/*.{ts,tsx,md}\"",
     "buildApi": "pnpm -F @repo/language-forest-api generate",
+    "buildI18N": "pnpm -F @repo/script getLanguage",
     "web:dev": "pnpm -F language-forest-web dev",
     "app:dev": "pnpm -F language-forest start --reset-cache",
     "app:android": "pnpm -F language-forest android",
