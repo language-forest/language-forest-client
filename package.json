@@ -9,6 +9,7 @@
     "buildApi": "pnpm -F @repo/language-forest-api generate",
     "buildI18N": "pnpm -F @repo/script getLanguage",
     "web:dev": "pnpm -F language-forest-web dev",
+    "web:build": "pnpm -F language-forest-web build",
     "app:dev": "pnpm -F language-forest start --reset-cache",
     "app:android": "pnpm -F language-forest android",
     "app:ios": "pnpm -F language-forest ios"
