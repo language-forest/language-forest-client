@@ -4,14 +4,14 @@ import styled from "@emotion/styled";
 import {
   CTAPosition,
   Divider,
-  GlobalContainer,
+  LFPageWrapper,
   LFLink,
   LFText,
   VStack,
 } from "@/component/design-system";
-import { AppleLogin } from "@/component/auth/AppleLogin.tsx";
 import { LoginStatusEnum, useUserStore } from "@/store/useUserStore.ts";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
+import { AppleLogin } from "@/component/auth/AppleLogin.tsx";
 
 const LoginScreen = () => {
   useDisableScroll();
@@ -30,7 +30,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <CTAContainer>
         <CTAButtonContainer>
           <GoogleLogin onLoginSuccess={handleLoginSuccess} />
@@ -64,7 +64,7 @@ const LoginScreen = () => {
           동의한 것으로 간주합니다
         </LFText>
       </CTAContainer>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };
 

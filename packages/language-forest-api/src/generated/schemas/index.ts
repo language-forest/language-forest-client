@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
+export * from './appleLoginRequest';
 export * from './authRefreshBody';
 export * from './baseUser';
 export * from './baseUserInfo';
@@ -14,6 +15,7 @@ export * from './baseUserStudyInfo';
 export * from './createUserNotification';
 export * from './createUserRequest';
 export * from './createUserStudyInfo';
+export * from './errorResponse';
 export * from './genderEnum';
 export * from './googleLoginRequest';
 export * from './languageEnum';
@@ -25,9 +27,16 @@ export * from './timestamped';
 export * from './tokenDto';
 export * from './updateUser';
 export * from './updateUserInfo';
+export * from './updateUserNotificationActiveBody';
+export * from './updateUserNotificationBody';
+export * from './updateUserRequest';
+export * from './updateUserStudyInfo';
 export * from './userResponse';
 export * from './userResponseAllOf';
 export * from './userResponseAllOfFour';
 export * from './userResponseAllOfThree';
 export * from './userResponseAllOfTwo';
+export * from './userSocialResponse';
+export * from './userSocialResponseApple';
+export * from './userSocialResponseGoogle';
 export * from './voiceTypeEnum';

@@ -1,7 +1,7 @@
 import {
   CTAPosition,
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   LFPickerWheel,
@@ -18,12 +18,12 @@ const yearList = Array.from(
   { length: currentYear - startYear + 1 },
   (_, i) => startYear + i,
 );
-export const BirthOfYear = () => {
+export const YearOfBirth = () => {
   useDisableScroll();
   const { onMoveNext, onMovePrev, updateUserInfo } = useOnboardingStore();
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
       <TopQuestion
         title={"태어난 연도를 알려주세요"}
@@ -39,7 +39,7 @@ export const BirthOfYear = () => {
           <LFPickerWheel
             list={yearList}
             getDisplayText={(item) => String(item)}
-            getInitialIndex={(items) => items.indexOf(2000)}
+            getInitialIndex={(items) => items.indexOf(1996)}
             onSelectedChange={(e) => updateUserInfo({ yearOfBirth: e })}
           />
         </VStack>
@@ -50,6 +50,6 @@ export const BirthOfYear = () => {
           다음
         </LFFillButton>
       </CTAPosition>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

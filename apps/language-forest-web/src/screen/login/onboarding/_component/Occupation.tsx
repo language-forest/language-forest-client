@@ -1,6 +1,6 @@
 import {
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   LFInputField,
@@ -17,7 +17,7 @@ export const Occupation = () => {
     useOnboardingStore();
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
       <TopQuestion
         title={"어떤 일을 하시는지 궁금해요"}
@@ -41,6 +41,6 @@ export const Occupation = () => {
           다음
         </LFFillButton>
       </MainContentContainer>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

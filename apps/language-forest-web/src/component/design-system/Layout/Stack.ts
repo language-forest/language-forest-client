@@ -1,15 +1,49 @@
 import styled from "@emotion/styled";
+import { CSSProperties } from "react";
 
-// VStack: 세로 방향 정렬
-export const VStack = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-`;
+interface Props {
+  flex?: number;
+  paddingVertical?: string | number;
+  paddingHorizontal?: string | number;
+  justifyContent?: CSSProperties["justifyContent"];
+  alignItems?: CSSProperties["alignItems"];
+  height?: CSSProperties["height"];
+  width?: CSSProperties["width"];
+  position?: CSSProperties["position"];
+  bottom?: CSSProperties["bottom"];
+  gap?: CSSProperties["gap"];
+  zIndex?: CSSProperties["zIndex"];
+}
 
-// HStack: 가로 방향 정렬
-export const HStack = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-`;
+const Stack = styled.div<Props>((props: Props) => {
+  return {
+    paddingLeft: props.paddingHorizontal,
+    paddingRight: props.paddingHorizontal,
+    paddingTop: props.paddingVertical,
+    paddingBottom: props.paddingVertical,
+    flex: props.flex,
+    display: "flex",
+    justifyContent: props.justifyContent,
+    alignItems: props.alignItems,
+    height: props.height,
+    width: props.width,
+    position: props.position,
+    bottom: props.bottom,
+    gap: props.gap,
+    zIndex: props.zIndex,
+  };
+});
+
+export const VStack = styled(Stack)<{ spacing?: number | string }>(
+  ({ spacing }) => ({
+    flexDirection: "column",
+    rowGap: spacing,
+  }),
+);
+
+export const HStack = styled(Stack)<{ spacing?: number | string }>(
+  ({ spacing }) => ({
+    flexDirection: "row",
+    columnGap: spacing,
+  }),
+);

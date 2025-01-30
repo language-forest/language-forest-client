@@ -20,6 +20,9 @@ importers:
 
   apps/language-forest:
     dependencies:
+      '@invertase/react-native-apple-authentication':
+        specifier: ^2.4.0
+        version: 2.4.0
       '@react-native-voice/voice':
         specifier: github:language-forest/voice
         version: https://codeload.github.com/language-forest/voice/tar.gz/4b2b90e7f4c7f090a1a9fd870b2f71b420b4cced(react-native@0.76.4(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@react-native-community/cli-server-api@15.0.1)(@types/react@18.3.16)(react@18.3.1))(react@18.3.1)
@@ -1502,6 +1505,10 @@ packages:
   '@ibm-cloud/openapi-ruleset@1.25.1':
     resolution: {integrity: sha512-hLfnZFdsHWOqYB4ethIm2oBp5ljHI3FYCiQuIoPj2yGIjlHkzQCHs32MH9C/Vyf9xv8SaTSBC3BrpKBQsszsqw==}
     engines: {node: '>=16.0.0'}
+
+  '@invertase/react-native-apple-authentication@2.4.0':
+    resolution: {integrity: sha512-H29XdL/4JmMMA/b7CCEHpSKvyg3LdCJKMydE7ont01IAnDIW//uPuRMdL2RkxJKJtw449c/PY2K9ijWLxQAMIQ==}
+    engines: {node: '>=14'}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -4251,6 +4258,7 @@ packages:
 
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
 
   lodash.isempty@4.4.0:
     resolution: {integrity: sha512-oKMuF3xEeqDltrGMfDxAPGIVMSSRv8tbRSODbrs4KGsRRLEhrW8N8Rd4DRgB2+621hY8A8XwwrTVhXWpxFvMzg==}
@@ -4260,6 +4268,7 @@ packages:
 
   lodash.omit@4.5.0:
     resolution: {integrity: sha512-XeqSp49hNGmlkj2EJlfrQFIzQ6lXdNro9sddtQzcJY8QaoC2GO0DT7xaIokHeyM+mIT0mPMlPvkYzg2xCuHdZg==}
+    deprecated: This package is deprecated. Use destructuring assignment syntax instead.
 
   lodash.omitby@4.6.0:
     resolution: {integrity: sha512-5OrRcIVR75M288p4nbI2WLAf3ndw2GD9fyNv3Bc15+WCxJDdZ4lYndSxGd7hnG6PVjiJTeJE2dHEGhIuKGicIQ==}
@@ -7105,6 +7114,8 @@ snapshots:
       validator: 13.12.0
     transitivePeerDependencies:
       - encoding
+
+  '@invertase/react-native-apple-authentication@2.4.0': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:

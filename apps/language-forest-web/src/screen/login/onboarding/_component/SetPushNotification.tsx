@@ -2,7 +2,7 @@ import { useOnboardingStore } from "@/screen/login/onboarding/_component/useOnbo
 import {
   CTAPosition,
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
 } from "@/component/design-system";
 import { LFHeaderGoBack } from "@/component/design-system/Header/LFHeaderGoBack.tsx";
@@ -17,7 +17,7 @@ export const SetPushNotification = () => {
   const onMovePrev = useOnboardingStore((state) => state.onMovePrev);
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
       <TopQuestion
         title={
@@ -34,6 +34,6 @@ export const SetPushNotification = () => {
           다음ㅓㅏ
         </LFFillButton>
       </CTAPosition>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

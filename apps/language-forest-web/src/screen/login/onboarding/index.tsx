@@ -6,7 +6,7 @@ import { Nickname } from "./_component/Nickname.tsx";
 import { SelectLanguage } from "./_component/SelectLanguage.tsx";
 import { QuestionAnnounce } from "./_component/QuestionAnnounce.tsx";
 import { Gender } from "./_component/Gender.tsx";
-import { BirthOfYear } from "./_component/BirthOfYear.tsx";
+import { YearOfBirth } from "./_component/YearOfBirth.tsx";
 import { Occupation } from "./_component/Occupation.tsx";
 import { Interest } from "./_component/Interest.tsx";
 import { Level } from "./_component/Level.tsx";
@@ -18,6 +18,7 @@ import { SetPushTime } from "./_component/SetPushTime.tsx";
 import { SetPushNotification } from "./_component/SetPushNotification.tsx";
 import { useAsyncEffect } from "@/hook/useAsyncEffect.ts";
 import { useUserStore } from "@/store/useUserStore.ts";
+import { useDisableScroll } from "@/hook/useScrollDisable.ts";
 
 const funnel: Array<{ index: number; key: string; Component: ReactNode }> = [
   {
@@ -49,7 +50,7 @@ const funnel: Array<{ index: number; key: string; Component: ReactNode }> = [
   {
     index: 5,
     key: "birthOfYear",
-    Component: <BirthOfYear />,
+    Component: <YearOfBirth />,
   },
   {
     index: 6,
@@ -103,6 +104,7 @@ const LoginOnboarding = () => {
   const fetchCreateUser = useOnboardingStore((state) => state.fetchCreateUser);
   const reFetchUser = useUserStore((state) => state.reFetch);
   const { replace } = useLFNavigate();
+  useDisableScroll();
 
   const [componentIndex, setComponentIndex] = useState(0);
 
@@ -116,7 +118,7 @@ const LoginOnboarding = () => {
       await fetchCreateUser();
 
       await reFetchUser();
-      replace("/");
+      replace({ path: "home" });
       return;
     }
 

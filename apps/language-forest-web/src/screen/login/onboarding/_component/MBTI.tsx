@@ -1,6 +1,6 @@
 import {
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   VStack,
@@ -13,43 +13,7 @@ import { TopQuestion } from "@/screen/login/onboarding/_component/shared/TopQues
 import { MainContentContainer } from "@/screen/login/onboarding/_component/shared/Layout.tsx";
 import { useState } from "react";
 import { SkipProgress } from "@/screen/login/onboarding/_component/shared/SkipProgress.tsx";
-
-const MBTIInfos = [
-  {
-    title: "⚡️ 에너지를 어디서 얻나요?",
-    key: "IE", // 상태 업데이트에 사용될 key
-    values: [
-      { text: "주변 사람들", value: "E" },
-      { text: "혼자만의 시간", value: "I" },
-    ],
-  },
-  {
-    title: "📍 나에게 더 중요한 것은?",
-    key: "NS",
-    values: [
-      { text: "현실적인 실용성", value: "S" },
-      { text: "전체적인 아이디어", value: "N" },
-    ],
-  },
-  {
-    title: "🗝️ 문제를 해결하고자 할 때",
-    key: "FT",
-    values: [
-      { text: "사람의 감정을 고려", value: "F" },
-      { text: "논리를 고려", value: "T" },
-    ],
-  },
-  {
-    title: "🗓️ 평소 어느 쪽에 더 가까우신가요?",
-    key: "PJ",
-    values: [
-      { text: "계획적인 편", value: "J" },
-      { text: "즉흥적인 편", value: "P" },
-    ],
-  },
-] as const;
-
-type MBTIKey = (typeof MBTIInfos)[number]["key"];
+import { MBTIInfos, MBTIGroupKey } from "@repo/shared/util";
 
 export const MBTI = () => {
   useDisableScroll();
@@ -63,19 +27,20 @@ export const MBTI = () => {
   const [isActive, setIsActive] = useState(false);
   const { onMoveNext, onMovePrev, updateUserInfo } = useOnboardingStore();
 
-  const handleSelect = (key: MBTIKey, value: string) => {
+  const handleSelect = (key: MBTIGroupKey, value: string) => {
     const updatedValues = { ...MBTIValues, [key]: value };
     setMBTIValues(updatedValues);
 
-    // 모든 질문이 답변되었는지 확인
-    const allAnswered = Object.values(updatedValues).every((val) => val !== "");
-    setIsActive(allAnswered);
-
-    // 사용자의 선택을 업데이트 (예시)
     const mbti =
-      MBTIValues["IE"] + MBTIValues["NS"] + MBTIValues["FT"] + MBTIValues["PJ"];
+      updatedValues["IE"] +
+      updatedValues["NS"] +
+      updatedValues["FT"] +
+      updatedValues["PJ"];
 
     updateUserInfo({ mbti });
+
+    const allAnswered = Object.values(updatedValues).every((val) => val !== "");
+    setIsActive(allAnswered);
   };
 
   const handleGoNext = () => {
@@ -83,7 +48,7 @@ export const MBTI = () => {
   };
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader
         left={<LFHeaderGoBack onGoBack={onMovePrev} />}
         right={<SkipProgress />}
@@ -128,6 +93,6 @@ export const MBTI = () => {
           다음
         </LFFillButton>
       </MainContentContainer>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

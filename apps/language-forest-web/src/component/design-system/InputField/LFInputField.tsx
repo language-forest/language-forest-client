@@ -11,6 +11,7 @@ type InputFieldProps = {
   maxLines?: number; // for textarea
   validate?: (value: string) => boolean;
   maxLength?: number;
+  disabled?: boolean;
 };
 
 export const LFInputField: React.FC<InputFieldProps> = ({
@@ -20,6 +21,7 @@ export const LFInputField: React.FC<InputFieldProps> = ({
   maxLines,
   validate,
   maxLength,
+  disabled,
 }) => {
   const [internalValue, setInternalValue] = useState<string>(externalValue);
   const [isFocused, setIsFocused] = useState(false);
@@ -62,8 +64,9 @@ export const LFInputField: React.FC<InputFieldProps> = ({
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        disabled={disabled}
       />
-      {maxLength ? (
+      {disabled ? null : maxLength ? (
         <div css={maxLengthStyle}>
           <LFText variant={"subHeadline"} weight={"M"} color={"GrayLight50"}>
             {value.length}/{maxLength}
@@ -87,8 +90,9 @@ export const LFInputField: React.FC<InputFieldProps> = ({
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        disabled={disabled}
       />
-      {maxLength ? (
+      {disabled ? null : maxLength ? (
         <div css={maxLengthStyle}>
           <LFText variant={"subHeadline"} weight={"M"} color={"GrayLight50"}>
             {value.length}/{maxLength}

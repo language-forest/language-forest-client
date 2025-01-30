@@ -1,8 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-// ===================== 1) 모든 SVG 파일 import =====================
-// (질문에 기재된 그대로 나열했습니다.)
 import topNav_shop from "./raw/topNav.shop.svg";
 import topNav_bell from "./raw/topNav.bell.svg";
 import topNav_bell_dot from "./raw/topNav.bell.dot.svg";
@@ -12,6 +10,9 @@ import bottomNav_book from "./raw/bottomNavBook.svg";
 import SooPooRy from "./raw/SooPooRy.svg";
 import Seed from "./raw/Seed.svg";
 import Shop from "./raw/Shop.svg";
+import Gear from "./raw/Gear.svg";
+import Question from "./raw/Question.svg";
+import Talk from "./raw/Talk.svg";
 
 import Weight_R_xMark from "./raw/Weight=R.xMark.svg";
 import Weight_R_speaker_wave_fill from "./raw/Weight=R.speaker.wave.fill.svg";
@@ -93,6 +94,9 @@ export type LFIconNonWeightedVariant =
   | "SooPooRy"
   | "Seed"
   | "Shop"
+  | "Gear"
+  | "Talk"
+  | "Question"
   | "topNav.shop"
   | "topNav.bell"
   | "topNav.bell.dot"
@@ -163,6 +167,9 @@ const icons = {
   SooPooRy: SooPooRy,
   Seed: Seed,
   Shop: Shop,
+  Gear: Gear,
+  Question: Question,
+  Talk: Talk,
   "topNav.shop": topNav_shop,
   "topNav.bell": topNav_bell,
   "topNav.bell.dot": topNav_bell_dot,

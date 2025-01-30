@@ -1,6 +1,6 @@
 import {
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   VStack,
@@ -27,7 +27,7 @@ export const StudyPlace = () => {
     useOnboardingStore();
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader
         left={<LFHeaderGoBack onGoBack={onMovePrev} />}
         right={<SkipProgress />}
@@ -57,6 +57,6 @@ export const StudyPlace = () => {
           다음
         </LFFillButton>
       </MainContentContainer>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

@@ -2,7 +2,7 @@ import { useOnboardingStore } from "@/screen/login/onboarding/_component/useOnbo
 import {
   CTAPosition,
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFInputField,
   LFText,
@@ -27,7 +27,7 @@ export const Nickname = () => {
   };
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={() => onMovePrev()} />} />
 
       <MainContentContainer>
@@ -68,6 +68,6 @@ export const Nickname = () => {
           만나서 반가워!
         </LFFillButton>
       </CTAPosition>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

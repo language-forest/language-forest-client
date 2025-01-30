@@ -12,3 +12,7 @@ export * from "./SegmentControl";
 export * from "./Select";
 export * from "./Slider";
 export * from "./Chip";
+export * from "./Image";
+export * from "./Toast";
+export * from "./List";
+export * from "./Toggle";

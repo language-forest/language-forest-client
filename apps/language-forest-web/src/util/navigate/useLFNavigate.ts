@@ -14,15 +14,23 @@ export const useLFNavigate = () => {
     back: () => {
       navigate(-1);
     },
+    reload: () => {
+      window.location.reload();
+    },
   };
 };
 
-const pathInfo = {
+export const pathInfo = {
   home: { path: "/", params: {} },
   shop: { path: "/shop", params: {} },
   login: { path: "/login", params: {} },
   loginOnboarding: { path: "/login/onboarding", params: {} },
   notification: { path: "/notification", params: {} },
+  study: { path: "/study", params: {} },
+  setting: { path: "/setting", params: {} },
+  myForest: { path: "/my-forest", params: {} },
+  diary: { path: "/diary", params: {} },
+  account: { path: "/account", params: {} },
 };
 
 export type PathKey = keyof typeof pathInfo;

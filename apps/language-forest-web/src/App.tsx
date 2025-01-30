@@ -56,7 +56,7 @@ for (const path of Object.keys(screens)) {
 const router = createBrowserRouter(
   routes.map(({ Element, ErrorBoundary, ...rest }) => ({
     ...rest,
-    element: <Element />,
+    element: Element ? <Element /> : null,
     ...(ErrorBoundary && { errorElement: <ErrorBoundary /> }),
   })),
 );

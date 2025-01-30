@@ -16,6 +16,7 @@ import { trigger } from "react-native-haptic-feedback";
 import { throttle } from "@repo/shared/util";
 import Voice from "@react-native-voice/voice";
 import { startVoice, destroyVoice } from "../util/voice.ts";
+import appleAuth from "@invertase/react-native-apple-authentication";
 
 const INJECTED_CODE = `
 (function() {
@@ -49,11 +50,28 @@ const RootLayout = () => {
   const appBridge = useMemo(
     () =>
       bridge<BridgeState>(({ get, set }) => ({
-        voiceStatus: "notStarted",
-        voicePartialResults: [],
-        voiceText: "",
-        postMessageHealthCheck: async ({ input }) => {
-          return `${input} success`;
+        onAppleLogin: async () => {
+          try {
+            const appleAuthRequestResponse = await appleAuth.performRequest({
+              requestedOperation: appleAuth.Operation.LOGIN,
+              // Note: it appears putting FULL_NAME first is important, see issue #293
+              requestedScopes: [
+                appleAuth.Scope.FULL_NAME,
+                appleAuth.Scope.EMAIL,
+              ],
+            });
+
+            const credentialState = await appleAuth.getCredentialStateForUser(
+              appleAuthRequestResponse.user,
+            );
+
+            if (credentialState === appleAuth.State.AUTHORIZED) {
+              return { isSuccess: true, response: appleAuthRequestResponse };
+            }
+            return { isSuccess: false };
+          } catch {
+            return { isSuccess: false };
+          }
         },
         changeSafeAreaColor: async ({ color }) => {
           setSafeAreaColor(color);
@@ -93,6 +111,9 @@ const RootLayout = () => {
             Linking.openURL("app-settings:");
           }
         },
+        voiceStatus: "notStarted",
+        voicePartialResults: [],
+        voiceText: "",
         onVoiceStart: async ({ locale }) => {
           const handleVocalStatusChange = (e: VoiceStatus) => {
             set({ voiceStatus: e });
@@ -140,6 +161,7 @@ const RootLayout = () => {
         fallback: (method) => {
           console.warn(`Method '${method}' not found in native`);
         },
+        responseTimeout: 10000,
       }),
     [appBridge],
   );
@@ -164,7 +186,7 @@ const RootLayout = () => {
         <CustomWebView
           ref={webviewRef}
           source={{
-            uri: "http://172.30.1.53:3000/",
+            uri: "http://172.30.1.12:3000",
           }}
           style={{
             height: "100%",

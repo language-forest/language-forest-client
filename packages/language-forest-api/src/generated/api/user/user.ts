@@ -18,8 +18,14 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query'
 import type {
+  BaseUserNotification,
   CreateUserRequest,
-  UserResponse
+  ErrorResponse,
+  NotificationEnum,
+  UpdateUserNotificationBody,
+  UpdateUserRequest,
+  UserResponse,
+  UserSocialResponse
 } from '../../schemas'
 import { fetchClient } from '../../../../fetchClient';
 
@@ -133,4 +139,230 @@ export function useGetUserMe<TData = Awaited<ReturnType<typeof getUserMe>>, TErr
 }
 
 
+
+/**
+ * @summary 유저의 정보를 변경합니다. 아직은 큰 차이 없으니 온보딩에서 사용한 schema를 재사용합니다.
+ */
+export const updateUser = (
+    updateUserRequest: UpdateUserRequest,
+ ) => {
+      
+      
+      return fetchClient<void>(
+      {url: `/user/me`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateUserRequest
+    },
+      );
+    }
+  
+
+/**
+ * 딱히 다른 곳에서 사용하지 않을 정보이기 때문에 그냥 email만 반환하는 식으로 구현합니다.
+ * @summary 유저의 소셜 로그인 정보를 가져옵니다.
+ */
+export const getUserMeSocial = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<UserSocialResponse>(
+      {url: `/user/me/social`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+export const getGetUserMeSocialQueryKey = () => {
+    return [`/user/me/social`] as const;
+    }
+
+    
+export const getGetUserMeSocialQueryOptions = <TData = Awaited<ReturnType<typeof getUserMeSocial>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeSocial>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetUserMeSocialQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMeSocial>>> = ({ signal }) => getUserMeSocial(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserMeSocial>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetUserMeSocialQueryResult = NonNullable<Awaited<ReturnType<typeof getUserMeSocial>>>
+export type GetUserMeSocialQueryError = unknown
+
+
+export function useGetUserMeSocial<TData = Awaited<ReturnType<typeof getUserMeSocial>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeSocial>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserMeSocial>>,
+          TError,
+          TData
+        > , 'initialData'
+      >, }
+
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetUserMeSocial<TData = Awaited<ReturnType<typeof getUserMeSocial>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeSocial>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserMeSocial>>,
+          TError,
+          TData
+        > , 'initialData'
+      >, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetUserMeSocial<TData = Awaited<ReturnType<typeof getUserMeSocial>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeSocial>>, TError, TData>>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+/**
+ * @summary 유저의 소셜 로그인 정보를 가져옵니다.
+ */
+
+export function useGetUserMeSocial<TData = Awaited<ReturnType<typeof getUserMeSocial>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeSocial>>, TError, TData>>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+
+  const queryOptions = getGetUserMeSocialQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary 유저의 notification 중 특정 enum값을 가져옵니다
+ */
+export const getUserMeNotification = (
+    notification: NotificationEnum,
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<BaseUserNotification>(
+      {url: `/user/me/notification/${notification}`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+export const getGetUserMeNotificationQueryKey = (notification: NotificationEnum,) => {
+    return [`/user/me/notification/${notification}`] as const;
+    }
+
+    
+export const getGetUserMeNotificationQueryOptions = <TData = Awaited<ReturnType<typeof getUserMeNotification>>, TError = ErrorResponse>(notification: NotificationEnum, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeNotification>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetUserMeNotificationQueryKey(notification);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserMeNotification>>> = ({ signal }) => getUserMeNotification(notification, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(notification), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserMeNotification>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetUserMeNotificationQueryResult = NonNullable<Awaited<ReturnType<typeof getUserMeNotification>>>
+export type GetUserMeNotificationQueryError = ErrorResponse
+
+
+export function useGetUserMeNotification<TData = Awaited<ReturnType<typeof getUserMeNotification>>, TError = ErrorResponse>(
+ notification: NotificationEnum, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeNotification>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserMeNotification>>,
+          TError,
+          TData
+        > , 'initialData'
+      >, }
+
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetUserMeNotification<TData = Awaited<ReturnType<typeof getUserMeNotification>>, TError = ErrorResponse>(
+ notification: NotificationEnum, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeNotification>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserMeNotification>>,
+          TError,
+          TData
+        > , 'initialData'
+      >, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetUserMeNotification<TData = Awaited<ReturnType<typeof getUserMeNotification>>, TError = ErrorResponse>(
+ notification: NotificationEnum, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeNotification>>, TError, TData>>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+/**
+ * @summary 유저의 notification 중 특정 enum값을 가져옵니다
+ */
+
+export function useGetUserMeNotification<TData = Awaited<ReturnType<typeof getUserMeNotification>>, TError = ErrorResponse>(
+ notification: NotificationEnum, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserMeNotification>>, TError, TData>>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+
+  const queryOptions = getGetUserMeNotificationQueryOptions(notification,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary 유저의 특정 알림(notification) 활성화 여부를 변경합니다. 이때 프론트에서 넘겨주는 값으로 변경합니다.
+ */
+export const updateUserNotification = (
+    notification: NotificationEnum,
+    updateUserNotificationBody: UpdateUserNotificationBody,
+ ) => {
+      
+      
+      return fetchClient<BaseUserNotification>(
+      {url: `/user/me/notification/${notification}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateUserNotificationBody
+    },
+      );
+    }
+  
+
+/**
+ * @summary 회원탈퇴를 진행합니다.
+ */
+export const userMeDelete = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<void>(
+      {url: `/user/me/delete`, method: 'POST', signal
+    },
+      );
+    }
+  
 

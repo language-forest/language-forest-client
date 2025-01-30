@@ -14,7 +14,7 @@ const getClientCookie = (name: string): string | undefined => {
 
 // Axios 인스턴스 생성
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: "http://localhost:8080", // 기본 API URL 설정
+  baseURL: "http://172.30.1.12:8080", // 기본 API URL 설정
   headers: {
     "Content-Type": "application/json", // 기본 Content-Type
   },

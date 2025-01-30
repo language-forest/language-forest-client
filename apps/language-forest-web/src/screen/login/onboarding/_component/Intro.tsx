@@ -1,7 +1,7 @@
 import {
   CTAPosition,
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   LFText,
@@ -19,7 +19,7 @@ export const Intro = () => {
   const { onMoveNext } = useOnboardingStore();
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack />} />
 
       <MainContentContainer>
@@ -49,6 +49,6 @@ export const Intro = () => {
           만나서 반가워!
         </LFFillButton>
       </CTAPosition>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };
