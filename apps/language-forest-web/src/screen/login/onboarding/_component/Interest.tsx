@@ -1,6 +1,6 @@
 import {
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   LFInputField,
@@ -50,7 +50,7 @@ export const Interest = () => {
   };
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
       <TopQuestion
         title={"관심 있는 분야에 대해 알려주세요"}
@@ -88,6 +88,6 @@ export const Interest = () => {
           })}
         </HStack>
       </MainContentContainer>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

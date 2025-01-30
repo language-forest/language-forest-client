@@ -1,6 +1,6 @@
 import {
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   VStack,
@@ -10,12 +10,7 @@ import { useDisableScroll } from "@/hook/useScrollDisable.ts";
 import { TopQuestion } from "@/screen/login/onboarding/_component/shared/TopQuestion.tsx";
 import { MainContentContainer } from "@/screen/login/onboarding/_component/shared/Layout.tsx";
 import { GenderEnum } from "@repo/language-forest-api";
-
-const GenderInfos = [
-  { displayText: "남성 (He)", enum: GenderEnum.MALE },
-  { displayText: "여성 (she)", enum: GenderEnum.FEMALE },
-  { displayText: "기타", enum: GenderEnum.OTHER },
-];
+import { GenderEnumTransformer } from "@repo/shared/util";
 
 export const Gender = () => {
   useDisableScroll();
@@ -23,7 +18,7 @@ export const Gender = () => {
     useOnboardingStore();
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
       <TopQuestion
         title={"성별을 알려주세요"}
@@ -52,6 +47,21 @@ export const Gender = () => {
           다음
         </LFFillButton>
       </MainContentContainer>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };
+
+const GenderInfos = [
+  {
+    displayText: GenderEnumTransformer(GenderEnum.MALE),
+    enum: GenderEnum.MALE,
+  },
+  {
+    displayText: GenderEnumTransformer(GenderEnum.FEMALE),
+    enum: GenderEnum.FEMALE,
+  },
+  {
+    displayText: GenderEnumTransformer(GenderEnum.OTHER),
+    enum: GenderEnum.OTHER,
+  },
+];

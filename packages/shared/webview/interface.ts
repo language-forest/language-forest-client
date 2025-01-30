@@ -1,4 +1,5 @@
 import { HapticFeedbackTypes } from "./HapticType";
+import { AppleRequestResponse } from "./AppleLoginType";
 
 type Promisify<T> = {
   [K in keyof T]: T[K] extends (...args: infer A) => infer R
@@ -6,20 +7,24 @@ type Promisify<T> = {
     : T[K];
 };
 
-export type safeAreaColors = "blue" | "green" | "transparent";
-
 export type VoiceStatus = "error" | "start" | "notStarted" | "finish";
 
 interface PostMessageBridgeRaw {
+  changeSafeAreaColor: (params: { color: string }) => void;
+
+  onAppleLogin: () =>
+    | { isSuccess: true; response: AppleRequestResponse }
+    | { isSuccess: false };
+
+  haptic: (params: { type: HapticFeedbackTypes }) => void;
+
   voiceText: string;
   voicePartialResults: Array<string>;
   voiceStatus: VoiceStatus;
-  postMessageHealthCheck: (params: { input: string }) => string;
-  changeSafeAreaColor: (params: { color: safeAreaColors }) => void;
-  haptic: (params: { type: HapticFeedbackTypes }) => void;
   onVoiceStart: (params: { locale: string }) => void;
   onVoiceCancel: () => void;
   onVoiceDestroy: () => void;
+
   openExternalBrowser: (params: { url: string }) => { success: boolean };
   openAppSetting: () => void;
   openNotificationSetting: () => void;

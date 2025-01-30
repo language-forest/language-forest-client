@@ -1,6 +1,6 @@
 import {
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   VStack,
@@ -30,7 +30,7 @@ export const AnotherLanguage = () => {
     useOnboardingStore();
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader
         left={<LFHeaderGoBack onGoBack={onMovePrev} />}
         right={<SkipProgress />}
@@ -60,6 +60,6 @@ export const AnotherLanguage = () => {
           다음
         </LFFillButton>
       </MainContentContainer>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

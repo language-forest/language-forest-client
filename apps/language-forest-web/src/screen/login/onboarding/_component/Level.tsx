@@ -1,6 +1,6 @@
 import {
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   VStack,
@@ -51,7 +51,7 @@ export const Level = () => {
   };
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
       <TopQuestion title={"{0}로 어느정도 말할 수 있으신가요?"} />
 
@@ -97,7 +97,7 @@ export const Level = () => {
           다음
         </LFFillButton>
       </CTAPosition>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };
 

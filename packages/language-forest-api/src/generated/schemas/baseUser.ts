@@ -11,5 +11,6 @@ export interface BaseUser {
   language: LanguageEnum;
   /** 유저 닉네임 (필수) */
   nickname: string;
+  profileImage?: string;
   uid: string;
 }

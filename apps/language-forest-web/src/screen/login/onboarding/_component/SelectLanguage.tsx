@@ -2,7 +2,7 @@ import { useOnboardingStore } from "@/screen/login/onboarding/_component/useOnbo
 import {
   CTAPosition,
   LFFillButton,
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFText,
   LFIcon,
@@ -29,7 +29,7 @@ export const SelectLanguage = () => {
   };
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
 
       <MainContentContainer>
@@ -80,6 +80,6 @@ export const SelectLanguage = () => {
           한국의 숲
         </LFFillButton>
       </CTAPosition>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

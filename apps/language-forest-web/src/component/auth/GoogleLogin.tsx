@@ -23,6 +23,7 @@ export const GoogleLogin = ({ onLoginSuccess }: GoogleLoginProps) => {
 
 const InnerGoogleLogin = ({ onLoginSuccess }: GoogleLoginProps) => {
   const handleLogin = async (accessToken: string) => {
+    console.log("google click");
     const info = await googleLogin({
       token: { accessToken },
       language: navigator.language,
@@ -38,13 +39,22 @@ const InnerGoogleLogin = ({ onLoginSuccess }: GoogleLoginProps) => {
   };
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      handleLogin(tokenResponse.access_token);
+    onError: (error) => {
+      console.error(error);
+    },
+
+    onSuccess: async (tokenResponse) => {
+      await handleLogin(tokenResponse.access_token);
     },
   });
 
   return (
-    <GoogleLoginButton onClick={() => login()}>
+    <GoogleLoginButton
+      onClick={() => {
+        console.log("click");
+        login();
+      }}
+    >
       <GoogleLogo />
       <LFText variant="callout" color={"LFBlack"} weight={"M"}>
         Google로 시작하기

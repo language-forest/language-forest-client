@@ -1,6 +1,6 @@
 import withAuth from "@/hoc/AuthHoc.tsx";
 import {
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   LFHeaderTitle,
@@ -10,7 +10,7 @@ import {
 const ShopScreen = withAuth(
   () => {
     return (
-      <GlobalContainer>
+      <LFPageWrapper>
         <LFHeader
           left={<LFHeaderGoBack />}
           center={<LFHeaderTitle title={"샵"} />}
@@ -26,7 +26,7 @@ const ShopScreen = withAuth(
           <br />
           샵에서 씨앗을 사용할 수 있어요!
         </LFText>
-      </GlobalContainer>
+      </LFPageWrapper>
     );
   },
   {

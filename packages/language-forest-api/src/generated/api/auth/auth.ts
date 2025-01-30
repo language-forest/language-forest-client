@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import type {
+  AppleLoginRequest,
   AuthRefreshBody,
   GoogleLoginRequest,
   TokenDto
@@ -30,6 +31,24 @@ export const googleLogin = (
       {url: `/auth/google`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: googleLoginRequest, signal
+    },
+      );
+    }
+  
+
+/**
+ * @summary apple 로그인을 요청합니다.
+ */
+export const appleLogin = (
+    appleLoginRequest: AppleLoginRequest,
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<TokenDto>(
+      {url: `/auth/apple`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: appleLoginRequest, signal
     },
       );
     }

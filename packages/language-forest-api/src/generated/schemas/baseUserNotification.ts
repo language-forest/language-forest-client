@@ -8,6 +8,7 @@ import type { NotificationEnum } from './notificationEnum';
 
 export interface BaseUserNotification {
   cron: string;
+  isActive: boolean;
   notificationPreference: NotificationEnum;
   uid: string;
 }

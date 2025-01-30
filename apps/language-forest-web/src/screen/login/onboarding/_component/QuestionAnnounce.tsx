@@ -1,5 +1,5 @@
 import {
-  GlobalContainer,
+  LFPageWrapper,
   LFHeader,
   LFHeaderGoBack,
   LFIcon,
@@ -43,7 +43,7 @@ export const QuestionAnnounce = () => {
   }, []);
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack onGoBack={onMovePrev} />} />
 
       <MainContentContainer>
@@ -65,6 +65,6 @@ export const QuestionAnnounce = () => {
 
         <LFIcon variant={"SooPooRy"} size={140} />
       </MainContentContainer>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };

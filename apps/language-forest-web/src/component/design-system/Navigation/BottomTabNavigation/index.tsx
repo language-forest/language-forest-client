@@ -6,64 +6,60 @@ import {
   LFText,
 } from "@/component/design-system";
 import { useLocation } from "react-router-dom";
-import { LFColorKey } from "@repo/shared/constant";
+import { LFColor, LFColorKey } from "@repo/shared/constant";
+import { pathInfo, PathKey } from "@/util/navigate/useLFNavigate.ts";
+
+const height = "67px";
 
 type BottomTabType = {
   iconKey: LFIconNonWeightedVariant;
   text: string;
-  pathNames: Array<string>;
-  href: string;
+  path: PathKey;
 };
 
 const BottomTabList: Array<BottomTabType> = [
   {
     iconKey: "bottomNav.home",
     text: "홈",
-    pathNames: ["/", "/home"],
-    href: "/",
+    path: "home",
   },
   {
     iconKey: "bottomNav.book",
     text: "다이어리",
-    pathNames: ["/diary"],
-    href: "/diary",
+    path: "diary",
   },
   {
     iconKey: "bottomNav.star",
     text: "나의 숲",
-    pathNames: ["/forest"],
-    href: "/forest",
-  },
-  {
-    iconKey: "bottomNav.star",
-    text: "보이스 테스트",
-    pathNames: ["/voice"],
-    href: "/voice",
+    path: "myForest",
   },
 ] as const;
 
 export const LFBottomTabNavigation = () => {
   const { pathname } = useLocation();
-  const getColor = (pathNames: BottomTabType["pathNames"]): LFColorKey => {
-    const isSelected = pathNames.includes(pathname);
+  const getColor = (href: BottomTabType["path"]): LFColorKey => {
+    const isSelected = pathInfo[href].path === pathname;
     return isSelected ? "LFGreen" : "OpacityB30";
   };
 
   return (
-    <HStack>
+    <HStack style={{ height }}>
       <BottomTabContainer>
         {BottomTabList.map((bottomTab) => {
           return (
-            <BottomTabItem key={bottomTab.text} href={bottomTab.href}>
+            <BottomTabItem
+              key={bottomTab.text}
+              href={pathInfo[bottomTab.path].path}
+            >
               <LFIcon
-                color={getColor(bottomTab.pathNames)}
+                color={getColor(bottomTab.path)}
                 variant={bottomTab.iconKey}
                 size={26}
               />
               <LFText
                 variant={"caption2"}
                 weight={"B"}
-                color={getColor(bottomTab.pathNames)}
+                color={getColor(bottomTab.path)}
               >
                 {bottomTab.text}
               </LFText>
@@ -71,14 +67,12 @@ export const LFBottomTabNavigation = () => {
           );
         })}
       </BottomTabContainer>
-      <BottomTabSpacer />
     </HStack>
   );
 };
 
-const height = "67px";
-
 const BottomTabContainer = styled(HStack)`
+  background-color: ${LFColor.GrayLight10};
   max-width: 480px;
   height: ${height};
   position: fixed;
@@ -86,6 +80,7 @@ const BottomTabContainer = styled(HStack)`
   bottom: 0;
   flex: ${BottomTabList.length};
   width: 100%;
+  border-top: 1px solid ${LFColor.OpacityB18};
 `;
 
 const BottomTabItem = styled.a`
@@ -96,8 +91,4 @@ const BottomTabItem = styled.a`
   align-items: center;
   width: 100%;
   gap: 4px;
-`;
-
-const BottomTabSpacer = styled(HStack)`
-  height: ${height};
 `;

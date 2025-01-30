@@ -12,8 +12,8 @@ import { useState } from "react";
 import { BaseUserPoint, BaseUserStudyInfo } from "@repo/language-forest-api";
 
 export const LFHeaderHome = () => {
-  const getUser = useUserStore((store) => store.getUser);
-  const { userPoint, userStudyInfo } = getUser();
+  const userPoint = useUserStore((store) => store.userPoint);
+  const userStudyInfo = useUserStore((store) => store.userStudyInfo);
   const { push } = useLFNavigate();
 
   return (

@@ -1,51 +1,76 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useDragControls } from "framer-motion";
 import styled from "@emotion/styled";
 import { LFColor } from "@repo/shared/constant";
-import { HStack } from "../Layout";
+import { Backdrop, HStack } from "../Layout";
+import { LFText } from "@/component/design-system";
+import { overlay } from "overlay-kit";
+import { CSSProperties, useEffect, useRef } from "react";
+import { useDisableScroll } from "@/hook/useScrollDisable.ts";
 
 interface BottomSheetProps {
-  isOpen: boolean;
-  onClose: () => void;
   children?: React.ReactNode;
+  title?: string;
+  onClose?: () => void;
+  contentContainerStyle?: CSSProperties;
 }
 
-export const BottomSheet: React.FC<BottomSheetProps> = ({
+export const LFBottomSheet = ({
+  title,
+  children,
+  onClose,
+  contentContainerStyle,
+}: BottomSheetProps) => {
+  overlay.open(({ close, isOpen }) => {
+    const handleClose = () => {
+      onClose?.();
+      close();
+    };
+    return (
+      <BottomSheet
+        title={title}
+        isOpen={isOpen}
+        onClose={handleClose}
+        contentContainerStyle={contentContainerStyle}
+      >
+        {children}
+      </BottomSheet>
+    );
+  });
+};
+
+export const BottomSheet = ({
   isOpen,
   onClose,
   children,
-}) => {
-  const sheetVariants = {
-    hidden: {
-      y: "100%",
-      opacity: 0,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 25,
-      },
-    },
-    exit: {
-      y: "100%",
-      opacity: 0,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 25,
-      },
-    },
-  };
+  title,
+  contentContainerStyle,
+}: BottomSheetProps & { isOpen: boolean; onClose: () => void }) => {
+  useDisableScroll();
 
   const handleDragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
     info: { offset: { y: number } },
   ) => {
     // 사용자가 일정 거리 이상 드래그하면 바텀시트를 닫음
-    if (info.offset.y > 10) {
+    if (info.offset.y > 20) {
       onClose();
+    }
+  };
+
+  const dragControls = useDragControls();
+  const bottomSheetRef = useRef<HTMLDivElement>(null); // 바텀시트 DOM 참조
+
+  const handleDragStart = (e: React.PointerEvent) => {
+    if (bottomSheetRef.current) {
+      const sheet = bottomSheetRef.current;
+
+      // 🌟 드래그 애니메이션 즉시 실행하도록 보장
+      sheet.style.pointerEvents = "none"; // 드래그 중 내부 요소가 이벤트를 받지 않도록 함
+      dragControls.start(e);
+
+      setTimeout(() => {
+        sheet.style.pointerEvents = ""; // 드래그 종료 후 다시 이벤트 활성화
+      }, 100);
     }
   };
 
@@ -55,20 +80,40 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
         <>
           <Container>
             <BottomSheetWrapper
+              ref={bottomSheetRef}
               initial="hidden"
               animate="visible"
               exit="exit"
               variants={sheetVariants}
-              drag="y" // Y축 드래그 활성화
-              dragConstraints={{ top: 0 }} // 위로는 드래그 불가
-              onDragEnd={handleDragEnd} // 드래그 종료 이벤트
+              dragControls={dragControls} // dragControls 연결
+              dragConstraints={{ top: 0 }}
+              onDragEnd={handleDragEnd}
             >
-              <BottomSheetClickableBar>
+              {/* 드래그 가능한 영역 */}
+              <BottomSheetClickableBar
+                onPointerDown={handleDragStart} // 자연스럽게 드래그 시작
+              >
                 <ClickableBar />
               </BottomSheetClickableBar>
-              <SheetContent>
+
+              <HStack paddingVertical={8} paddingHorizontal={20}>
+                {title && (
+                  <LFText
+                    variant={"title2"}
+                    color={"ContentMainC"}
+                    weight={"B"}
+                  >
+                    {title}
+                  </LFText>
+                )}
+              </HStack>
+              <SheetContent
+                style={contentContainerStyle}
+                onPointerDown={(e) => {
+                  e.stopPropagation();
+                }} // 내부에서 드래그 방지
+              >
                 {children}
-                <CloseButton onClick={onClose}>Close</CloseButton>
               </SheetContent>
             </BottomSheetWrapper>
           </Container>
@@ -107,33 +152,16 @@ const BottomSheetWrapper = styled(motion.div)`
   max-width: 480px;
 `;
 const SheetContent = styled.div`
+  overflow: auto;
   padding: 20px;
 `;
-const CloseButton = styled.button`
-  margin-top: 10px;
-  padding: 10px;
-  background: #f44336;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-const Backdrop = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 50;
-`;
 
-const BottomSheetClickableBar = styled(HStack)`
+const BottomSheetClickableBar = styled(motion.div)`
+  display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 12px;
   padding-top: 16px;
-  cursor: grab; /* 드래그 가능 UI 표시 */
 `;
 
 const ClickableBar = styled.div`
@@ -142,3 +170,28 @@ const ClickableBar = styled.div`
   height: 6px;
   border-radius: 13px;
 `;
+
+const sheetVariants = {
+  hidden: {
+    y: "100%",
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 200,
+      damping: 25,
+    },
+  },
+  exit: {
+    y: "100%",
+    opacity: 0,
+    transition: {
+      type: "spring",
+      stiffness: 200,
+      damping: 25,
+    },
+  },
+};

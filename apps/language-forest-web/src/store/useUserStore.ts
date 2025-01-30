@@ -5,9 +5,14 @@ import {
   BaseUserPoint,
   BaseUserStudyInfo,
   getUserMe,
+  getUserMeSocial,
+  updateUser,
+  type UpdateUserRequest,
+  UserSocialResponse,
 } from "@repo/language-forest-api";
 import { create } from "zustand";
 import { AuthKey, cookieStore } from "@repo/shared/storage";
+import { waitTimeout } from "@/util/waitTimeout.ts";
 
 export enum LoadingStatusEnum {
   init = "init",
@@ -25,51 +30,31 @@ export enum LoginStatusEnum {
 
 // Zustand 상태와 동작 정의
 interface UseUserStore {
-  _user: BaseUser | null;
-  _userInfo: BaseUserInfo | null;
-  _userStudyInfo: BaseUserStudyInfo | null;
-  _userPoint: BaseUserPoint | null;
+  user?: BaseUser;
+  userInfo?: BaseUserInfo;
+  userStudyInfo?: BaseUserStudyInfo;
+  userPoint?: BaseUserPoint;
+  userSocialInfo?: UserSocialResponse;
   loadingStatus: LoadingStatusEnum; // 로딩 상태
-
-  getUser: () => {
-    user: BaseUser | null;
-    userInfo: BaseUserInfo | null;
-    userStudyInfo: BaseUserStudyInfo | null;
-    userPoint: BaseUserPoint | null;
-  };
 
   checkLoginStatus: () => LoginStatusEnum;
   getIsLoggedIn: () => boolean;
+  getUserSocialInfo: () => Promise<void>;
+  updateUser: (updateUser: UpdateUserRequest) => Promise<void>;
 
   init: () => Promise<void>; // 유저 정보를 가져오는 함수
   reFetch: () => Promise<void>;
-  clear: () => void; // 유저 정보를 초기화하는 함수
+  logout: () => void; // 유저 정보를 초기화하는 함수
 }
 
 // Zustand 스토어 생성
 export const useUserStore = create<UseUserStore>((set, get) => ({
-  _user: null,
-  _userInfo: null,
-  _userStudyInfo: null,
-  _userPoint: null,
-
+  user: undefined,
+  userInfo: undefined,
+  userStudyInfo: undefined,
+  userPoint: undefined,
+  userSocialInfo: undefined,
   loadingStatus: LoadingStatusEnum.init,
-
-  getUser: () => {
-    const {
-      _user: user,
-      _userInfo: userInfo,
-      _userStudyInfo: userStudyInfo,
-      _userPoint: userPoint,
-    } = get();
-
-    return {
-      user,
-      userInfo,
-      userStudyInfo,
-      userPoint,
-    };
-  },
 
   checkLoginStatus: () => {
     const refreshToken = cookieStore.get<string | null>(AuthKey.refreshToken);
@@ -80,9 +65,9 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
     }
 
     const {
-      _user: user,
-      _userStudyInfo: userStudyInfo,
-      _userInfo: userInfo,
+      user: user,
+      userStudyInfo: userStudyInfo,
+      userInfo: userInfo,
       loadingStatus,
     } = get();
 
@@ -106,6 +91,17 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
 
   getIsLoggedIn: () => get().checkLoginStatus() === LoginStatusEnum.login,
 
+  getUserSocialInfo: async () => {
+    const userSocialInfo = await getUserMeSocial();
+    set({ userSocialInfo });
+  },
+
+  updateUser: async (_updateUser) => {
+    await updateUser(_updateUser);
+    await waitTimeout(500);
+    await get().reFetch();
+  },
+
   // 유저 정보를 가져오는 함수
   init: async () => {
     const refreshToken = cookieStore.get<string | null>(AuthKey.refreshToken);
@@ -127,10 +123,10 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
       const { userInfo, user, userStudyInfo, userPoint } = await getUserMe();
 
       set({
-        _userInfo: userInfo,
-        _user: user,
-        _userStudyInfo: userStudyInfo,
-        _userPoint: userPoint,
+        userInfo: userInfo,
+        user: user,
+        userStudyInfo: userStudyInfo,
+        userPoint: userPoint,
         loadingStatus: LoadingStatusEnum.success,
       });
     } catch {
@@ -144,10 +140,10 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
       const { userInfo, user, userStudyInfo, userPoint } = await getUserMe();
 
       set({
-        _userInfo: userInfo,
-        _user: user,
-        _userStudyInfo: userStudyInfo,
-        _userPoint: userPoint,
+        userInfo: userInfo,
+        user: user,
+        userStudyInfo: userStudyInfo,
+        userPoint: userPoint,
         loadingStatus: LoadingStatusEnum.success,
       });
     } catch {
@@ -156,13 +152,15 @@ export const useUserStore = create<UseUserStore>((set, get) => ({
   },
 
   // 유저 정보를 초기화하는 함수
-  clear: () => {
+  logout: () => {
     set({
-      _user: null,
-      _userInfo: null,
-      _userStudyInfo: null,
-      _userPoint: null,
+      user: undefined,
+      userInfo: undefined,
+      userStudyInfo: undefined,
+      userPoint: undefined,
       loadingStatus: LoadingStatusEnum.loading,
     });
+    cookieStore.remove(AuthKey.accessToken);
+    cookieStore.remove(AuthKey.refreshToken);
   },
 }));

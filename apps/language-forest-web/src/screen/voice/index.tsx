@@ -1,5 +1,5 @@
 import {
-  GlobalContainer,
+  LFPageWrapper,
   LFFillButton,
   LFHeader,
   LFHeaderGoBack,
@@ -19,7 +19,7 @@ const Voice = () => {
   } = useVoiceRecognize({ locale: LanguageEnum.KO });
 
   return (
-    <GlobalContainer>
+    <LFPageWrapper>
       <LFHeader left={<LFHeaderGoBack />} />
 
       <VStack>
@@ -55,7 +55,7 @@ const Voice = () => {
           </VStack>
         </VStack>
       </VStack>
-    </GlobalContainer>
+    </LFPageWrapper>
   );
 };
 
