@@ -11,7 +11,7 @@ import { LFImage } from "@/component/design-system/Image/LFImage.tsx";
 import { LFColor } from "@repo/shared/constant";
 
 type UserProfileAProps = {
-  user?: BaseUser;
+  user: BaseUser | null;
   onEditProfileClick?: () => void;
   onEditNicknameClick?: () => void;
 };

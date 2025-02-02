@@ -1,13 +1,16 @@
 {
   "name": "language-forest-web",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.0-20250202144618",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint ",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "pkg-version": "node -p \"require('./package.json').version\"",
+    "update-patch-version": "npm version patch --no-git-tag-version",
+    "set-version": "node -p \"const fs = require('fs'); const pkg = require('./package.json'); pkg.version = process.argv[1]; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));\""
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",

@@ -30,10 +30,10 @@ export enum LoginStatusEnum {
 
 // Zustand 상태와 동작 정의
 interface UseUserStore {
-  user?: BaseUser;
-  userInfo?: BaseUserInfo;
-  userStudyInfo?: BaseUserStudyInfo;
-  userPoint?: BaseUserPoint;
+  user: BaseUser | null;
+  userInfo: BaseUserInfo | null;
+  userStudyInfo: BaseUserStudyInfo | null;
+  userPoint: BaseUserPoint | null;
   userSocialInfo?: UserSocialResponse;
   loadingStatus: LoadingStatusEnum; // 로딩 상태
 
@@ -49,10 +49,10 @@ interface UseUserStore {
 
 // Zustand 스토어 생성
 export const useUserStore = create<UseUserStore>((set, get) => ({
-  user: undefined,
-  userInfo: undefined,
-  userStudyInfo: undefined,
-  userPoint: undefined,
+  user: null,
+  userInfo: null,
+  userStudyInfo: null,
+  userPoint: null,
   userSocialInfo: undefined,
   loadingStatus: LoadingStatusEnum.init,
 

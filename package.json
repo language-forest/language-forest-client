@@ -10,6 +10,9 @@
     "buildI18N": "pnpm -F @repo/script getLanguage",
     "web:dev": "pnpm -F language-forest-web dev",
     "web:build": "pnpm -F language-forest-web build",
+    "web:version": "pnpm -F language-forest-web pkg-version",
+    "web:set-version": "pnpm -F language-forest-web set-version",
+    "web:update-patch-version": "pnpm -F language-forest-web update-patch-version",
     "app:dev": "pnpm -F language-forest start --reset-cache",
     "app:android": "pnpm -F language-forest android",
     "app:ios": "pnpm -F language-forest ios"

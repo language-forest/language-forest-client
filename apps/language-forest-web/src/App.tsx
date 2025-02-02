@@ -59,6 +59,9 @@ const router = createBrowserRouter(
     element: Element ? <Element /> : null,
     ...(ErrorBoundary && { errorElement: <ErrorBoundary /> }),
   })),
+  {
+    basename: "/",
+  },
 );
 
 const App = () => {

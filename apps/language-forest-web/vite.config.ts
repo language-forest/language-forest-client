@@ -5,6 +5,16 @@ import svgr from "vite-plugin-svgr";
 import path from "path";
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: "[name].[hash].[ext]",
+        chunkFileNames: "[name].[hash].js",
+        entryFileNames: "[name].[hash].js",
+      },
+    },
+  },
+  base: "/",
   plugins: [
     svgr({
       include: ["**/*.svg"], // 직접 지정

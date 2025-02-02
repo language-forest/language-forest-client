@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { AccountManagementBottomSheet } from "@/screen/setting/_component/AccountManagementBottomSheet.tsx";
 import { PushNotificationBottomSheet } from "@/screen/setting/_component/PushNotificationBottomSheet.tsx";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
+import packageJson from "../../../package.json";
 
 const SettingScreen = () => {
   const logout = useUserStore((state) => state.logout);
@@ -152,6 +153,11 @@ const SettingScreen = () => {
               prefixIcon: { variant: "Question", size: 32 },
               title: "자주 묻는 질문",
               onClick: () => console.log("ccc"),
+            },
+            {
+              title: "버전",
+              description: `버전: ${packageJson.version}`,
+              onClick: () => {},
             },
           ]}
         />
