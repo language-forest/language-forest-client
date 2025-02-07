@@ -1,7 +1,7 @@
 {
   "name": "language-forest-web",
   "private": true,
-  "version": "0.0.0-20250202144618",
+  "version": "0.0.0-20250203005512",
   "type": "module",
   "scripts": {
     "dev": "vite",

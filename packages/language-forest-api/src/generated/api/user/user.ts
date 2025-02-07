@@ -36,6 +36,22 @@ type AwaitedInput<T> = PromiseLike<T> | T;
 
 
 /**
+ * @summary 더미 유저를 생성합니다.
+ */
+export const createDummy = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<void>(
+      {url: `/user/dummy`, method: 'POST', signal
+    },
+      );
+    }
+  
+
+/**
  * @summary 새로운 유저를 생성합니다.
  */
 export const createUser = (

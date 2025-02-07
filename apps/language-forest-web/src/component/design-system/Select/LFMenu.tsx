@@ -38,7 +38,7 @@ export const LFMenu = ({
 }: MenuProps) => {
   return (
     <AnimatePresence>
-      {show ? null : (
+      {show ? (
         <>
           <VStack css={ContainerStyle} style={containerStyle}>
             <HStack paddingVertical={"12px"} paddingHorizontal={"16px"}>
@@ -88,7 +88,7 @@ export const LFMenu = ({
             onClick={onClose}
           />
         </>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 };

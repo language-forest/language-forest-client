@@ -13,6 +13,7 @@ import Shop from "./raw/Shop.svg";
 import Gear from "./raw/Gear.svg";
 import Question from "./raw/Question.svg";
 import Talk from "./raw/Talk.svg";
+import Reload from "./raw/Reload.svg";
 
 import Weight_R_xMark from "./raw/Weight=R.xMark.svg";
 import Weight_R_speaker_wave_fill from "./raw/Weight=R.speaker.wave.fill.svg";
@@ -97,6 +98,7 @@ export type LFIconNonWeightedVariant =
   | "Gear"
   | "Talk"
   | "Question"
+  | "Reload"
   | "topNav.shop"
   | "topNav.bell"
   | "topNav.bell.dot"
@@ -170,6 +172,7 @@ const icons = {
   Gear: Gear,
   Question: Question,
   Talk: Talk,
+  Reload: Reload,
   "topNav.shop": topNav_shop,
   "topNav.bell": topNav_bell,
   "topNav.bell.dot": topNav_bell_dot,

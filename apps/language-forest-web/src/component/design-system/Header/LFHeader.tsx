@@ -35,6 +35,7 @@ const headerStyle = css`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 480px;
   height: ${height};
   padding: 0 4px;
 `;
