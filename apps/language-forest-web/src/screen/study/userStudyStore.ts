@@ -9,7 +9,6 @@ import { LFToast } from "@/component/design-system";
 interface UseStudyStore {
   createStudy: CreateStudy | null;
   updateCreateStudyPartial: (createStudy: CreateStudy) => void;
-  studySummary: BaseStudySummary | null;
   generateSummary: () => Promise<{ studyId: string }>;
 }
 
@@ -24,7 +23,6 @@ export const useStudyStore = create<UseStudyStore>((set, get) => {
 
       set({ createStudy: newCreateStudy });
     },
-    studySummary: null,
 
     async generateSummary() {
       const createStudyParams = get().createStudy;
@@ -32,7 +30,7 @@ export const useStudyStore = create<UseStudyStore>((set, get) => {
       if (!createStudyParams) {
         LFToast({ text: "학습을 시작할 수 없습니다.", position: "top" });
 
-        return;
+        throw new Error("학습을 시작할 수 없습니다.");
       }
 
       const { studyId } = await createStudy({ study: createStudyParams });
@@ -40,7 +38,7 @@ export const useStudyStore = create<UseStudyStore>((set, get) => {
       if (!studyId) {
         LFToast({ text: "학습을 시작할 수 없습니다.", position: "top" });
 
-        return;
+        throw new Error("학습을 시작할 수 없습니다.");
       }
 
       return { studyId };

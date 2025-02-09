@@ -1,27 +1,87 @@
 import {
   CTAPosition,
+  HStack,
+  LFChip,
   LFFillButton,
   LFHeader,
   LFHeaderClose,
-  LFHeaderTitle,
   LFIcon,
   LFPageWrapper,
   LFText,
+  LFToast,
   VStack,
 } from "@/component/design-system";
 import { LFHeaderETC } from "@/component/design-system/Header/LFHeaderETC.tsx";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
-import { useGetStudy } from "@repo/language-forest-api";
+import {
+  createStudyPractice,
+  useGetStudy,
+} from "../../../../../../packages/language-forest-api";
 import { LFColor } from "@repo/shared/constant";
+import { useState } from "react";
+
+function parseStringArray(input: string): string[] {
+  if (typeof input !== "string") {
+    throw new Error("Invalid input: must be a string");
+  }
+
+  return input
+    .split(",") // 쉼표 기준으로 나누기
+    .map((item) => item.trim()) // 앞뒤 공백 제거
+    .filter((item) => item.length > 0); // 빈 문자열 제거
+}
+
+// 테스트
+
+function safeJsonParse(input: string): string[] {
+  try {
+    const parsed = JSON.parse(input);
+    if (
+      Array.isArray(parsed) &&
+      parsed.every((item) => typeof item === "string")
+    ) {
+      return parsed;
+    }
+  } catch {}
+
+  return parseStringArray(input);
+}
 
 const StudyScreen = () => {
-  const { getParamsFromPath } = useLFNavigate();
+  const { getParamsFromPath, push, back } = useLFNavigate();
 
   const { studyId } = getParamsFromPath("study/summary");
   const { data } = useGetStudy(studyId);
 
+  const tags = safeJsonParse(data?.studySummary?.tags ?? "");
+  const [selectedTag, setSelectedTag] = useState(tags[0]);
 
-  const handleStartPractice = () => {}
+  const handleStartPractice = async () => {
+    if (!data?.studySummary?.id) {
+      LFToast({ text: "학습을 시작할 수 없습니다.", position: "top" });
+
+      return;
+    }
+    const { studyPractices } = await createStudyPractice(studyId, {
+      studySummaryId: data.studySummary.id,
+      selectedTag,
+    });
+
+    const studyPracticeId = studyPractices?.find(
+      (item) => item.problemNumber === 1,
+    )?.studyPracticeId;
+
+    if (!studyPracticeId) {
+      LFToast({ text: "학습을 시작할 수 없습니다.", position: "top" });
+
+      return;
+    }
+
+    push({
+      path: "study/practice",
+      params: { studyPracticeId, studyId },
+    });
+  };
 
   if (!data) {
     return null;
@@ -53,6 +113,18 @@ const StudyScreen = () => {
         <br />
         선택해보세요
       </LFText>
+
+      <HStack justifyContent={"center"} alignItems={"center"} gap={12}>
+        {tags.map((item) => (
+          <LFChip
+            selected={item === selectedTag}
+            key={item}
+            onClick={() => setSelectedTag(item)}
+          >
+            {item}
+          </LFChip>
+        ))}
+      </HStack>
 
       <CTAPosition>
         <VStack
@@ -91,14 +163,11 @@ const StudyScreen = () => {
           오늘 있었던 일을 영어로 말해볼까요?
         </LFText>
 
-        <LFFillButton type={"Green"} onClick={() => console.log("start study")}>
+        <LFFillButton type={"Green"} onClick={handleStartPractice}>
           학습 시작하기
         </LFFillButton>
 
-        <LFFillButton
-          type={"LightGreen"}
-          onClick={() => console.log("start study")}
-        >
+        <LFFillButton type={"LightGreen"} onClick={back}>
           다시 기록하기
         </LFFillButton>
       </CTAPosition>

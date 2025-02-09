@@ -16,3 +16,4 @@ export * from "./Image";
 export * from "./Toast";
 export * from "./List";
 export * from "./Toggle";
+export * from "./Timer";

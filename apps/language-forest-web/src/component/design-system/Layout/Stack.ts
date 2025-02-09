@@ -1,10 +1,13 @@
 import styled from "@emotion/styled";
 import { CSSProperties } from "react";
+import { LFColor, LFColorKey } from "@repo/shared/constant";
 
 interface Props {
   flex?: number;
   paddingVertical?: string | number;
   paddingHorizontal?: string | number;
+  backgroundColor?: LFColorKey;
+  borderRadius?: CSSProperties["borderRadius"];
   justifyContent?: CSSProperties["justifyContent"];
   alignItems?: CSSProperties["alignItems"];
   height?: CSSProperties["height"];
@@ -20,7 +23,11 @@ const Stack = styled.div<Props>((props: Props) => {
     paddingLeft: props.paddingHorizontal,
     paddingRight: props.paddingHorizontal,
     paddingTop: props.paddingVertical,
+    borderRadius: props.borderRadius,
     paddingBottom: props.paddingVertical,
+    backgroundColor: props.backgroundColor
+      ? LFColor[props.backgroundColor]
+      : "transparent",
     flex: props.flex,
     display: "flex",
     justifyContent: props.justifyContent,

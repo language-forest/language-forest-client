@@ -12,7 +12,10 @@ import { StudyHeader } from "@/screen/study/_component/StudyHeader.tsx";
 import { useEffect, useState } from "react";
 import { useVoiceRecognize } from "@/util/voiceRecognize";
 import { useUserStore } from "@/store/useUserStore.ts";
-import { createStudySummary, LanguageEnum } from "@repo/language-forest-api";
+import {
+  createStudySummary,
+  LanguageEnum,
+} from "../../../../../../packages/language-forest-api";
 import { useStudyStore } from "@/screen/study/userStudyStore.ts";
 import { useLocation } from "react-router-dom";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";

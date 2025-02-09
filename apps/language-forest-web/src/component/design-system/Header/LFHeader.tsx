@@ -2,6 +2,7 @@
 import { css } from "@emotion/react";
 import { HStack, VStack } from "@/component/design-system/Layout";
 import { CSSProperties } from "react";
+import { LFColor } from "@repo/shared/constant";
 
 interface HeaderProps {
   containerStyle?: CSSProperties;
@@ -38,6 +39,8 @@ const headerStyle = css`
   max-width: 480px;
   height: ${height};
   padding: 0 4px;
+  background-color: ${LFColor.Background};
+  z-index: 100;
 `;
 
 const centerStyle = css`

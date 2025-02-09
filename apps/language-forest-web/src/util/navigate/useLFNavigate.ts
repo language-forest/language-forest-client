@@ -100,20 +100,40 @@ export const pathInfo = {
   loginOnboarding: { path: "/login/onboarding" },
   notification: { path: "/notification" },
   study: {
-    path: "/study/:userStudyInfoId",
+    path: "/study/init/:userStudyInfoId",
     buildPath: ({ userStudyInfoId }: { userStudyInfoId: string }) =>
-      `/study/${userStudyInfoId}`,
+      `/study/init/${userStudyInfoId}`,
   },
   "study/summary": {
-    path: "/study/summary/:studyId",
+    path: "/study/:studyId/summary",
     buildPath: ({ studyId }: { studyId: string }) =>
-      `/study/summary/${studyId}`,
+      `/study/${studyId}/summary`,
   },
   "study/practice": {
-    path: "/study/practice/:studyPracticeId",
-    buildPath: ({ studyPracticeId }: { studyPracticeId: string }) =>
-      `/study/practice/${studyPracticeId}`,
+    path: "/study/:studyId/practice/:studyPracticeId",
+    buildPath: ({
+      studyPracticeId,
+      studyId,
+    }: {
+      studyPracticeId: string;
+      studyId: string;
+    }) => `/study/${studyId}/practice/${studyPracticeId}`,
   },
+  "study/practice/result": {
+    path: "/study/:studyId/practice/:studyPracticeId/result",
+    buildPath: ({
+      studyPracticeId,
+      studyId,
+    }: {
+      studyPracticeId: string;
+      studyId: string;
+    }) => `/study/${studyId}/practice/${studyPracticeId}/result`,
+  },
+  "study/result": {
+    path: "/study/:studyId/result",
+    buildPath: ({ studyId }: { studyId: string }) => `/study/${studyId}/result`,
+  },
+
   setting: { path: "/setting" },
   myForest: { path: "/my-forest" },
   diary: { path: "/diary" },

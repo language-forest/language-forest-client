@@ -44,6 +44,7 @@ export const LFColor = {
   LabelsSecondary: "#3C3C4399",
   FillsSecondary: "#78788029",
   ToggleActiveGreen: "#3F8643",
+  Background: "#F3F9F0",
 } as const;
 
 export type LFColorKey = keyof typeof LFColor;
