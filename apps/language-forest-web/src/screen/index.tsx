@@ -10,18 +10,21 @@ import {
   LFHugButton,
   VStack,
   LFIcon,
+  LFToast,
 } from "@/component/design-system";
 import { LFColor } from "@repo/shared/constant";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
 import styled from "@emotion/styled";
+import { useUserStore } from "@/store/useUserStore.ts";
 
 const IndexScreen = withAuth(
   () => {
     const { push } = useLFNavigate();
+    const userStudyInfo = useUserStore((state) => state.userStudyInfo);
+
     return (
       <LFPageWrapper>
         <LFHeader left={<LFHeaderHome />} right={<LFHeaderNotification />} />
-
         <VStack
           style={{ flex: 1 }}
           alignItems={"center"}
@@ -57,7 +60,18 @@ const IndexScreen = withAuth(
               border={"Pill"}
               whiteSpace={"nowrap"}
               onClick={async () => {
-                push({ path: "study" });
+                if (!userStudyInfo) {
+                  LFToast({
+                    text: "학습을 시작할 수 없습니다.",
+                    position: "top",
+                  });
+
+                  return;
+                }
+                push({
+                  path: "study",
+                  params: { userStudyInfoId: userStudyInfo.id },
+                });
               }}
             >
               오늘의 표현

@@ -32,7 +32,7 @@ export const StudyPlace = () => {
         left={<LFHeaderGoBack onGoBack={onMovePrev} />}
         right={<SkipProgress />}
       />
-      <TopQuestion title={"외에 더 배우고 싶은 언어가 있나요?"} />
+      <TopQuestion title={"주로 어디서 학습하시나요?"} />
 
       <MainContentContainer>
         <VStack style={{ gap: 12, width: "100%" }}>

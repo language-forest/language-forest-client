@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type UpdateUserNotificationActiveBody = {
-  isActive: boolean;
+export type UpdateStudyBody = {
+  /** 유저의 학습 일기 */
+  story: string;
 };

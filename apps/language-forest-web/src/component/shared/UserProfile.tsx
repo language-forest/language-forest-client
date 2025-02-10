@@ -1,6 +1,7 @@
 import {
   HStack,
   LFHugButton,
+  LFIcon,
   LFIconButton,
   LFText,
   VStack,
@@ -9,6 +10,7 @@ import { BaseUser } from "@repo/language-forest-api";
 import styled from "@emotion/styled";
 import { LFImage } from "@/component/design-system/Image/LFImage.tsx";
 import { LFColor } from "@repo/shared/constant";
+import React from "react";
 
 type UserProfileAProps = {
   user: BaseUser | null;
@@ -48,15 +50,11 @@ export const UserProfile = ({
           {user.nickname}
         </LFText>
         {onEditNicknameClick && (
-          <LFIconButton
-            icon={{
-              variant: "chevron.right",
-              color: "ContentMainC",
-              weight: "M",
-              size: 20,
-            }}
-            // 위에 컴포넌트에서 정의했기 때문에 여기는 따로 넣어주지 않습니다.
-            onClick={() => {}}
+          <LFIcon
+            variant={"chevron.right"}
+            color={"ContentMainC"}
+            weight={"M"}
+            size={20}
           />
         )}
       </NicknameContainer>
@@ -95,6 +93,7 @@ const ProfileContainer = styled(VStack)`
 const NicknameContainer = styled(HStack)`
   justify-content: center;
   align-items: center;
+  gap: 4px;
   //
   //
   //

@@ -7,7 +7,7 @@ type LFChipProps = {
   prefixIcon?: LFIconProps;
   children: ReactNode;
   selected?: boolean;
-  onClick: () => Promise<void> | void;
+  onClick?: () => Promise<void> | void;
   suffixIcon?: LFIconProps;
 };
 
@@ -20,7 +20,7 @@ export const LFChip = ({
 }: LFChipProps) => {
   const handleClick = async () => {
     try {
-      await onClick();
+      await onClick?.();
     } catch (error) {
       console.error(error);
     }

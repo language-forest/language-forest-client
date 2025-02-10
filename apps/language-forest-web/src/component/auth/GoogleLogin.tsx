@@ -23,7 +23,6 @@ export const GoogleLogin = ({ onLoginSuccess }: GoogleLoginProps) => {
 
 const InnerGoogleLogin = ({ onLoginSuccess }: GoogleLoginProps) => {
   const handleLogin = async (accessToken: string) => {
-    console.log("google click");
     const info = await googleLogin({
       token: { accessToken },
       language: navigator.language,
@@ -51,7 +50,6 @@ const InnerGoogleLogin = ({ onLoginSuccess }: GoogleLoginProps) => {
   return (
     <GoogleLoginButton
       onClick={() => {
-        console.log("click");
         login();
       }}
     >

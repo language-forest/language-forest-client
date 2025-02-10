@@ -1,4 +1,4 @@
-import { HStack, LFText } from "@/component/design-system";
+import { VStack, LFText } from "@/component/design-system";
 import styled from "@emotion/styled";
 
 type HeaderTitleProps = {
@@ -22,4 +22,6 @@ export const LFHeaderTitle = ({ title, description }: HeaderTitleProps) => {
   );
 };
 
-const HeaderTitleContainer = styled(HStack)``;
+const HeaderTitleContainer = styled(VStack)`
+  align-items: center;
+`;

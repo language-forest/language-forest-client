@@ -12,6 +12,7 @@ import {
 import { LoginStatusEnum, useUserStore } from "@/store/useUserStore.ts";
 import { useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
 import { AppleLogin } from "@/component/auth/AppleLogin.tsx";
+import { PRIVACY_POLICY_URL, TERMS_URL } from "@repo/shared/constant";
 
 const LoginScreen = () => {
   useDisableScroll();
@@ -42,25 +43,10 @@ const LoginScreen = () => {
           color={"LFBlack"}
           weight={"R"}
         >
-          시작할 경우{" "}
-          <LFLink
-            href={
-              "https://exclusive-unicorn-65b.notion.site/_V-0-0-7ea1d3ed94dd4e1dbb4a7e70cd223ac4"
-            }
-          >
-            이용약관
-          </LFLink>
-          과{" "}
-          <LFLink
-            href={
-              "https://exclusive-unicorn-65b.notion.site/_V-0-0-f88c6eee1b7e4ac69aac9ae90c170738"
-            }
-          >
-            개인정보처리방침
-          </LFLink>
+          시작할 경우 <LFLink href={TERMS_URL}>이용약관</LFLink>과{" "}
+          <LFLink href={PRIVACY_POLICY_URL}>개인정보처리방침</LFLink>
           에
           <br />
-          <Divider height={4} backgroundColor={"White"} />
           동의한 것으로 간주합니다
         </LFText>
       </CTAContainer>

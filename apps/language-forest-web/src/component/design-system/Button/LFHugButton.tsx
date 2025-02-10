@@ -136,11 +136,13 @@ export const LFHugButton = ({
               }
               transition={{ duration: 0.3 }}
             >
-              {prefixIcon && <LFIcon {...prefixIcon} />}
-              <LFText {...fontStyles[type]} whiteSpace={whiteSpace}>
-                {children}
-              </LFText>
-              {suffixIcon && <LFIcon {...suffixIcon} />}
+              <HStack justifyContent={"center"} alignItems={"center"} gap={2}>
+                {prefixIcon && <LFIcon {...prefixIcon} />}
+                <LFText {...fontStyles[type]} whiteSpace={whiteSpace}>
+                  {children}
+                </LFText>
+                {suffixIcon && <LFIcon {...suffixIcon} />}
+              </HStack>
             </motion.span>
           </AnimatePresence>
 

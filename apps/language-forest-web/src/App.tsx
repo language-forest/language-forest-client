@@ -39,10 +39,9 @@ for (const path of Object.keys(screens)) {
     continue;
   }
 
-  const normalizedPathName = fileName.includes("$")
-    ? //   파일을 $id.tsx이런식으로하면 path를 지정할 수 있다.
-      fileName.replace("$", ":")
-    : fileName.replace(/\/index/, "");
+  const normalizedPathName = fileName
+    .replace(/\$/g, ":") // 모든 $를 :로 변환
+    .replace(/\/index$/, "");
 
   routes.push({
     path: fileName === "index" ? "/" : `/${normalizedPathName.toLowerCase()}`,
@@ -93,7 +92,7 @@ const GlobalOuterContainer = styled.div`
 const GlobalInnerContainer = styled.div`
   max-width: 480px;
   width: 100%;
-  background-color: ${LFColor.LFWhite};
+  background-color: ${LFColor.Background};
 `;
 
 export default App;

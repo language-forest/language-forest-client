@@ -72,3 +72,19 @@ export const authRefresh = (
     }
   
 
+/**
+ * @summary dummy 로그인을 요청합니다.
+ */
+export const dummyLogin = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<TokenDto>(
+      {url: `/auth/dummy`, method: 'POST', signal
+    },
+      );
+    }
+  
+

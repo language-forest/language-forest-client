@@ -72,7 +72,6 @@ export const StudyHeader = () => {
           }
         : undefined,
     },
-
     {
       title: "학습 문장 수 ",
       items: [

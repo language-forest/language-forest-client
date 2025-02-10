@@ -58,7 +58,7 @@ export const MBTI = () => {
       <MainContentContainer>
         <VStack style={{ gap: 12, width: "100%" }}>
           {MBTIInfos.map((MBTIInfo) => (
-            <VStack key={MBTIInfo.key}>
+            <VStack key={MBTIInfo.key} gap={8}>
               <LFText
                 variant={"subHeadline"}
                 color={"ContentMainC"}

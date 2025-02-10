@@ -38,7 +38,7 @@ export const LFMenu = ({
 }: MenuProps) => {
   return (
     <AnimatePresence>
-      {show ? null : (
+      {show ? (
         <>
           <VStack css={ContainerStyle} style={containerStyle}>
             <HStack paddingVertical={"12px"} paddingHorizontal={"16px"}>
@@ -88,7 +88,7 @@ export const LFMenu = ({
             onClick={onClose}
           />
         </>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 };
@@ -199,7 +199,7 @@ const LFMenuItem = ({ isSelected, label }: LFMenuItemProps) => {
 const ContainerStyle = css`
   background-color: ${LFColor.GrayLight10};
   position: absolute;
-  z-index: 100;
+  z-index: 200;
   display: flex;
   border-radius: 12px;
   width: 100%;

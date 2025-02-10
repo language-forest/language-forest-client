@@ -13,6 +13,13 @@ import Shop from "./raw/Shop.svg";
 import Gear from "./raw/Gear.svg";
 import Question from "./raw/Question.svg";
 import Talk from "./raw/Talk.svg";
+import Reload from "./raw/Reload.svg";
+import ResultSeed from "./raw/ResultSeed.svg";
+import ResultSeedActive from "./raw/ResultSeedActive.svg";
+import ResultSeedInActive from "./raw/ResultSeedInActive.svg";
+import ResultStreakDays from "./raw/ResultStreakDays.svg";
+import ResultScore from "./raw/ResultScore.svg";
+import bookmark from "./raw/bookmark.svg";
 
 import Weight_R_xMark from "./raw/Weight=R.xMark.svg";
 import Weight_R_speaker_wave_fill from "./raw/Weight=R.speaker.wave.fill.svg";
@@ -97,6 +104,13 @@ export type LFIconNonWeightedVariant =
   | "Gear"
   | "Talk"
   | "Question"
+  | "Reload"
+  | "ResultSeed"
+  | "ResultSeedActive"
+  | "ResultSeedInActive"
+  | "ResultStreakDays"
+  | "ResultScore"
+  | "bookmark"
   | "topNav.shop"
   | "topNav.bell"
   | "topNav.bell.dot"
@@ -164,12 +178,20 @@ const icons = {
   "Weight=B.arrow.down": Weight_B_arrow_down,
 
   // --- (B) NonWeighted 아이콘 ---
-  SooPooRy: SooPooRy,
-  Seed: Seed,
-  Shop: Shop,
-  Gear: Gear,
-  Question: Question,
-  Talk: Talk,
+  SooPooRy,
+  Seed,
+  Shop,
+  Gear,
+  Question,
+  Talk,
+  Reload,
+  ResultSeed,
+  ResultSeedActive,
+  ResultSeedInActive,
+  ResultStreakDays,
+  ResultScore,
+  bookmark,
+
   "topNav.shop": topNav_shop,
   "topNav.bell": topNav_bell,
   "topNav.bell.dot": topNav_bell_dot,
