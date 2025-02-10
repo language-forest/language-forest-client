@@ -7,22 +7,22 @@
 
 export interface BaseStudyPractice {
   /** 정답 */
-  correctAnswer?: string;
-  id?: string;
+  correctAnswer: string;
+  id: string;
   /** 유저의 답변 */
-  myAnswer?: string;
+  myAnswer: string;
   /**
    * 유저의 답변 음성 파일 경로
    * @nullable
    */
   myAnswerVoicePath?: string | null;
   /** 문제 */
-  problem?: string;
+  problem: string;
   /** 문제 번호 */
-  problemNumber?: number;
+  problemNumber: number;
   /** 점수 */
-  score?: number;
-  studyId?: string;
+  score: number;
+  studyId: string;
   /** 팁(피드백) */
-  tip?: string;
+  tip: string;
 }

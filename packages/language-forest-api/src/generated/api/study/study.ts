@@ -23,7 +23,10 @@ import type {
   CreateStudyRequest,
   CreateStudyResponse,
   CreateStudySummaryResponse,
+  GetMontlyStudyParams,
+  MonthlyStudyResponse,
   StudyResponse,
+  UpdateStudyBody,
   UpdateStudyPracticeRequest,
   UpdateStudyPracticeResponse
 } from '../../schemas'
@@ -52,6 +55,94 @@ export const createStudy = (
       );
     }
   
+
+/**
+ * @summary 연도와 월에 해당하는 학습 정보를 가져옵니다.
+ */
+export const getMontlyStudy = (
+    params: GetMontlyStudyParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return fetchClient<MonthlyStudyResponse>(
+      {url: `/study`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+export const getGetMontlyStudyQueryKey = (params: GetMontlyStudyParams,) => {
+    return [`/study`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetMontlyStudyQueryOptions = <TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(params: GetMontlyStudyParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMontlyStudyQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMontlyStudy>>> = ({ signal }) => getMontlyStudy(params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
+}
+
+export type GetMontlyStudyQueryResult = NonNullable<Awaited<ReturnType<typeof getMontlyStudy>>>
+export type GetMontlyStudyQueryError = unknown
+
+
+export function useGetMontlyStudy<TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(
+ params: GetMontlyStudyParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMontlyStudy>>,
+          TError,
+          TData
+        > , 'initialData'
+      >, }
+
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetMontlyStudy<TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(
+ params: GetMontlyStudyParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMontlyStudy>>,
+          TError,
+          TData
+        > , 'initialData'
+      >, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+export function useGetMontlyStudy<TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(
+ params: GetMontlyStudyParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+/**
+ * @summary 연도와 월에 해당하는 학습 정보를 가져옵니다.
+ */
+
+export function useGetMontlyStudy<TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(
+ params: GetMontlyStudyParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+
+  const queryOptions = getGetMontlyStudyQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
 
 /**
  * @summary 학습 결과 정보를 가져옵니다.
@@ -139,6 +230,39 @@ export function useGetStudy<TData = Awaited<ReturnType<typeof getStudy>>, TError
 }
 
 
+
+/**
+ * @summary 학습의 유저 학습 일기를 수정합니다.
+ */
+export const updateStudy = (
+    studyId: string,
+    updateStudyBody: UpdateStudyBody,
+ ) => {
+      
+      
+      return fetchClient<void>(
+      {url: `/study/${studyId}`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: updateStudyBody
+    },
+      );
+    }
+  
+
+/**
+ * @summary 학습을 삭제합니다.
+ */
+export const deleteStudy = (
+    studyId: string,
+ ) => {
+      
+      
+      return fetchClient<void>(
+      {url: `/study/${studyId}`, method: 'DELETE'
+    },
+      );
+    }
+  
 
 /**
  * @summary 유저 일기를 요약하고 태그, 이모티콘 등을 만들어 제공합니다.

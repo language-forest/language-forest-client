@@ -7,15 +7,15 @@
 
 export interface BaseStudySummary {
   /** 하루 일지 기반 이모티콘 */
-  emoji?: string;
-  id?: string;
+  emoji: string;
+  id: string;
   /** 하루 일지 150자 이내 요약 */
-  message?: string;
+  message: string;
   /** 유저가 선택한 키워드 */
-  selectedTag?: string;
-  studyId?: string;
+  selectedTag: string;
+  studyId: string;
   /** 하루 일지 한 문장 요약 */
-  summary?: string;
+  summary: string;
   /** 하루 일지 기반 4가지 키워드 */
-  tags?: string;
+  tags: string[];
 }

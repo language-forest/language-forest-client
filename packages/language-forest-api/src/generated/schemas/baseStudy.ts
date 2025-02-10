@@ -12,31 +12,31 @@ import type { VoiceTypeEnum } from './voiceTypeEnum';
 
 export interface BaseStudy {
   /** 전체 점수 평균 */
-  averageScore?: number;
-  id?: string;
+  averageScore: number;
+  id: string;
   /** 문장 입력 타입 */
-  inputType?: InputTypeEnum;
+  inputType: InputTypeEnum;
   /** 지금 내가 학습하는 언어 */
-  language?: LanguageEnum;
+  language: LanguageEnum;
   /** 학습 난이도 */
-  level?: LevelEnum;
+  level: LevelEnum;
   /** 학습 완료로 획득한 재화의 양 */
-  point?: number;
+  point: number;
   /** 학습할 문장 수 */
-  sentenceAmount?: number;
+  sentenceAmount: number;
   /** 시작 질문 */
-  startQuestion?: string;
+  startQuestion: string;
   /** 유저의 하루 일기 */
-  story?: string;
+  story: string;
   /**
    * 유저의 하루 일기 음성 파일 경로
    * @nullable
    */
   storyVoicePath?: string | null;
   /** 학습 상태 */
-  studyStatus?: StudyStatusEnum;
-  uid?: string;
-  userStudyInfoId?: string;
+  studyStatus: StudyStatusEnum;
+  uid: string;
+  userStudyInfoId: string;
   /** ai 목소리 타입 */
-  voiceType?: VoiceTypeEnum;
+  voiceType: VoiceTypeEnum;
 }

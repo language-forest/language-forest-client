@@ -14,5 +14,5 @@ export interface CreateStudySummaryResponse {
   /** 하루 일지 한 문장 요약 */
   summary?: string;
   /** 하루 일지 기반 4가지 키워드 */
-  tags?: string;
+  tags?: string[];
 }

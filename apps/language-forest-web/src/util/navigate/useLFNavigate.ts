@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 export type PathKey = keyof typeof pathInfo;
 
 type PathParams<T extends PathKey> = T extends keyof typeof pathInfo
-  ? "buildPath" extends keyof (typeof pathInfo)[T]
+  ? (typeof pathInfo)[T] extends { buildPath: (...args: any) => any }
     ? Parameters<(typeof pathInfo)[T]["buildPath"]>[0]
     : never
   : never;
@@ -29,7 +29,9 @@ export const useLFNavigate = () => {
 
     // 동적 Path 변환
     if ("buildPath" in pathInfo[path] && pathParams) {
-      pathValue = (pathInfo[path] as any).buildPath(pathParams);
+      pathValue = (
+        pathInfo[path] as { buildPath: (params: any) => string }
+      ).buildPath(pathParams);
     }
 
     // QueryString 변환

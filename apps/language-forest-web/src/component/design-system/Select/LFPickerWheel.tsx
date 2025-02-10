@@ -25,9 +25,7 @@ export const LFPickerWheel = <T,>({
   const ref = useRef<HTMLUListElement>(null);
   const [selected, setSelected] = useState(getInitialIndex(list) + 1); // 앞에 undefinde를 넣기 때문에 + 1을 해줍니다
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<any | null>(null);
 
   const handleScroll = () => {
     if (ref.current) {

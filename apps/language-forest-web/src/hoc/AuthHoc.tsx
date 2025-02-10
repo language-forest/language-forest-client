@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { overlay } from "overlay-kit";
-import { Alert, BottomSheet } from "@/component/design-system";
+import { Alert, BottomSheet, LFText } from "@/component/design-system";
 import { LoadingStatusEnum, useUserStore } from "@/store/useUserStore.ts";
 import { PathKey, useLFNavigate } from "@/util/navigate/useLFNavigate.ts";
 
@@ -58,7 +58,11 @@ function withAuth<P extends object>(
                 handleOutsideClick();
               }}
             >
-              로그인 안돼서 못봐용
+              <LFText variant={"headline"} weight={"B"}>
+                로그인 이후 사용 가능합니다.
+              </LFText>
+              <br />
+              <LFText variant={"headline"}>로그인 화면으로 전환됩니다.</LFText>
             </BottomSheet>
           );
         });

@@ -47,7 +47,6 @@ const LoginScreen = () => {
           <LFLink href={PRIVACY_POLICY_URL}>개인정보처리방침</LFLink>
           에
           <br />
-          <Divider height={4} backgroundColor={"White"} />
           동의한 것으로 간주합니다
         </LFText>
       </CTAContainer>

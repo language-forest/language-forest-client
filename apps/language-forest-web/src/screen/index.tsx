@@ -21,10 +21,10 @@ const IndexScreen = withAuth(
   () => {
     const { push } = useLFNavigate();
     const userStudyInfo = useUserStore((state) => state.userStudyInfo);
+
     return (
       <LFPageWrapper>
         <LFHeader left={<LFHeaderHome />} right={<LFHeaderNotification />} />
-
         <VStack
           style={{ flex: 1 }}
           alignItems={"center"}

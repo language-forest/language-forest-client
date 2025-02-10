@@ -46,8 +46,6 @@ const StudyResultScreen = () => {
     ];
   };
 
-  console.log(getSummary());
-
   return (
     <LFPageWrapper>
       <LFHeader />

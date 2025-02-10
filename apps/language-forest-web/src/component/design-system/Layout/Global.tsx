@@ -32,5 +32,5 @@ export const Backdrop = styled(motion.div)`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 50;
+  z-index: 101;
 `;

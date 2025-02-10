@@ -4,7 +4,7 @@ import { LFColor } from "@repo/shared/constant";
 import { Backdrop, HStack } from "../Layout";
 import { LFText } from "@/component/design-system";
 import { overlay } from "overlay-kit";
-import { CSSProperties, useEffect, useRef } from "react";
+import { CSSProperties, useRef } from "react";
 import { useDisableScroll } from "@/hook/useScrollDisable.ts";
 
 interface BottomSheetProps {

@@ -18,34 +18,7 @@ import {
   useGetStudy,
 } from "../../../../../../packages/language-forest-api";
 import { LFColor } from "@repo/shared/constant";
-import { useState } from "react";
-
-function parseStringArray(input: string): string[] {
-  if (typeof input !== "string") {
-    throw new Error("Invalid input: must be a string");
-  }
-
-  return input
-    .split(",") // 쉼표 기준으로 나누기
-    .map((item) => item.trim()) // 앞뒤 공백 제거
-    .filter((item) => item.length > 0); // 빈 문자열 제거
-}
-
-// 테스트
-
-function safeJsonParse(input: string): string[] {
-  try {
-    const parsed = JSON.parse(input);
-    if (
-      Array.isArray(parsed) &&
-      parsed.every((item) => typeof item === "string")
-    ) {
-      return parsed;
-    }
-  } catch {}
-
-  return parseStringArray(input);
-}
+import { useEffect, useState } from "react";
 
 const StudyScreen = () => {
   const { getParamsFromPath, push, back } = useLFNavigate();
@@ -53,7 +26,7 @@ const StudyScreen = () => {
   const { studyId } = getParamsFromPath("study/summary");
   const { data } = useGetStudy(studyId);
 
-  const tags = safeJsonParse(data?.studySummary?.tags ?? "");
+  const tags = data?.studySummary?.tags ?? [];
   const [selectedTag, setSelectedTag] = useState(tags[0]);
 
   const handleStartPractice = async () => {
@@ -82,6 +55,14 @@ const StudyScreen = () => {
       params: { studyPracticeId, studyId },
     });
   };
+
+  useEffect(() => {
+    if (tags.length === 0) {
+      return;
+    }
+
+    setSelectedTag(tags[0]);
+  }, [tags]);
 
   if (!data) {
     return null;

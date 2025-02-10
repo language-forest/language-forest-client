@@ -127,8 +127,6 @@ const StudyPracticeResultScreen = () => {
     }
   };
 
-  console.log(getTexts());
-
   const handleComplete = async () => {
     await completeStudyPractice(studyId);
     await refetchUser();
