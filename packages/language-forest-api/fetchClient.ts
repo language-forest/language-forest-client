@@ -5,9 +5,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import { AuthKey } from "@repo/shared/storage";
-import { loadCustomEnv } from "./loadEnv";
 
-const { API_BASE_URL } = loadCustomEnv();
 // 클라이언트 환경에서 요청 쿠키를 가져오는 함수
 const getClientCookie = (name: string): string | undefined => {
   const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
@@ -16,7 +14,8 @@ const getClientCookie = (name: string): string | undefined => {
 
 // Axios 인스턴스 생성
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  // baseURL: "https://dev-api.languageforest.in/",
+  baseURL: "http://localhost:8080",
   headers: {
     "Content-Type": "application/json", // 기본 Content-Type
   },

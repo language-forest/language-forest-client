@@ -4,9 +4,7 @@
  * Sample API
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useQuery
-} from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -15,8 +13,8 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query'
+  UseQueryResult,
+} from "@tanstack/react-query";
 import type {
   CreateStudyPracticeBody,
   CreateStudyPracticeResponse,
@@ -28,327 +26,370 @@ import type {
   StudyResponse,
   UpdateStudyBody,
   UpdateStudyPracticeRequest,
-  UpdateStudyPracticeResponse
-} from '../../schemas'
-import { fetchClient } from '../../../../fetchClient';
+  UpdateStudyPracticeResponse,
+} from "../../schemas";
+import { fetchClient } from "../../../../fetchClient";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
-      type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
-
-
+type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
 
 /**
  * @summary 새로운 스터디를 생성합니다.
  */
 export const createStudy = (
-    createStudyRequest: CreateStudyRequest,
- signal?: AbortSignal
+  createStudyRequest: CreateStudyRequest,
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return fetchClient<CreateStudyResponse>(
-      {url: `/study`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createStudyRequest, signal
-    },
-      );
-    }
-  
+  return fetchClient<CreateStudyResponse>({
+    url: `/study`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: createStudyRequest,
+    signal,
+  });
+};
 
 /**
  * @summary 연도와 월에 해당하는 학습 정보를 가져옵니다.
  */
 export const getMontlyStudy = (
-    params: GetMontlyStudyParams,
- signal?: AbortSignal
+  params: GetMontlyStudyParams,
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return fetchClient<MonthlyStudyResponse>(
-      {url: `/study`, method: 'GET',
-        params, signal
-    },
-      );
-    }
-  
+  return fetchClient<MonthlyStudyResponse>({
+    url: `/study`,
+    method: "GET",
+    params,
+    signal,
+  });
+};
 
-export const getGetMontlyStudyQueryKey = (params: GetMontlyStudyParams,) => {
-    return [`/study`, ...(params ? [params]: [])] as const;
-    }
+export const getGetMontlyStudyQueryKey = (params: GetMontlyStudyParams) => {
+  return [`/study`, ...(params ? [params] : [])] as const;
+};
 
-    
-export const getGetMontlyStudyQueryOptions = <TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(params: GetMontlyStudyParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>>, }
+export const getGetMontlyStudyQueryOptions = <
+  TData = Awaited<ReturnType<typeof getMontlyStudy>>,
+  TError = unknown,
+>(
+  params: GetMontlyStudyParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>
+    >;
+  },
 ) => {
+  const { query: queryOptions } = options ?? {};
 
-const {query: queryOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetMontlyStudyQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getMontlyStudy>>> = ({
+    signal,
+  }) => getMontlyStudy(params, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetMontlyStudyQueryKey(params);
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getMontlyStudy>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData> };
+};
 
-  
+export type GetMontlyStudyQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getMontlyStudy>>
+>;
+export type GetMontlyStudyQueryError = unknown;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMontlyStudy>>> = ({ signal }) => getMontlyStudy(params, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetMontlyStudyQueryResult = NonNullable<Awaited<ReturnType<typeof getMontlyStudy>>>
-export type GetMontlyStudyQueryError = unknown
-
-
-export function useGetMontlyStudy<TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(
- params: GetMontlyStudyParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>> & Pick<
+export function useGetMontlyStudy<
+  TData = Awaited<ReturnType<typeof getMontlyStudy>>,
+  TError = unknown,
+>(
+  params: GetMontlyStudyParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getMontlyStudy>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetMontlyStudy<TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(
- params: GetMontlyStudyParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+  },
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetMontlyStudy<
+  TData = Awaited<ReturnType<typeof getMontlyStudy>>,
+  TError = unknown,
+>(
+  params: GetMontlyStudyParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getMontlyStudy>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetMontlyStudy<TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(
- params: GetMontlyStudyParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>>, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+        >,
+        "initialData"
+      >;
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useGetMontlyStudy<
+  TData = Awaited<ReturnType<typeof getMontlyStudy>>,
+  TError = unknown,
+>(
+  params: GetMontlyStudyParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>
+    >;
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
 /**
  * @summary 연도와 월에 해당하는 학습 정보를 가져옵니다.
  */
 
-export function useGetMontlyStudy<TData = Awaited<ReturnType<typeof getMontlyStudy>>, TError = unknown>(
- params: GetMontlyStudyParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>>, }
+export function useGetMontlyStudy<
+  TData = Awaited<ReturnType<typeof getMontlyStudy>>,
+  TError = unknown,
+>(
+  params: GetMontlyStudyParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getMontlyStudy>>, TError, TData>
+    >;
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetMontlyStudyQueryOptions(params, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
 
-  const queryOptions = getGetMontlyStudyQueryOptions(params,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
 
-
-
 /**
  * @summary 학습 결과 정보를 가져옵니다.
  */
-export const getStudy = (
-    studyId: string,
- signal?: AbortSignal
+export const getStudy = (studyId: string, signal?: AbortSignal) => {
+  return fetchClient<StudyResponse>({
+    url: `/study/${studyId}`,
+    method: "GET",
+    signal,
+  });
+};
+
+export const getGetStudyQueryKey = (studyId: string) => {
+  return [`/study/${studyId}`] as const;
+};
+
+export const getGetStudyQueryOptions = <
+  TData = Awaited<ReturnType<typeof getStudy>>,
+  TError = unknown,
+>(
+  studyId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>
+    >;
+  },
 ) => {
-      
-      
-      return fetchClient<StudyResponse>(
-      {url: `/study/${studyId}`, method: 'GET', signal
-    },
-      );
-    }
-  
+  const { query: queryOptions } = options ?? {};
 
-export const getGetStudyQueryKey = (studyId: string,) => {
-    return [`/study/${studyId}`] as const;
-    }
+  const queryKey = queryOptions?.queryKey ?? getGetStudyQueryKey(studyId);
 
-    
-export const getGetStudyQueryOptions = <TData = Awaited<ReturnType<typeof getStudy>>, TError = unknown>(studyId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>>, }
-) => {
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getStudy>>> = ({
+    signal,
+  }) => getStudy(studyId, signal);
 
-const {query: queryOptions} = options ?? {};
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!studyId,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
+};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetStudyQueryKey(studyId);
+export type GetStudyQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getStudy>>
+>;
+export type GetStudyQueryError = unknown;
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getStudy>>> = ({ signal }) => getStudy(studyId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(studyId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData> & { queryKey: DataTag<QueryKey, TData> }
-}
-
-export type GetStudyQueryResult = NonNullable<Awaited<ReturnType<typeof getStudy>>>
-export type GetStudyQueryError = unknown
-
-
-export function useGetStudy<TData = Awaited<ReturnType<typeof getStudy>>, TError = unknown>(
- studyId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>> & Pick<
+export function useGetStudy<
+  TData = Awaited<ReturnType<typeof getStudy>>,
+  TError = unknown,
+>(
+  studyId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getStudy>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetStudy<TData = Awaited<ReturnType<typeof getStudy>>, TError = unknown>(
- studyId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>> & Pick<
+        >,
+        "initialData"
+      >;
+  },
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData>;
+};
+export function useGetStudy<
+  TData = Awaited<ReturnType<typeof getStudy>>,
+  TError = unknown,
+>(
+  studyId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getStudy>>,
           TError,
           TData
-        > , 'initialData'
-      >, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
-export function useGetStudy<TData = Awaited<ReturnType<typeof getStudy>>, TError = unknown>(
- studyId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>>, }
-
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> }
+        >,
+        "initialData"
+      >;
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
+export function useGetStudy<
+  TData = Awaited<ReturnType<typeof getStudy>>,
+  TError = unknown,
+>(
+  studyId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>
+    >;
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
 /**
  * @summary 학습 결과 정보를 가져옵니다.
  */
 
-export function useGetStudy<TData = Awaited<ReturnType<typeof getStudy>>, TError = unknown>(
- studyId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>>, }
+export function useGetStudy<
+  TData = Awaited<ReturnType<typeof getStudy>>,
+  TError = unknown,
+>(
+  studyId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof getStudy>>, TError, TData>
+    >;
+  },
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const queryOptions = getGetStudyQueryOptions(studyId, options);
 
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData>;
+  };
 
-  const queryOptions = getGetStudyQueryOptions(studyId,options)
-
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
-
-
 
 /**
  * @summary 학습의 유저 학습 일기를 수정합니다.
  */
 export const updateStudy = (
-    studyId: string,
-    updateStudyBody: UpdateStudyBody,
- ) => {
-      
-      
-      return fetchClient<void>(
-      {url: `/study/${studyId}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: updateStudyBody
-    },
-      );
-    }
-  
+  studyId: string,
+  updateStudyBody: UpdateStudyBody,
+) => {
+  return fetchClient<void>({
+    url: `/study/${studyId}`,
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    data: updateStudyBody,
+  });
+};
 
 /**
  * @summary 학습을 삭제합니다.
  */
-export const deleteStudy = (
-    studyId: string,
- ) => {
-      
-      
-      return fetchClient<void>(
-      {url: `/study/${studyId}`, method: 'DELETE'
-    },
-      );
-    }
-  
+export const deleteStudy = (studyId: string) => {
+  return fetchClient<void>({ url: `/study/${studyId}`, method: "DELETE" });
+};
 
 /**
  * @summary 유저 일기를 요약하고 태그, 이모티콘 등을 만들어 제공합니다.
  */
-export const createStudySummary = (
-    studyId: string,
- signal?: AbortSignal
-) => {
-      
-      
-      return fetchClient<CreateStudySummaryResponse>(
-      {url: `/study/${studyId}/summary`, method: 'POST', signal
-    },
-      );
-    }
-  
+export const createStudySummary = (studyId: string, signal?: AbortSignal) => {
+  return fetchClient<CreateStudySummaryResponse>({
+    url: `/study/${studyId}/summary`,
+    method: "POST",
+    signal,
+  });
+};
 
 /**
  * @summary 유저가 선택한 태그를 저장하고 유저가 선택했던 레벨과 개수, 언어에 맞는 문제를 생성해 제공합니다.
  */
 export const createStudyPractice = (
-    studyId: string,
-    createStudyPracticeBody: CreateStudyPracticeBody,
- signal?: AbortSignal
+  studyId: string,
+  createStudyPracticeBody: CreateStudyPracticeBody,
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return fetchClient<CreateStudyPracticeResponse>(
-      {url: `/study/${studyId}/practice`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createStudyPracticeBody, signal
-    },
-      );
-    }
-  
+  return fetchClient<CreateStudyPracticeResponse>({
+    url: `/study/${studyId}/practice`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    data: createStudyPracticeBody,
+    signal,
+  });
+};
 
 /**
  * @summary 학습 완료 후 평균 점수 산정 및 학습 상태 변경
  */
-export const completeStudyPractice = (
-    studyId: string,
- ) => {
-      
-      
-      return fetchClient<void>(
-      {url: `/study/${studyId}/practice`, method: 'PUT'
-    },
-      );
-    }
-  
+export const completeStudyPractice = (studyId: string) => {
+  return fetchClient<void>({
+    url: `/study/${studyId}/practice`,
+    method: "PUT",
+  });
+};
 
 /**
  * @summary 문제에 맞는 유저의 답변을 받아 정답, 점수, 팁(피드백) 제공
  */
 export const updateStudyPractice = (
-    studyId: string,
-    studyPracticeId: string,
-    updateStudyPracticeRequest: UpdateStudyPracticeRequest,
- ) => {
-      
-      
-      return fetchClient<UpdateStudyPracticeResponse>(
-      {url: `/study/${studyId}/practice/${studyPracticeId}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: updateStudyPracticeRequest
-    },
-      );
-    }
-  
+  studyId: string,
+  studyPracticeId: string,
+  updateStudyPracticeRequest: UpdateStudyPracticeRequest,
+) => {
+  return fetchClient<UpdateStudyPracticeResponse>({
+    url: `/study/${studyId}/practice/${studyPracticeId}`,
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    data: updateStudyPracticeRequest,
+  });
+};
 
 /**
  * @summary 재시도를 위해 문제에 맞는 유저의 답변을 받아 정답(기존에 생성됨), 점수, 팁(피드백) 제공
  */
 export const updateStudyPracticeRetry = (
-    studyId: string,
-    studyPracticeId: string,
-    updateStudyPracticeRequest: UpdateStudyPracticeRequest,
- ) => {
-      
-      
-      return fetchClient<UpdateStudyPracticeResponse>(
-      {url: `/study/${studyId}/practice/${studyPracticeId}/retry`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: updateStudyPracticeRequest
-    },
-      );
-    }
-  
-
+  studyId: string,
+  studyPracticeId: string,
+  updateStudyPracticeRequest: UpdateStudyPracticeRequest,
+) => {
+  return fetchClient<UpdateStudyPracticeResponse>({
+    url: `/study/${studyId}/practice/${studyPracticeId}/retry`,
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    data: updateStudyPracticeRequest,
+  });
+};
