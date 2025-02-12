@@ -10,21 +10,16 @@ import "react-calendar/dist/Calendar.css";
 import "../../ReactCalendarCustomCss.css";
 import { useGetMontlyStudy } from "@repo/language-forest-api";
 import { DiaryTileComponent } from "@/screen/diary/_components/DiaryTileComponent.tsx";
-
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+import { isBefore, isSameDay, isSameMonth } from "date-fns";
 
 const minDate = new Date(2025, 0, 1);
 const maxDate = new Date();
 
 const DiaryScreen = withAuth(
   () => {
-    const [value, setValue] = useState<Value>(new Date());
-    const year =
-      value instanceof Date ? value.getFullYear() : new Date().getFullYear();
-    const month =
-      value instanceof Date ? value.getMonth() + 1 : new Date().getMonth() + 1; // 0부터 시작하므로 +1
+    const [value, setValue] = useState<Date>(new Date());
+    const year = value.getFullYear();
+    const month = value.getMonth() + 1;
 
     const { data } = useGetMontlyStudy({ year, month });
     const studies = data?.studies ?? [];
@@ -36,19 +31,30 @@ const DiaryScreen = withAuth(
           maxDate={maxDate}
           minDate={minDate}
           onChange={(e) => {
-            console.log(e);
-            setValue(e);
+            if (e instanceof Date) {
+              setValue(e);
+            }
           }}
           value={value}
           calendarType={"gregory"}
           tileContent={(e) => {
             const targetDate = new Date(e.date);
             if (e.view === "month") {
+              const isActive = isSameDay(value, targetDate);
+              const isSelectedMonth =
+                isSameMonth(value, targetDate) && isBefore(e.date, maxDate);
               const formatDate = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, "0")}-${String(targetDate.getDate()).padStart(2, "0")}`;
               const targetItem = studies.find(
                 (study) => study.studyDate === formatDate,
               );
-              return <DiaryTileComponent studyItem={targetItem} tileArgs={e} />;
+              return (
+                <DiaryTileComponent
+                  studyItem={targetItem}
+                  tileArgs={e}
+                  isActive={isActive}
+                  isSelectedMonth={isSelectedMonth}
+                />
+              );
             }
           }}
           formatShortWeekday={(locale, date) => {

@@ -32,7 +32,7 @@ export const LFChip = ({
         {prefixIcon && <LFIcon {...prefixIcon} />}
         <LFText
           variant={"callout"}
-          color={"ContentMainC"}
+          color={selected ? "LightGreen" : "ContentMainC"}
           weight={"B"}
           textAlign={"center"}
         >
@@ -56,7 +56,7 @@ const RawLFChip = styled.button<{ selected: boolean }>`
   align-items: center;
   box-sizing: border-box;
   background-color: ${(props) =>
-    props.selected ? LFColor.Green10 : LFColor.GrayLight30};
+    props.selected ? LFColor.LFGreen : LFColor.GrayLight30};
   border-radius: 33px;
   border: 1px solid
     ${(props) => (props.selected ? LFColor.LFGreen : "transparent")};

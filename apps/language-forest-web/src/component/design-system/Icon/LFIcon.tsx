@@ -20,6 +20,7 @@ import ResultSeedInActive from "./raw/ResultSeedInActive.svg";
 import ResultStreakDays from "./raw/ResultStreakDays.svg";
 import ResultScore from "./raw/ResultScore.svg";
 import bookmark from "./raw/bookmark.svg";
+import SooPooRyDiaryMarker from "./raw/SooPooRyDiaryMarker.svg";
 
 import Weight_R_xMark from "./raw/Weight=R.xMark.svg";
 import Weight_R_speaker_wave_fill from "./raw/Weight=R.speaker.wave.fill.svg";
@@ -98,6 +99,7 @@ export type LFIconWeightedVariant =
  *   예: "bottomNav.home", "topNav.bell", etc.
  */
 export type LFIconNonWeightedVariant =
+  | "SooPooRyDiaryMarker"
   | "SooPooRy"
   | "Seed"
   | "Shop"
@@ -191,6 +193,7 @@ const icons = {
   ResultStreakDays,
   ResultScore,
   bookmark,
+  SooPooRyDiaryMarker,
 
   "topNav.shop": topNav_shop,
   "topNav.bell": topNav_bell,

@@ -14,8 +14,8 @@ const getClientCookie = (name: string): string | undefined => {
 
 // Axios 인스턴스 생성
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: "https://dev-api.languageforest.in/",
-  // baseURL: "http://localhost:8080",
+  // baseURL: "https://dev-api.languageforest.in/",
+  baseURL: "http://localhost:8080",
   headers: {
     "Content-Type": "application/json", // 기본 Content-Type
   },
