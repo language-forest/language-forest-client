@@ -11,8 +11,7 @@ type GoogleLoginProps = {
 };
 
 export const GoogleLogin = ({ onLoginSuccess }: GoogleLoginProps) => {
-  const clientId =
-    "534905735410-e72i9oi4k8sqe2fpcn55q4m2645fbgnr.apps.googleusercontent.com";
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
