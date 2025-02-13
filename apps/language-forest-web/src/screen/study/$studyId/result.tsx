@@ -15,6 +15,7 @@ import {
 } from "@/component/design-system";
 import { useUserStore } from "@/store/useUserStore.ts";
 import { LFColorKey } from "@repo/shared/constant";
+import { PracticeSentence } from "@/component/shared";
 
 const StudyResultScreen = () => {
   const { getParamsFromPath, push } = useLFNavigate();
@@ -107,50 +108,11 @@ const StudyResultScreen = () => {
             <VStack gap={2} backgroundColor="GrayLight20">
               {(data?.studyPractices ?? []).map((practice) => {
                 return (
-                  <HStack
-                    style={{ paddingTop: 16, paddingBottom: 20 }}
-                    backgroundColor={"LFWhite"}
-                    justifyContent={"space-between"}
-                  >
-                    <VStack gap={16}>
-                      <VStack gap={4}>
-                        <LFText
-                          variant={"callout"}
-                          weight={"B"}
-                          color={"ContentMainC"}
-                        >
-                          {practice.problem}
-                        </LFText>
-                        <LFText
-                          variant={"subHeadline"}
-                          weight={"R"}
-                          color={"ContentSubC"}
-                        >
-                          {practice.problem}
-                        </LFText>
-                      </VStack>
-
-                      <HStack gap={8}>
-                        <LFChip>점수 {practice.score}</LFChip>
-                        <LFChip>
-                          씨앗 +
-                          {practice?.score
-                            ? practice.score < 50
-                              ? 0
-                              : practice.score < 70
-                                ? 1
-                                : practice.score < 90
-                                  ? 2
-                                  : 3
-                            : 0}
-                        </LFChip>
-                      </HStack>
-                    </VStack>
-                    <LFIconButton
-                      icon={{ variant: "bookmark" }}
-                      onClick={() => console.log("book mark")}
-                    />
-                  </HStack>
+                  <PracticeSentence
+                    practice={practice}
+                    onBookmarkClick={() => console.log("book")}
+                    key={practice.id}
+                  />
                 );
               })}
             </VStack>

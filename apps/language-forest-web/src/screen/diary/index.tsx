@@ -11,9 +11,13 @@ import "../../ReactCalendarCustomCss.css";
 import { useGetMontlyStudy } from "@repo/language-forest-api";
 import { DiaryTileComponent } from "@/screen/diary/_components/DiaryTileComponent.tsx";
 import { isBefore, isSameDay, isSameMonth } from "date-fns";
+import { StudyHistory } from "@/screen/diary/_components/StudyHistory.tsx";
 
 const minDate = new Date(2025, 0, 1);
 const maxDate = new Date();
+
+const getFormatDate = (targetDate: Date) =>
+  `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, "0")}-${String(targetDate.getDate()).padStart(2, "0")}`;
 
 const DiaryScreen = withAuth(
   () => {
@@ -23,6 +27,9 @@ const DiaryScreen = withAuth(
 
     const { data } = useGetMontlyStudy({ year, month });
     const studies = data?.studies ?? [];
+    const selectedDayStudy = data?.studies?.find(
+      (item) => item.studyDate === getFormatDate(value),
+    );
 
     return (
       <LFPageWrapper>
@@ -43,7 +50,7 @@ const DiaryScreen = withAuth(
               const isActive = isSameDay(value, targetDate);
               const isSelectedMonth =
                 isSameMonth(value, targetDate) && isBefore(e.date, maxDate);
-              const formatDate = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, "0")}-${String(targetDate.getDate()).padStart(2, "0")}`;
+              const formatDate = getFormatDate(targetDate);
               const targetItem = studies.find(
                 (study) => study.studyDate === formatDate,
               );
@@ -68,6 +75,12 @@ const DiaryScreen = withAuth(
           }}
         />
 
+        {selectedDayStudy?.studyId && selectedDayStudy?.studyDate && (
+          <StudyHistory
+            studyId={selectedDayStudy.studyId}
+            studyDate={new Date(selectedDayStudy.studyDate)}
+          />
+        )}
         <LFBottomTabNavigation />
       </LFPageWrapper>
     );
